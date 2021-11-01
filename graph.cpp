@@ -15,20 +15,16 @@
 
 
 string graph::get_string(){
-    string graphAsString="Vertices:\t { ";
+    string graphAsString="Vertices:\n";
     
     for(int v=0; v < this->numberVertices; v++){
+        graphAsString.append("\n{");
         graphAsString.append(this->vertices[v].to_string());
-        
-        graphAsString.append(", ");
-    }
-    graphAsString.append(" }\n\n");
-    graphAsString.append("Edges:\n\t");
-    for(int e=0; e < this->numberEdges;e++){
-        graphAsString.append(this->edges[e].to_string());
-        graphAsString.append("\n\t");
+        graphAsString.append("}\n");
+        graphAsString.append(this->vertices[v].out_to_string());
     }
     
+        
     return graphAsString;
 }
 graph::graph(const graph& orig) {
@@ -65,10 +61,9 @@ void graph::constructFromBinary(GraphBinary data){
     this->numberVertices = (unsigned short)data.number;
 
     this->numberEdges = (unsigned int) this->countBinaryOnes(data.edges);
-    std::cout << "\n" << this->numberEdges << std::endl;
+    //std::cout << "\n" << this->numberEdges << std::endl;
     this->vertices = new vertice[data.number]();
     
-    this->edges = new edge[this->numberEdges]();
     
     
     for(int i=0; i < this->numberVertices ;i++ ){
@@ -80,9 +75,13 @@ void graph::constructFromBinary(GraphBinary data){
     for(int i = 0; i < data.number * data.number;i++){
         if(this->getBitByNum((i % 8),data.edges[i/8])){
             //std::cout << data.edges[i/8]+0 << std::endl;
-            this->edges[edgecounter].set(&vertices[i/data.number],&vertices[i % data.number]);
+            this->vertices[i/data.number].addConnection(&(vertices[i % data.number]));
             edgecounter++;
         }
     }
     
+}
+
+unsigned int graph::gaussianSum(unsigned short n){
+    return (n*(n+1)) >> 1;
 }

@@ -16,7 +16,6 @@
 #include <vector>
 #include "vertice.h"
 #include "reader.h"
-#include "edge.h"
 #include <string.h>
 
 using namespace std;
@@ -36,7 +35,7 @@ private:
     unsigned int countBinaryOnes(char* binary);
     unsigned int countBinaryOnes(char binary);
     bool getBitByNum(short num, char byte);
-    edge* edges;
+    unsigned int gaussianSum(unsigned short n);
     vertice* vertices;
     unsigned int numberEdges;
     

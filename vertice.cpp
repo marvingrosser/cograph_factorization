@@ -26,10 +26,24 @@ void vertice::setNum(int num){
 string vertice::to_string(){
     return std::to_string(this->num);
 }
+
+string vertice::out_to_string(){
+    string outs = "";
+    for(vertice* vert: this->out){
+        outs.append("\t --> \t");
+        outs.append(vert->to_string());
+        outs.append("\n");
+    }
+    
+    return outs;
+}
 int vertice::getNum(){
     return this->num;
 }
 
+void vertice::addConnection(vertice* vert){
+    this->out.push_back(vert);
+}
 
 vertice::~vertice() {
 }

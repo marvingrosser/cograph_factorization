@@ -70,13 +70,15 @@ GraphBinary reader::readBinaryFromGraphFile(){
     file = file.substr(file.find('\n'));
     
     while(file.find('\n') != string::npos){
-        file.erase(file.begin() + file.find('\n'));
+        unsigned short index =  file.find('\n');
+        file.erase(file.begin() + index);
+        //file.erase(index+1);
     }
+    
     for(int i = 0; i < file.size(); i++){
         //std::cout << ((int)file.at(i) - (int)'0')*0x80 << std::endl ;
         graphData.edges[i/8] = graphData.edges[i/8] << 1;
         graphData.edges[i/8] = graphData.edges[i/8]  | (((int)file.at(i)) - (int)'0');
-        
     }
 
     

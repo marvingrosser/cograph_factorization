@@ -17,7 +17,7 @@
 #include "vertice.h"
 #include "reader.h"
 #include <string.h>
-
+#include <pthread.h>
 using namespace std;
 using std::string;
 
@@ -26,19 +26,54 @@ struct GraphBinary;
 
 class graph {
 public:
+    
+    /**
+     * New Graph from File
+     * @param path filepath (local)
+     */
     graph(string path);
+    
     graph(const graph& orig);
+    
     virtual ~graph();
+    /**
+     * Returns String with the Data represented in Ascii-Visualized Data
+     * @return 
+     */
     string get_string();
 private:
     void constructFromBinary(GraphBinary data);
+    /**
+     * Counts binary Ones on Char-Array (binary Data of Char array)
+     * @param binary the binary data in Char array 
+     * @return number of ones in Chararray
+     */
     unsigned int countBinaryOnes(char* binary);
+    /**
+     * Counts binaray ones on Char in O(m) with m being the number of ones
+     * @param binary the binary data as CHar array
+     * @return number of ones in Char
+     */
     unsigned int countBinaryOnes(char binary);
+    /**
+     * Returns the State of the bit on the num place in the Char (num>7 --> false)
+     * @param num   Index of the bit in the Char
+     * @param byte  the binary data in Char
+     * @return the corrosponding boolean value
+     */
     bool getBitByNum(short num, char byte);
+    /**
+     * Calculates the fast Gaussian sum 
+     * @param n
+     * @return 
+     */
     unsigned int gaussianSum(unsigned short n);
-    vertice* vertices;
-    unsigned int numberEdges;
     
+    //Array of Vertices in the Graph
+    vertice* vertices;
+    
+    unsigned int numberEdges;
+    //Number of Vertices saved in "vertices" 
     unsigned short numberVertices; 
     
 

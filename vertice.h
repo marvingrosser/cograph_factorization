@@ -13,9 +13,8 @@
 
 #ifndef VERTICE_H
 #define VERTICE_H
-#include "edge.h"
+#include <string>
 #include <vector>
-#include <string.h>
 using namespace std;
 using std::vector;
 using std::string;
@@ -25,12 +24,18 @@ public:
     vertice(int num);
     virtual ~vertice();
     string to_string();
+    string out_to_string();
     int getNum();
     void setNum(int num);
+    void addConnection(vertice *vert);
+    void visit();
+    bool isVisited();
+    void unvisit();
+    vector<vertice*>* getConnections();
 private:
     int num;
-    vector<edge> out;
-    vector<edge> in;
+    vector<vertice*> out;
+    bool visited;
 
 };
 

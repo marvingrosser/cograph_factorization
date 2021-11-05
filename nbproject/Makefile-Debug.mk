@@ -35,8 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/edge.o \
 	${OBJECTDIR}/graph.o \
+	${OBJECTDIR}/gtree.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/reader.o \
 	${OBJECTDIR}/vertice.o
@@ -66,15 +66,15 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/factorization_graph: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/factorization_graph ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/edge.o: edge.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/edge.o edge.cpp
-
 ${OBJECTDIR}/graph.o: graph.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/graph.o graph.cpp
+
+${OBJECTDIR}/gtree.o: gtree.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gtree.o gtree.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

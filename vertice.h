@@ -28,9 +28,14 @@ public:
     int getNum();
     void setNum(int num);
     void addConnection(vertice *vert);
+    void visit();
+    bool isVisited();
+    void unvisit();
+    vector<vertice*>* getConnections();
 private:
     int num;
     vector<vertice*> out;
+    bool visited;
 
 };
 

@@ -18,14 +18,21 @@
 #include "reader.h"
 #include <string.h>
 #include <pthread.h>
+#include <vector>
 using namespace std;
 using std::string;
 
 struct GraphBinary;
-
+struct PGraph{
+    int size;
+    vector<vertice*> verts;
+};
 
 class graph {
 public:
+    
+    graph(PGraph g);
+    graph();
     
     /**
      * New Graph from File
@@ -41,7 +48,16 @@ public:
      * @return 
      */
     string get_string();
+    graph invert();
+    vector<graph> getConnected();
+    graph(vertice **vert, unsigned short numberVerts);
+
+    
 private:
+    PGraph searchAllConnected(vertice *vert);
+    
+    
+    
     void constructFromBinary(GraphBinary data);
     /**
      * Counts binary Ones on Char-Array (binary Data of Char array)
@@ -69,9 +85,11 @@ private:
      */
     unsigned int gaussianSum(unsigned short n);
     
-    //Array of Vertices in the Graph
+    //Array of actual hold Vertices in the Graph
     vertice* vertices;
-    
+    //array of pointers pointing to actual vertices, if the graph has no actual data, but operates on other graphs (eg. it's subgraph)
+    vertice** verticePointers;
+    //at the moment senseless
     unsigned int numberEdges;
     //Number of Vertices saved in "vertices" 
     unsigned short numberVertices; 

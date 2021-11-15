@@ -24,14 +24,13 @@ using std::string;
 
 struct GraphBinary;
 struct PGraph{
-    int size;
     vector<vertice*> verts;
 };
 
 class graph {
 public:
     
-    graph(PGraph g);
+    graph(vector<vertice*> g);
     graph();
     
     /**
@@ -49,12 +48,14 @@ public:
      */
     string get_string();
     graph invert();
-    vector<graph> getConnected();
-    graph(vertice **vert, unsigned short numberVerts);
+    vector<vector<vertice*>> getConnected();
+    graph(vector<vertice*> vert, unsigned short numberVerts);
 
     
 private:
-    PGraph searchAllConnected(vertice *vert);
+    
+    void printPGraph(vector<vertice*> g);
+    void searchAllConnected(vertice *vert, vector<vertice*> *g, bool invert);
     
     
     
@@ -88,7 +89,7 @@ private:
     //Array of actual hold Vertices in the Graph
     vertice* vertices;
     //array of pointers pointing to actual vertices, if the graph has no actual data, but operates on other graphs (eg. it's subgraph)
-    vertice** verticePointers;
+    vector<vertice*> verticePointers;
     //at the moment senseless
     unsigned int numberEdges;
     //Number of Vertices saved in "vertices" 

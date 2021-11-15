@@ -12,30 +12,45 @@
  */
 
 #include "graph.h"
-
-graph::graph(){}
-graph::graph(PGraph g){
-    this->numberVertices = g.size;
-    this->verticePointers = &g.verts[0];
+void graph::printPGraph(vector<vertice*> verts){
+    std::cout << "PGraph:\n" << std::endl;
+    for(vertice* v: verts){
+        std::cout << v->to_string() << std::endl;
+    }
 }
-vector<graph> graph::getConnected(){
-    vector<graph> components;
-    for(unsigned short i = 0; i < this->numberVertices; i++ ){
+graph::graph(){}
+graph::graph(vector<vertice*> verts){
+    this->numberVertices = verts.size();
+    this->verticePointers= *new vector<vertice*>(verts.begin(),verts.end());
+    //std::cout << "PF"<<  this->get_string() << std::endl;
+}
+vector<vector<vertice*>> graph::getConnected(){
+    vector<vector<vertice*>> components = * new vector<vector<vertice*>>;
     
-        if(!this->verticePointers[i]->isVisited()){
-            components.push_back(*new graph(this->searchAllConnected(this->verticePointers[i])));
+    for(vertice* vert:this->verticePointers){
+        if(!vert->isVisited()){
+            vector<vertice*> pg = * new vector<vertice*>;
+            this->searchAllConnected(vert, &pg,false);
+            components.push_back(pg);
         }
     }
+
     return components;
 }
 
-PGraph graph::searchAllConnected(vertice *vert){
+void graph::searchAllConnected(vertice *vert, vector<vertice*> *g, bool invert){
+    vert->visit();
     for(vertice *succ : *(vert->getConnections())){
         if(!succ->isVisited()){
-            this->searchAllConnected(succ);
+            this->searchAllConnected(succ,g,invert);
+
         }
     }
-    return *new PGraph();
+    
+    g->push_back(vert);
+    
+    
+    return;
 }
 graph graph::invert(){
     return *new graph();
@@ -43,7 +58,7 @@ graph graph::invert(){
 
 
 
-graph::graph(vertice** verts, unsigned short numberVerts){
+graph::graph(vector<vertice*> verts, unsigned short numberVerts){
     this->numberVertices = numberVerts;
     this->verticePointers = verts;
 }
@@ -51,11 +66,11 @@ graph::graph(vertice** verts, unsigned short numberVerts){
 string graph::get_string(){
     string graphAsString="Vertices:\n";
     
-    for(int v=0; v < this->numberVertices; v++){
+    for(int v=0; v < this->verticePointers.size(); v++){
         graphAsString.append("\n{");
-        graphAsString.append(this->vertices[v].to_string());
+        graphAsString.append(this->verticePointers.at(v)->to_string());
         graphAsString.append("}\n");
-        graphAsString.append(this->vertices[v].out_to_string());
+        graphAsString.append(this->verticePointers.at(v)->out_to_string());
     }
     
         
@@ -97,12 +112,12 @@ void graph::constructFromBinary(GraphBinary data){
     this->numberEdges = (unsigned int) this->countBinaryOnes(data.edges);
     //std::cout << "\n" << this->numberEdges << std::endl;
     this->vertices = new vertice[data.number]();
-    this->verticePointers = new vertice*[data.number];
+    this->verticePointers = *new vector<vertice*>;
     
     
     for(int i=0; i < this->numberVertices ;i++ ){
         this->vertices[i] = * new vertice(i);
-        this->verticePointers[i] = &this->vertices[i];
+        this->verticePointers.push_back(&vertices[i]);
     }
     
     

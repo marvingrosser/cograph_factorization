@@ -25,6 +25,7 @@ using std::string;
 struct GraphBinary{
     int number;
     char * edges;
+    char ** edgesPerVertice;
 };
 
 class reader {

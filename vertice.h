@@ -15,11 +15,17 @@
 #define VERTICE_H
 #include <string>
 #include <vector>
+#include "graph.h"
+
+class graph;
 using namespace std;
 using std::vector;
 using std::string;
 class vertice {
 public:
+    void setGraph(graph * g);
+    void setOneInOut(unsigned short index);
+    void initOut(unsigned short number);
     vertice();
     vertice(int num);
     virtual ~vertice();
@@ -34,7 +40,8 @@ public:
     vector<vertice*>* getConnections();
 private:
     int num;
-    vector<vertice*> out;
+    graph * g;
+    char * out;
     bool visited;
 
 };

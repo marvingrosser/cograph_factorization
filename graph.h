@@ -21,7 +21,7 @@
 #include <vector>
 using namespace std;
 using std::string;
-
+class vertice;
 struct GraphBinary;
 struct PGraph{
     vector<vertice*> verts;
@@ -50,7 +50,8 @@ public:
     graph invert();
     vector<vector<vertice*>> getConnected();
     graph(vector<vertice*> vert, unsigned short numberVerts);
-
+    unsigned short getSize();
+    vertice * getVerticeByNumber(unsigned short num);
     
 private:
     

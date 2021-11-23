@@ -43,10 +43,12 @@ string vertice::to_string(){
 
 string vertice::out_to_string(){
     string outs = "";
-    for(vertice* vert: this->out){
-        outs.append("\t --> \t");
-        outs.append(vert->to_string());
-        outs.append("\n");
+    for(int i=0 ; i < this->g->getSize();i++ ){
+        if((this->out[i/8] >> (7 - i % 8))%2 ){
+            outs.append("\t --> \t");
+            outs.append(this->g->getVerticeByNumber(i)->to_string());
+            outs.append("\n");
+        }
     }
     
     return outs;
@@ -55,13 +57,19 @@ int vertice::getNum(){
     return this->num;
 }
 
-void vertice::addConnection(vertice* vert){
-    this->out.push_back(vert);
-}
+
 
 vertice::~vertice() {
 }
+void vertice::setGraph(graph* g){
+    this->g = g;
+}
 
-vector<vertice*>* vertice::getConnections(){
-    return &this->out;
+void vertice::initOut(unsigned short number){
+    this->out = (char *)malloc(sizeof(char)*number/8);
+    this->out[0] = (char)0;
+    
+}
+void vertice::setOneInOut(unsigned short index){
+    this->out[index/8] += ((char) 1  << (7 - index % 8))  ;
 }

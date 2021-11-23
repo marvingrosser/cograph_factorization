@@ -12,46 +12,14 @@
  */
 
 #include "graph.h"
-void graph::printPGraph(vector<vertice*> verts){
-    std::cout << "PGraph:\n" << std::endl;
-    for(vertice* v: verts){
-        std::cout << v->to_string() << std::endl;
-    }
-}
+
 graph::graph(){}
 graph::graph(vector<vertice*> verts){
     this->numberVertices = verts.size();
     this->verticePointers= *new vector<vertice*>(verts.begin(),verts.end());
     //std::cout << "PF"<<  this->get_string() << std::endl;
 }
-vector<vector<vertice*>> graph::getConnected(){
-    vector<vector<vertice*>> components = * new vector<vector<vertice*>>;
-    
-    for(vertice* vert:this->verticePointers){
-        if(!vert->isVisited()){
-            vector<vertice*> pg = * new vector<vertice*>;
-            this->searchAllConnected(vert, &pg,false);
-            components.push_back(pg);
-        }
-    }
 
-    return components;
-}
-
-void graph::searchAllConnected(vertice *vert, vector<vertice*> *g, bool invert){
-    vert->visit();
-    for(vertice *succ : *(vert->getConnections())){
-        if(!succ->isVisited()){
-            this->searchAllConnected(succ,g,invert);
-
-        }
-    }
-    
-    g->push_back(vert);
-    
-    
-    return;
-}
 graph graph::invert(){
     return *new graph();
 }
@@ -71,6 +39,7 @@ string graph::get_string(){
         graphAsString.append(this->verticePointers.at(v)->to_string());
         graphAsString.append("}\n");
         graphAsString.append(this->verticePointers.at(v)->out_to_string());
+        
     }
     
         
@@ -117,16 +86,20 @@ void graph::constructFromBinary(GraphBinary data){
     
     for(int i=0; i < this->numberVertices ;i++ ){
         this->vertices[i] = * new vertice(i);
+        this->vertices[i].initOut(this->numberVertices - 1);
+        this->vertices[i].setGraph(this);
         this->verticePointers.push_back(&vertices[i]);
+        
     }
     
     
     unsigned int edgecounter = 0;
     for(int i = 0; i < data.number * data.number;i++){
+        
         if(this->getBitByNum((i % 8),data.edges[i/8])){
             //std::cout << data.edges[i/8]+0 << std::endl;
-            this->vertices[i/data.number].addConnection(&(vertices[i % data.number]));
-            edgecounter++;
+            
+            this->vertices[i/data.number].setOneInOut(i % data.number);
         }
     }
     
@@ -134,4 +107,12 @@ void graph::constructFromBinary(GraphBinary data){
 
 unsigned int graph::gaussianSum(unsigned short n){
     return (n*(n+1)) >> 1;
+}
+
+unsigned short graph::getSize(){
+    return (unsigned short) this->verticePointers.size();
+}
+
+vertice * graph::getVerticeByNumber(unsigned short num){
+    return this->verticePointers.at(num);
 }

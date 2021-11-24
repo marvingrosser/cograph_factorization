@@ -56,7 +56,7 @@ public:
 private:
     
     void printPGraph(vector<vertice*> g);
-    void searchAllConnected(vertice *vert, vector<vertice*> *g, bool invert);
+    void searchAllConnected(vertice *vert,char* binary, bool invert);
     
     
     

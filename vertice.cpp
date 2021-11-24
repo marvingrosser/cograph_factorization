@@ -12,7 +12,9 @@
  */
 
 #include "vertice.h"
-
+graph* vertice::getGraph(){
+    return this->g;
+}
 void vertice::visit(){
     this->visited =true;
 }
@@ -40,6 +42,7 @@ void vertice::setNum(int num){
 string vertice::to_string(){
     return std::to_string(this->num);
 }
+
 
 string vertice::out_to_string(){
     string outs = "";
@@ -72,4 +75,8 @@ void vertice::initOut(unsigned short number){
 }
 void vertice::setOneInOut(unsigned short index){
     this->out[index/8] += ((char) 1  << (7 - index % 8))  ;
+}
+
+char* vertice::getConnections(){
+    return this->out;
 }

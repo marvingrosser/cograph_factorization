@@ -23,6 +23,7 @@ using std::vector;
 using std::string;
 class vertice {
 public:
+    graph* getGraph();
     void setGraph(graph * g);
     void setOneInOut(unsigned short index);
     void initOut(unsigned short number);
@@ -37,7 +38,7 @@ public:
     void visit();
     bool isVisited();
     void unvisit();
-    vector<vertice*>* getConnections();
+    char* getConnections();
 private:
     int num;
     graph * g;

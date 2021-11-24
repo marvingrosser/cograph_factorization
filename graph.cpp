@@ -12,7 +12,17 @@
  */
 
 #include "graph.h"
+void graph::searchAllConnected(vertice* vert, char* binary,bool invert){
+    *binary |= *vert->getConnections();
+    char vertbinary[sizeof(*vert->getConnections())/sizeof(char)];
+    *vertbinary = *vert->getConnections();
+    unsigned int index = 0;
+    for(int i = index; vertbinary; i = index ){
+        vertbinary[i/8] &= vertbinary[i/8] - 1;
+        index = 0;
+    }
 
+}
 graph::graph(){}
 graph::graph(vector<vertice*> verts){
     this->numberVertices = verts.size();

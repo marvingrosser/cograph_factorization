@@ -12,16 +12,68 @@
  */
 
 #include "graph.h"
-void graph::searchAllConnected(vertice* vert, char* binary,bool invert){
-    *binary |= *vert->getConnections();
-    char vertbinary[sizeof(*vert->getConnections())/sizeof(char)];
-    *vertbinary = *vert->getConnections();
-    unsigned int index = 0;
-    for(int i = index; vertbinary; i = index ){
-        vertbinary[i/8] &= vertbinary[i/8] - 1;
-        index = 0;
+void graph::verticeUnion(char* dest, char* other, unsigned short size){
+    for(int i = 0; i < size/8 + 1; i++){
+        dest[i] |= other[i];
     }
+}
 
+void graph::verticeInversion(char* dest, unsigned short size){
+    for(int i = 0; i < size/8 + 1; i++){
+        dest[i] = ~dest[i];
+    }
+}
+
+
+void graph::verticeXOR(char * dest, char * other, unsigned short size){
+    for(int i = 0; i < size/8 + 1; i++){
+        dest[i] ^= other[i];
+    }
+}
+vector<char*> graph::getConnections(bool invert){
+
+    unsigned short numVerts = this->verticePointers.size(); //number of verts in the graph
+
+    char * visited = (char*)calloc(numVerts/8,sizeof(char)); //stores visited vertices
+
+    vector<char*> components;
+
+    for(int i=0; i < numVerts   ;i++ ){
+        if( ((unsigned char)visited[i / 8] >> (7 - (i % 8))) % 2 == 0){ //is the vertex[i] not visited? 
+  
+            char * component = (char*)calloc(numVerts/8,sizeof(char)); //component data
+            
+            vertice* current = this->verticePointers.at(i); // take current vertice
+            
+            searchAllConnected(current, component , invert,this->verticePointers); //create component
+            
+            verticeUnion(visited,component, numVerts); // write the component to the visited
+            
+            components.push_back(component); //add the component to our components vector
+        }
+        
+    }
+    return components;
+}
+void graph::searchAllConnected(vertice* vert, char* binary,bool invert,vector<vertice*> verticePointers){
+    unsigned short numVerts= verticePointers.size(); //
+    unsigned short numOfThisVert = vert->getNum(); //takes the index of this vertex
+    char disjunion[numVerts/8+1]; //variable where we store wich vertices we have to visit from this vertex
+    char * connected = vert->getConnections(); //take the bitrepresentation for connected vertices
+    for(int i = 0; i < numVerts/8 + 1;i++){ //loop over our Windows of the Bitrepr of connected vertices
+        if(invert) connected[i] = ~connected[i]; //invert if that shit has to be inverted 
+        disjunion[i] = connected[i] ^ (binary[i] & connected[i]); //calculates the vertices we haveent visited but can visit from this vertex
+        binary[i] |= connected[i]; // adds the vertices that will be visited from this vertex to the visited variable
+    }
+    binary[numOfThisVert/8] |=  ((char)1) << 7 - (numOfThisVert % 8);  //adds the vertex itseklf to the visited
+    if(disjunion){ //do the loop only if there are vertices to visit
+        for(int i = 0; i < numVerts; i++){//könnte man nachdem nur noch nullen kommen + mod 7 ^-1 skippen
+            unsigned char wtf = disjunion[i/8] >> 7-(i % 8); //vertex(i) to index 7
+            if( wtf % 2 == 1 && i!=numOfThisVert){ //should we visit this vertex?
+                searchAllConnected(verticePointers.at(i), binary,invert, verticePointers);
+            }
+        }
+    }
 }
 graph::graph(){}
 graph::graph(vector<vertice*> verts){

@@ -69,12 +69,12 @@ void vertice::setGraph(graph* g){
 }
 
 void vertice::initOut(unsigned short number){
-    this->out = (char *)malloc(sizeof(char)*number/8);
+    this->out = (char *)calloc(number/8,sizeof(char));
     this->out[0] = (char)0;
     
 }
 void vertice::setOneInOut(unsigned short index){
-    this->out[index/8] += ((char) 1  << (7 - index % 8))  ;
+    this->out[index/8] |= ((unsigned char) 1  << (7 - index % 8))  ;
 }
 
 char* vertice::getConnections(){

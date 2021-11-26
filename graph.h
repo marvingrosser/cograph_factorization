@@ -1,4 +1,5 @@
-/*
+
+        /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -52,11 +53,13 @@ public:
     graph(vector<vertice*> vert, unsigned short numberVerts);
     unsigned short getSize();
     vertice * getVerticeByNumber(unsigned short num);
-    
+    vector<char*> getConnections(bool invert);
 private:
-    
+    void verticeInversion(char* dest, unsigned short size);
+    void verticeUnion(char* dest, char* other, unsigned short size);
+    void verticeXOR(char * dest, char * other, unsigned short size);
     void printPGraph(vector<vertice*> g);
-    void searchAllConnected(vertice *vert,char* binary, bool invert);
+    void searchAllConnected(vertice *vert,char* binary, bool invert, vector<vertice*> pointers);
     
     
     

@@ -20,9 +20,11 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    graph *g = new graph("src/data/graph1.graph"); //wtf wenn das kein pointer ist passiert was mit dem speicher was ich nicht mag
+    graph *g = new graph("src/data/graph2.graph"); //wtf wenn das kein pointer ist passiert was mit dem speicher was ich nicht mag
     //vector<vector<vertice*>> cons = g->getConnected();
     std::cout << g->get_string()<< std::endl;
+    vector<char*> c = g->getConnections(true);
+
     /*for(int i=0; i < cons.size(); i++){
         std::cout << "Connected:\t" << (*new graph(cons.at(i))).get_string() << std::endl;
     }*/

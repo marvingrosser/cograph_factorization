@@ -14,25 +14,63 @@
 #ifndef GTREE_H
 #define GTREE_H
 #include "vertice.h"
-
+#include <vector>
+#include <string.h>
 class gtree {
 public:
     gtree();
+    /**
+     * Construct Cotree from graph
+     * @param g
+     */
+    gtree(graph* g);
+    /**
+     * Construct cotree from graph and pass inversions
+     * @param g
+     * @param component
+     * @param state
+     */
+    gtree(graph* g, char* component, bool state);
+    gtree(bool state);
     gtree(const gtree& orig);
-    gtree* getChilds();
+    vector<gtree*> getChilds();
+    /**
+     * Construct String representing the graph
+     * @return 
+     */
+    string get_string();
+    /**
+     * Construct String representing the graph per node
+     * @param intendation  
+     * @param isLast
+     * @return 
+     */
+    string get_string(string intendation, bool isLast);
+    /**
+     * Returns state 
+     * @return 
+     */
     bool getState();
+    /**
+     * Sets state
+     * @param state
+     */
     void setState(bool state);
-    void setChilds(gtree *child1, gtree *child2);
-    void setChild1(gtree* child);
-    void setChild2(gtree*child);
-    gtree* getChild1();
-    gtree* getChild2();
-    
+    /**
+     * adds Child to Childs
+     * @param child
+     */
+    void addChild(gtree * child);
+    /**
+     * returns child with certain indeces
+     * @param i
+     * @return 
+     */
+    gtree* getChild(unsigned short i);
     virtual ~gtree();
 private:
     bool state; 
-    gtree *child1;
-    gtree *child2;
+    vector<gtree*> childs;
     
 };
 

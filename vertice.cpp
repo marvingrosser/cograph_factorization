@@ -15,25 +15,16 @@
 graph* vertice::getGraph(){
     return this->g;
 }
-void vertice::visit(){
-    this->visited =true;
-}
-bool vertice::isVisited(){
-    return this->visited;
-}
 
-void vertice::unvisit(){
-    this->visited=false;
-}
 
 
 vertice::vertice(int num) {
     this->num =num;
-    this->visited = false;
+
 }
 vertice::vertice(){
     this->num = 0;
-this->visited = false;}
+}
 
 void vertice::setNum(int num){
     this->num = num;

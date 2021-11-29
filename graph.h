@@ -18,20 +18,17 @@
 #include "vertice.h"
 #include "reader.h"
 #include <string.h>
-#include <pthread.h>
 #include <vector>
 using namespace std;
 using std::string;
 class vertice;
 struct GraphBinary;
-struct PGraph{
-    vector<vertice*> verts;
-};
+
 
 class graph {
 public:
     
-    graph(vector<vertice*> g);
+
     graph();
     
     /**
@@ -48,17 +45,63 @@ public:
      * @return 
      */
     string get_string();
-    graph invert();
-    vector<vector<vertice*>> getConnected();
-    graph(vector<vertice*> vert, unsigned short numberVerts);
+    
+    
+
+
     unsigned short getSize();
+    /**
+     * Returns vertice with corrosponding index
+     * @param num index
+     * @return vertex[num]
+     */
     vertice * getVerticeByNumber(unsigned short num);
-    vector<char*> getConnections(bool invert);
-private:
+    /**
+     * Searches for all components inside the graph
+     * @param invert Should the graph be inverted
+     * @param lookAt which Verts should be looked at?
+     * @return vector of binary representation of components
+     */
+    vector<char*> getConnections(bool invert,char* lookAt);
+    /**
+     * Inverts the given Vertice-Outputs on the Binary Data
+     * @param dest  Given input
+     * @param size Graph size
+     */
     void verticeInversion(char* dest, unsigned short size);
+private:
+    
+    /**
+     * Unites the Output of two vertices
+     * @param dest vertdata one and in which to store the value
+     * @param other vertdata two
+     * @param size size of the graph (length of the arrays)
+     */
     void verticeUnion(char* dest, char* other, unsigned short size);
-    void verticeXOR(char * dest, char * other, unsigned short size);
-    void printPGraph(vector<vertice*> g);
+    /**
+     * Unites the Output of two vertices where the second one is inverted before
+     * @param dest vertdata one and in which to store the value
+     * @param other vertdata two (which will get inverted before the union)
+     * @param size size of the graph (length of the arrays)
+     */
+    void verticeInverseUnion(char* dest, char* other, unsigned short size);
+    /**
+     * XOR's the Output of two vertices where the second one is inverted before
+     * @param dest vertdata one and in which to store the value
+     * @param other vertdata two (which will get inverted before the XOR)
+     * @param size size of the graph (length of the arrays)
+     */
+    void verticeInverseXOR(char * dest, char * other, unsigned short size);
+    
+    
+
+    /**
+     * Collects the component in which the Vertice lays
+     * @param vert Vertice to look at
+     * @param binary Vertices already inside the Component/to ignore
+     * @param invert Should the graph be inverted?
+     * @param pointers Collection ov verticePointers
+     */
     void searchAllConnected(vertice *vert,char* binary, bool invert, vector<vertice*> pointers);
     
     
@@ -88,7 +131,6 @@ private:
      * @param n
      * @return 
      */
-    unsigned int gaussianSum(unsigned short n);
     
     //Array of actual hold Vertices in the Graph
     vertice* vertices;

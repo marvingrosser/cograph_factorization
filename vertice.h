@@ -24,26 +24,67 @@ using std::string;
 class vertice {
 public:
     graph* getGraph();
+    /**
+     * Sets the graph pointer
+     * @param g
+     */
     void setGraph(graph * g);
+    /**
+     * Sets the bit with index to 1
+     * @param index
+     */
     void setOneInOut(unsigned short index);
+    /**
+     * Inits Binary data for vertice-output
+     * @param number
+     */
     void initOut(unsigned short number);
     vertice();
+    /**
+     * Construct vertice with given number
+     * @param num (label)
+     */
     vertice(int num);
     virtual ~vertice();
+    /**
+     * Returns number of vert as string
+     * @return 
+     */
     string to_string();
+    /**
+     * returns Connected-vertices as strings
+     * @return 
+     */
     string out_to_string();
+    /**
+     * Return Label
+     * @return 
+     */
     int getNum();
+    /**
+     * Sets numberlabel
+     * @param num
+     */
     void setNum(int num);
-    void addConnection(vertice *vert);
-    void visit();
-    bool isVisited();
-    void unvisit();
+
+    /**
+     * Returns binary Representation of Connections
+     * @return binary repr. as Char-array
+     */
     char* getConnections();
 private:
+    /**
+     * Label
+     */
     int num;
+    /**
+     * the parent graph
+     */
     graph * g;
+    /**
+     *Connections to other vertices
+     */
     char * out;
-    bool visited;
 
 };
 

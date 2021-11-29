@@ -17,6 +17,11 @@ void graph::verticeUnion(char* dest, char* other, unsigned short size){
         dest[i] |= other[i];
     }
 }
+void graph::verticeInverseUnion(char* dest, char* other, unsigned short size){
+    for(int i = 0; i < size/8 + 1; i++){
+        dest[i] |= ~ other[i];
+    }
+}
 
 void graph::verticeInversion(char* dest, unsigned short size){
     for(int i = 0; i < size/8 + 1; i++){
@@ -25,28 +30,28 @@ void graph::verticeInversion(char* dest, unsigned short size){
 }
 
 
-void graph::verticeXOR(char * dest, char * other, unsigned short size){
+void graph::verticeInverseXOR(char * dest, char * other, unsigned short size){
     for(int i = 0; i < size/8 + 1; i++){
-        dest[i] ^= other[i];
+        dest[i] ^= ~other[i];
     }
 }
-vector<char*> graph::getConnections(bool invert){
 
+vector<char*> graph::getConnections(bool invert, char* lookAt){
+    
     unsigned short numVerts = this->verticePointers.size(); //number of verts in the graph
 
     char * visited = (char*)calloc(numVerts/8,sizeof(char)); //stores visited vertices
-
+    verticeInverseUnion(visited, lookAt, numVerts);
     vector<char*> components;
-
-    for(int i=0; i < numVerts   ;i++ ){
+    for(int i=0; i < numVerts ; i++ ){
         if( ((unsigned char)visited[i / 8] >> (7 - (i % 8))) % 2 == 0){ //is the vertex[i] not visited? 
   
             char * component = (char*)calloc(numVerts/8,sizeof(char)); //component data
-            
+            verticeInverseUnion(component, lookAt,numVerts);
             vertice* current = this->verticePointers.at(i); // take current vertice
             
             searchAllConnected(current, component , invert,this->verticePointers); //create component
-            
+            verticeInverseXOR(component, lookAt,numVerts);
             verticeUnion(visited,component, numVerts); // write the component to the visited
             
             components.push_back(component); //add the component to our components vector
@@ -59,11 +64,12 @@ void graph::searchAllConnected(vertice* vert, char* binary,bool invert,vector<ve
     unsigned short numVerts= verticePointers.size(); //
     unsigned short numOfThisVert = vert->getNum(); //takes the index of this vertex
     char disjunion[numVerts/8+1]; //variable where we store wich vertices we have to visit from this vertex
-    char * connected = vert->getConnections(); //take the bitrepresentation for connected vertices
+    char * realConnected = vert->getConnections(); //take the bitrepresentation for connected vertices
+    char connectedCopy[numVerts/8+1];
     for(int i = 0; i < numVerts/8 + 1;i++){ //loop over our Windows of the Bitrepr of connected vertices
-        if(invert) connected[i] = ~connected[i]; //invert if that shit has to be inverted 
-        disjunion[i] = connected[i] ^ (binary[i] & connected[i]); //calculates the vertices we haveent visited but can visit from this vertex
-        binary[i] |= connected[i]; // adds the vertices that will be visited from this vertex to the visited variable
+        connectedCopy[i] = (invert)? ~realConnected[i]: realConnected[i]; //invert if that shit has to be inverted 
+        disjunion[i] = connectedCopy[i] ^ (binary[i] & connectedCopy[i]); //calculates the vertices we haveent visited but can visit from this vertex
+        binary[i] |= connectedCopy[i]; // adds the vertices that will be visited from this vertex to the visited variable
     }
     binary[numOfThisVert/8] |=  ((char)1) << 7 - (numOfThisVert % 8);  //adds the vertex itseklf to the visited
     if(disjunion){ //do the loop only if there are vertices to visit
@@ -76,22 +82,13 @@ void graph::searchAllConnected(vertice* vert, char* binary,bool invert,vector<ve
     }
 }
 graph::graph(){}
-graph::graph(vector<vertice*> verts){
-    this->numberVertices = verts.size();
-    this->verticePointers= *new vector<vertice*>(verts.begin(),verts.end());
-    //std::cout << "PF"<<  this->get_string() << std::endl;
-}
-
-graph graph::invert(){
-    return *new graph();
-}
 
 
 
-graph::graph(vector<vertice*> verts, unsigned short numberVerts){
-    this->numberVertices = numberVerts;
-    this->verticePointers = verts;
-}
+
+
+
+
 
 string graph::get_string(){
     string graphAsString="Vertices:\n";
@@ -167,9 +164,7 @@ void graph::constructFromBinary(GraphBinary data){
     
 }
 
-unsigned int graph::gaussianSum(unsigned short n){
-    return (n*(n+1)) >> 1;
-}
+
 
 unsigned short graph::getSize(){
     return (unsigned short) this->verticePointers.size();

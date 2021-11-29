@@ -12,40 +12,79 @@
  */
 
 #include "gtree.h"
-
+string gtree::get_string(){
+    return this->get_string("",true);
+}
+string gtree::get_string(string intendation, bool isLast){
+    string me_s = intendation;
+    
+    if(isLast){
+        me_s.append("└─");
+        intendation.append("  ");
+    }else{
+        me_s.append("├─");
+        intendation.append("| ");
+    }
+    me_s.append(this->state? "1\n": "0\n");
+    for(unsigned short i = 0; i < this->childs.size(); i++){
+        me_s.append(this->childs.at(i)->get_string(intendation,(this->childs.size()-1 == i) ));
+    }
+    return me_s;
+    
+}
 gtree::gtree() {
 }
 
 gtree::gtree(const gtree& orig) {
 }
-
+gtree::gtree(graph* g){
+    unsigned short size = g->getSize();
+    char* lookAtAll = (char *)calloc( size/ 8,sizeof(char));
+    g->verticeInversion(lookAtAll, size);
+    vector<char*> components= g->getConnections(false,lookAtAll);
+    
+    if(components.size() == 1){
+        this->state = true;
+        components= g->getConnections(true,lookAtAll);
+    }else{
+        this->state = false;
+    }
+    for(char* component: components){
+        gtree* child = new gtree(g, component, !this->state);
+        this->childs.push_back(child);
+    }
+    
+}
+gtree::gtree(graph* g, char* component, bool state){
+    this->state = state;
+    vector<char*> components = g->getConnections(state, component);
+    if(components.size() > 1){
+        for(char* thiscomponent: components){
+            gtree* child = new gtree(g, thiscomponent, !this->state);
+            this->childs.push_back(child);
+        }
+    }
+}
 gtree::~gtree() {
 }
+gtree::gtree(bool state){
+    this->state = state;
+}
 
-gtree* gtree::getChilds(){
-    gtree* childs = new gtree[2]{*this->child1, *this->child2};
+vector<gtree*> gtree::getChilds(){
     return childs;
 }
-gtree* gtree::getChild1(){
-    return this->child1;
-}
-gtree* gtree::getChild2(){
-    return this->child2;
-}
+
 bool gtree::getState(){
     return this->state;
 }
 void gtree::setState(bool state){
     this->state = state;
 }
-
-void gtree::setChilds(gtree* child1, gtree* child2){
-    this->child1 = child1;
-    this->child2 = child2;
- }
-void gtree::setChild1(gtree* child){
-    this->child1 = child;
+void gtree::addChild(gtree* child){
+    this->childs.push_back(child);
 }
-void gtree::setChild2(gtree* child){
-    this->child2 = child;
+
+gtree* gtree::getChild(unsigned short i){
+    return this->childs.at(i);
 }

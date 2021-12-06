@@ -41,17 +41,24 @@ vector<unsigned long long*> graph::getConnections(bool invert, unsigned long lon
     unsigned short numVerts = this->verticePointers.size(); //number of verts in the graph
 
     unsigned long long * visited = (unsigned long long*)calloc(numVerts/DATA_SIZE,DATA_SIZE); //stores visited vertices
-    verticeInverseUnion(visited, lookAt, numVerts);
+    
+    verticeInverseUnion(visited, lookAt, numVerts); //fill visited with stuff we do not want to visit
+    
     vector<unsigned long long*> components;
+    
     for(int i=0; i < numVerts ; i++ ){
         if( ((unsigned long long)visited[i / DATA_SIZE] >> (DATA_SIZE - 1  - (i % DATA_SIZE))) % 2 == 0){ //is the vertex[i] not visited? 
   
             unsigned long long * component = (unsigned long long*)calloc(numVerts/DATA_SIZE,DATA_SIZE); //component data
-            verticeInverseUnion(component, lookAt,numVerts);
+            
+            verticeInverseUnion(component, lookAt,numVerts); //All Vertices not to look at will be 1    (*)
+            
             vertice* current = this->verticePointers.at(i); // take current vertice
             
             searchAllConnected(current, component , invert,this->verticePointers); //create component
-            verticeInverseXOR(component, lookAt,numVerts);
+            
+            verticeInverseXOR(component, lookAt,numVerts); //reverse step (*)
+            
             verticeUnion(visited,component, numVerts); // write the component to the visited
             
             components.push_back(component); //add the component to our components vector
@@ -61,22 +68,35 @@ vector<unsigned long long*> graph::getConnections(bool invert, unsigned long lon
     return components;
 }
 void graph::searchAllConnected(vertice* vert, unsigned long long* binary,bool invert,vector<vertice*> verticePointers){
-    unsigned short numVerts= verticePointers.size(); //
+    
+    unsigned short numVerts= verticePointers.size(); //graph size
+    
     unsigned short numOfThisVert = vert->getNum(); //takes the index of this vertex
+    
     unsigned long long disjunion[numVerts/DATA_SIZE + 1]; //variable where we store wich vertices we have to visit from this vertex
+    
     unsigned long long * realConnected = vert->getConnections(); //take the bitrepresentation for connected vertices
+    
     unsigned long long connectedCopy[numVerts/DATA_SIZE+1];
+    
     for(int i = 0; i < numVerts/DATA_SIZE + 1;i++){ //loop over our Windows of the Bitrepr of connected vertices
         connectedCopy[i] = (invert)? ~realConnected[i]: realConnected[i]; //invert if that shit has to be inverted 
         disjunion[i] = connectedCopy[i] ^ (binary[i] & connectedCopy[i]); //calculates the vertices we haveent visited but can visit from this vertex
         binary[i] |= connectedCopy[i]; // adds the vertices that will be visited from this vertex to the visited variable
     }
+    
     binary[numOfThisVert/DATA_SIZE] |=  ((unsigned long long)1) << DATA_SIZE - 1  - (numOfThisVert % DATA_SIZE);  //adds the vertex itseklf to the visited
+    
     if(disjunion){ //do the loop only if there are vertices to visit
+        
         for(int i = 0; i < numVerts; i++){//könnte man nachdem nur noch nullen kommen + mod DATA_SIZE - 1  ^-1 skippen
-            unsigned long long wtf = disjunion[i/DATA_SIZE] >> DATA_SIZE - 1 -(i % DATA_SIZE); //vertex(i) to index DATA_SIZE - 1 
-            if( wtf % 2 == 1 && i!=numOfThisVert){ //should we visit this vertex?
+            
+            unsigned long long currentVertice = disjunion[i/DATA_SIZE] >> DATA_SIZE - 1 -(i % DATA_SIZE); //vertex(i) to index DATA_SIZE - 1 
+            
+            if( currentVertice % 2 == 1 && i != numOfThisVert){ //should we visit this vertex?
+                
                 searchAllConnected(verticePointers.at(i), binary,invert, verticePointers);
+                
             }
         }
     }

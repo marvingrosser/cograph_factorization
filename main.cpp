@@ -21,7 +21,7 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    graph *g = new graph("src/data/graph1.graph"); 
+    graph *g = new graph("src/data/problem.graph"); 
 
     std::cout << g->get_string()<< std::endl;
     

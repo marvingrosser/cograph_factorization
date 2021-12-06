@@ -16,6 +16,7 @@
 #include "vertice.h"
 #include <vector>
 #include <string.h>
+#define DATA_SIZE sizeof(unsigned long long)
 class gtree {
 public:
     gtree();
@@ -30,7 +31,7 @@ public:
      * @param component
      * @param state
      */
-    gtree(graph* g, char* component, bool state);
+    gtree(graph* g, unsigned long long* component, bool state);
     gtree(bool state);
     gtree(const gtree& orig);
     vector<gtree*> getChilds();

@@ -21,11 +21,10 @@
 #include <iostream>
 using namespace std;
 using std::string;
-
+#define DATA_SIZE sizeof(unsigned long long)
 struct GraphBinary{
     int number;
-    char * edges;
-    char ** edgesPerVertice;
+    unsigned long long * edges;
 };
 
 class reader {

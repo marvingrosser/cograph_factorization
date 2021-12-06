@@ -12,41 +12,41 @@
  */
 
 #include "graph.h"
-void graph::verticeUnion(char* dest, char* other, unsigned short size){
-    for(int i = 0; i < size/8 + 1; i++){
+void graph::verticeUnion(unsigned long long* dest, unsigned long long* other, unsigned short size){
+    for(int i = 0; i < size/DATA_SIZE + 1; i++){
         dest[i] |= other[i];
     }
 }
-void graph::verticeInverseUnion(char* dest, char* other, unsigned short size){
-    for(int i = 0; i < size/8 + 1; i++){
+void graph::verticeInverseUnion(unsigned long long* dest, unsigned long long* other, unsigned short size){
+    for(int i = 0; i < size/DATA_SIZE + 1; i++){
         dest[i] |= ~ other[i];
     }
 }
 
-void graph::verticeInversion(char* dest, unsigned short size){
-    for(int i = 0; i < size/8 + 1; i++){
+void graph::verticeInversion(unsigned long long* dest, unsigned short size){
+    for(int i = 0; i < size/DATA_SIZE + 1; i++){
         dest[i] = ~dest[i];
     }
 }
 
 
-void graph::verticeInverseXOR(char * dest, char * other, unsigned short size){
-    for(int i = 0; i < size/8 + 1; i++){
+void graph::verticeInverseXOR(unsigned long long * dest, unsigned long long * other, unsigned short size){
+    for(int i = 0; i < size/DATA_SIZE + 1; i++){
         dest[i] ^= ~other[i];
     }
 }
 
-vector<char*> graph::getConnections(bool invert, char* lookAt){
+vector<unsigned long long*> graph::getConnections(bool invert, unsigned long long* lookAt){
     
     unsigned short numVerts = this->verticePointers.size(); //number of verts in the graph
 
-    char * visited = (char*)calloc(numVerts/8,sizeof(char)); //stores visited vertices
+    unsigned long long * visited = (unsigned long long*)calloc(numVerts/DATA_SIZE,DATA_SIZE); //stores visited vertices
     verticeInverseUnion(visited, lookAt, numVerts);
-    vector<char*> components;
+    vector<unsigned long long*> components;
     for(int i=0; i < numVerts ; i++ ){
-        if( ((unsigned char)visited[i / 8] >> (7 - (i % 8))) % 2 == 0){ //is the vertex[i] not visited? 
+        if( ((unsigned long long)visited[i / DATA_SIZE] >> (DATA_SIZE - 1  - (i % DATA_SIZE))) % 2 == 0){ //is the vertex[i] not visited? 
   
-            char * component = (char*)calloc(numVerts/8,sizeof(char)); //component data
+            unsigned long long * component = (unsigned long long*)calloc(numVerts/DATA_SIZE,DATA_SIZE); //component data
             verticeInverseUnion(component, lookAt,numVerts);
             vertice* current = this->verticePointers.at(i); // take current vertice
             
@@ -60,21 +60,21 @@ vector<char*> graph::getConnections(bool invert, char* lookAt){
     }
     return components;
 }
-void graph::searchAllConnected(vertice* vert, char* binary,bool invert,vector<vertice*> verticePointers){
+void graph::searchAllConnected(vertice* vert, unsigned long long* binary,bool invert,vector<vertice*> verticePointers){
     unsigned short numVerts= verticePointers.size(); //
     unsigned short numOfThisVert = vert->getNum(); //takes the index of this vertex
-    char disjunion[numVerts/8+1]; //variable where we store wich vertices we have to visit from this vertex
-    char * realConnected = vert->getConnections(); //take the bitrepresentation for connected vertices
-    char connectedCopy[numVerts/8+1];
-    for(int i = 0; i < numVerts/8 + 1;i++){ //loop over our Windows of the Bitrepr of connected vertices
+    unsigned long long disjunion[numVerts/DATA_SIZE + 1]; //variable where we store wich vertices we have to visit from this vertex
+    unsigned long long * realConnected = vert->getConnections(); //take the bitrepresentation for connected vertices
+    unsigned long long connectedCopy[numVerts/DATA_SIZE+1];
+    for(int i = 0; i < numVerts/DATA_SIZE + 1;i++){ //loop over our Windows of the Bitrepr of connected vertices
         connectedCopy[i] = (invert)? ~realConnected[i]: realConnected[i]; //invert if that shit has to be inverted 
         disjunion[i] = connectedCopy[i] ^ (binary[i] & connectedCopy[i]); //calculates the vertices we haveent visited but can visit from this vertex
         binary[i] |= connectedCopy[i]; // adds the vertices that will be visited from this vertex to the visited variable
     }
-    binary[numOfThisVert/8] |=  ((char)1) << 7 - (numOfThisVert % 8);  //adds the vertex itseklf to the visited
+    binary[numOfThisVert/DATA_SIZE] |=  ((unsigned long long)1) << DATA_SIZE - 1  - (numOfThisVert % DATA_SIZE);  //adds the vertex itseklf to the visited
     if(disjunion){ //do the loop only if there are vertices to visit
-        for(int i = 0; i < numVerts; i++){//könnte man nachdem nur noch nullen kommen + mod 7 ^-1 skippen
-            unsigned char wtf = disjunion[i/8] >> 7-(i % 8); //vertex(i) to index 7
+        for(int i = 0; i < numVerts; i++){//könnte man nachdem nur noch nullen kommen + mod DATA_SIZE - 1  ^-1 skippen
+            unsigned long long wtf = disjunion[i/DATA_SIZE] >> DATA_SIZE - 1 -(i % DATA_SIZE); //vertex(i) to index DATA_SIZE - 1 
             if( wtf % 2 == 1 && i!=numOfThisVert){ //should we visit this vertex?
                 searchAllConnected(verticePointers.at(i), binary,invert, verticePointers);
             }
@@ -115,23 +115,23 @@ graph::graph(string path){
 
 }
 
-unsigned int graph::countBinaryOnes(char binary){
+unsigned int graph::countBinaryOnes(unsigned long long binary){
     unsigned int count;
     for(count = 0; binary; count++ ){
         binary &= binary - 1;
     }
     return count;
 }
-unsigned int graph::countBinaryOnes(char* binary){
+unsigned int graph::countBinaryOnes(unsigned long long* binary){
     unsigned int count = 0;
     unsigned int  n = this->numberVertices;
-    for(unsigned int i=0; i < (int)(n*n)/8;i++){
+    for(unsigned int i=0; i < (int)(n*n)/DATA_SIZE;i++){
         count += this->countBinaryOnes(binary[i]);
     }
     return count;
 }
-bool graph::getBitByNum(short num, char byte){
-    return (byte << num) & 128;
+bool graph::getBitByNum(short num, unsigned long long byte){
+    return (byte >> DATA_SIZE - num - 1 ) & 1;
 }
 void graph::constructFromBinary(GraphBinary data){
     
@@ -155,8 +155,8 @@ void graph::constructFromBinary(GraphBinary data){
     unsigned int edgecounter = 0;
     for(int i = 0; i < data.number * data.number;i++){
         
-        if(this->getBitByNum((i % 8),data.edges[i/8])){
-            //std::cout << data.edges[i/8]+0 << std::endl;
+        if(this->getBitByNum((i % DATA_SIZE),data.edges[i/DATA_SIZE])){
+            //std::cout << data.edges[i/DATA_SIZE]+0 << std::endl;
             
             this->vertices[i/data.number].setOneInOut(i % data.number);
         }

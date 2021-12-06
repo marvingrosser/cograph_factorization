@@ -39,9 +39,9 @@ gtree::gtree(const gtree& orig) {
 }
 gtree::gtree(graph* g){
     unsigned short size = g->getSize();
-    char* lookAtAll = (char *)calloc( size/ 8,sizeof(char));
+    unsigned long long* lookAtAll = (unsigned long long *)calloc( size/ DATA_SIZE,DATA_SIZE);
     g->verticeInversion(lookAtAll, size);
-    vector<char*> components= g->getConnections(false,lookAtAll);
+    vector<unsigned long long*> components= g->getConnections(false,lookAtAll);
     
     if(components.size() == 1){
         this->state = true;
@@ -49,17 +49,17 @@ gtree::gtree(graph* g){
     }else{
         this->state = false;
     }
-    for(char* component: components){
+    for(unsigned long long* component: components){
         gtree* child = new gtree(g, component, !this->state);
         this->childs.push_back(child);
     }
     
 }
-gtree::gtree(graph* g, char* component, bool state){
+gtree::gtree(graph* g, unsigned long long* component, bool state){
     this->state = state;
-    vector<char*> components = g->getConnections(state, component);
+    vector<unsigned long long*> components = g->getConnections(state, component);
     if(components.size() > 1){
-        for(char* thiscomponent: components){
+        for(unsigned long long* thiscomponent: components){
             gtree* child = new gtree(g, thiscomponent, !this->state);
             this->childs.push_back(child);
         }

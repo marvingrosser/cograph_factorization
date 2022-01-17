@@ -25,7 +25,7 @@ string gtree::get_string(string intendation, bool isLast){
         me_s.append("├─");
         intendation.append("| ");
     }
-    me_s.append(this->state? "1\n": "0\n");
+    me_s.append(this->state? "1:[": "0:[").append(to_string(this->id)).append("]\n");
     for(unsigned short i = 0; i < this->childs.size(); i++){
         me_s.append(this->childs.at(i)->get_string(intendation,(this->childs.size()-1 == i) ));
     }
@@ -34,7 +34,66 @@ string gtree::get_string(string intendation, bool isLast){
 }
 gtree::gtree() {
 }
+void gtree::setId(unsigned int newId){
+    this->id = newId;
+}
+unsigned int gtree::getId(){
+    return this->id;
+    
+}
+vector<unsigned int> gtree::getOrdinality(gtree* g){
+    vector<unsigned int> ord;
+    for(gtree* child:g->getChilds()){
+        ord.push_back(child->getId());
+    }
+    return ord;
+}
+unsigned int gtree::giveIdsFromOrdinality(vector<vector<unsigned int> > ordinality, vector<gtree*> subtrees, unsigned int lastid){
+    unsigned int highestIndex = lastid;
+    if(lastid==0){return 1;}
+    for(int i=0; i < ordinality.size(); i++){
+        
+        unsigned int biggerAs = 0;
+        
+        for(int j=0; j < ordinality.size();j++){
+            
+            int compare = gtree::compareOrdinalitys(ordinality[i],ordinality[j]);
+            
+            biggerAs = biggerAs + (compare==1?1:0);
+        }  
+        highestIndex = (highestIndex >= lastid + 1 + biggerAs? highestIndex: lastid + 1 + biggerAs);
+        subtrees[i]->setId(lastid + 1 + biggerAs);
+    }
+    return highestIndex;
+}
+int gtree::compareOrdinalitys(vector<unsigned int> one, vector<unsigned int> two){
+    unsigned int i = 0;
+    while(i < one.size() && i < two.size()){
+        if(one.at(i) > two.at(i)){
+            return 1;
+        }else if(one.at(i) < two.at(i)){
+            return -1;
+        }
+        
+        i++;
+    }
+    return one.size() > two.size()? 1: (one.size() == two.size()? 0: -1 );
 
+}
+void gtree::makeIdsWithRBD(vector<vector<gtree*> > rbd){
+    unsigned int lastid = 0;
+    vector<vector<vector<unsigned int>>> ordinality;
+    unsigned int ordinalityIndex = 0;
+    for(vector<gtree*> depthSubtrees:rbd){
+        ordinality.push_back(*new vector<vector<unsigned int>>);
+        for(gtree* subtreeWithFixedDepth: depthSubtrees){
+            ordinality[ordinalityIndex].push_back(gtree::getOrdinality(subtreeWithFixedDepth));
+        }
+        
+        lastid = gtree::giveIdsFromOrdinality(ordinality[ordinalityIndex], depthSubtrees, lastid);
+        ordinalityIndex++;
+    }
+}
 gtree::gtree(const gtree& orig) {
 }
 gtree::gtree(graph* g){
@@ -49,20 +108,49 @@ gtree::gtree(graph* g){
     }else{
         this->state = false;
     }
-    for(unsigned long long* component: components){
-        gtree* child = new gtree(g, component, !this->state);
+    unsigned int * mydepth = (unsigned int *)calloc(components.size(), sizeof(unsigned int));
+    unsigned int d_c = 0;
+    vector<vector<gtree*>> rbd;
+    for(unsigned long long* component: components){  
+        gtree* child = new gtree(g, component, !this->state, &mydepth[d_c],&rbd);
         this->childs.push_back(child);
+        d_c++;
     }
-    
+    unsigned int max = 0;
+        for(int i = 0; i < this->childs.size(); i++){
+            max = (max > mydepth[i])?max: mydepth[i];
+            gtree::addtoRBD(mydepth[i], this->childs[i],&rbd);
+        }
+        max++;
+        gtree::addtoRBD(max, this,&rbd);
+        gtree::makeIdsWithRBD(rbd);
 }
-gtree::gtree(graph* g, unsigned long long* component, bool state){
+void gtree::addtoRBD(unsigned int depth, gtree* child, vector<vector<gtree*> >* rootsbydepth){
+    if((*rootsbydepth).size() <= depth){
+        (*rootsbydepth).push_back(* new vector<gtree*>);
+    }
+    (*rootsbydepth)[depth].push_back(child);
+}
+gtree::gtree(graph* g, unsigned long long* component, bool state, unsigned int * depth, vector<vector<gtree*>> * rbd){
     this->state = state;
+    this->id = 0;
     vector<unsigned long long*> components = g->getConnections(state, component);
     if(components.size() > 1){
+        unsigned int * mydepth = (unsigned int *)calloc(components.size(), sizeof(unsigned int));
+        unsigned int d_c = 0;
         for(unsigned long long* thiscomponent: components){
-            gtree* child = new gtree(g, thiscomponent, !this->state);
+            gtree* child = new gtree(g, thiscomponent, !this->state,&mydepth[d_c],rbd);
             this->childs.push_back(child);
+            d_c++;
         }
+        unsigned int max = 0;
+        for(int i = 0; i < this->childs.size(); i++){
+            max = (max > mydepth[i])?max: mydepth[i];
+            gtree::addtoRBD(mydepth[i], this->childs[i],rbd);
+        }
+        *depth = max + 1;
+    }else{
+        this->id = 1;
     }
 }
 gtree::~gtree() {

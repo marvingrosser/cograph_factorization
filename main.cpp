@@ -26,6 +26,7 @@ int main(int argc, char** argv) {
     std::cout << g->get_string()<< std::endl;
     
     gtree * gt = new gtree(g);
+    gt->computeFactorizations();
     std::cout << "\nTree: \n\n"<< gt->get_string() <<std::endl;
 
     

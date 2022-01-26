@@ -12,6 +12,47 @@
  */
 
 #include "gtree.h"
+vector<vector<gtree*>> gtree::computeFactorizations(){
+    vector<vector<gtree*>> factorizations;
+    unsigned int n= 6;
+    for(unsigned int k=(int) n/2; k >=2; k-- ){
+        for(gtree* rps : getRP(this,k)){
+            std::cout << rps->get_string()<< std::endl;
+        }
+    }
+    return factorizations;
+
+}
+unsigned int gtree::getLeafesCount(){
+    unsigned int counter = 0;
+    for(gtree * child: this->childs){
+        if(child->getChilds().size()==0){
+            counter++;
+        }
+    }
+    return counter;
+}
+vector<gtree*> gtree::getRP(gtree *tree, unsigned int k){
+    vector<gtree*> rp;
+    bool addVertU = false;
+    for(gtree* child : tree->getChilds()){
+        
+        if(child->getLeafesCount() < k){
+            addVertU = true;
+        }else{
+            vector<gtree*> childRp = getRP(child,k);
+            rp.insert(rp.end(), childRp.begin(), childRp.end());
+        }
+    
+    }
+    if(addVertU == true){
+        rp.push_back(tree);
+    }
+    return rp;
+
+
+
+}
 string gtree::get_string(){
     return this->get_string("",true);
 }

@@ -19,6 +19,8 @@
 #define DATA_SIZE sizeof(unsigned long long)
 class gtree {
 public:
+    vector<vector<gtree*>> computeFactorizations();
+    vector<gtree*> getRP(gtree *tree ,unsigned int k);
     int compareOrdinalitys(vector<unsigned int> one, vector<unsigned int> two);
     unsigned int giveIdsFromOrdinality(vector<vector<unsigned int>> ordinality, vector<gtree*> subtrees, unsigned int lastid);
     vector<unsigned int> getOrdinality(gtree* g);
@@ -77,6 +79,8 @@ public:
      */
     gtree* getChild(unsigned short i);
     virtual ~gtree();
+    
+    unsigned int getLeafesCount();
 private:
     unsigned int id;
     bool state; 

@@ -19,19 +19,11 @@
 #define DATA_SIZE sizeof(unsigned long long)
 class gtree {
 public:
-    int compareOrdinalitys(vector<unsigned int> one, vector<unsigned int> two);
-    unsigned int giveIdsFromOrdinality(vector<vector<unsigned int>> ordinality, vector<gtree*> subtrees, unsigned int lastid);
-    vector<unsigned int> getOrdinality(gtree* g);
-    void makeIdsWithRBD(vector<vector<gtree*>> rbd);
-    void setId(unsigned int newId);
-    unsigned int getId();
-    void createIds(vector<vector<gtree*>> * rootsbydepth);
     gtree();
     /**
      * Construct Cotree from graph
      * @param g
      */
-    void addtoRBD(unsigned int depth, gtree * child ,vector<vector<gtree*>> *   rootsbydepth);
     gtree(graph* g);
     /**
      * Construct cotree from graph and pass inversions
@@ -39,7 +31,7 @@ public:
      * @param component
      * @param state
      */
-    gtree(graph* g, unsigned long long* component, bool state, unsigned int * id, vector<vector<gtree*>> * rootsbydepth);
+    gtree(graph* g, unsigned long long* component, bool state);
     gtree(bool state);
     gtree(const gtree& orig);
     vector<gtree*> getChilds();
@@ -78,7 +70,6 @@ public:
     gtree* getChild(unsigned short i);
     virtual ~gtree();
 private:
-    unsigned int id;
     bool state; 
     vector<gtree*> childs;
     

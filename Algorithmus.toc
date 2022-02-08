@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}Theoretical Concept}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Tree}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Lexicographic Product}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Balancing Cotrees}{2}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Treedepth}{2}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}levels in a tree}{3}{subsection.1.5}%
+\contentsline {subsection}{\numberline {1.6}Labeling}{3}{subsection.1.6}%
+\contentsline {subsection}{\numberline {1.7}Connection of depth and level}{3}{subsection.1.7}%
+\contentsline {subsection}{\numberline {1.8}Balancing}{4}{subsection.1.8}%
+\contentsline {subsection}{\numberline {1.9}Properties for the lexicographical Product of Cographs}{5}{subsection.1.9}%
+\contentsline {subsubsection}{\numberline {1.9.1}Minimal Cotree}{5}{subsubsection.1.9.1}%
+\contentsline {subsubsection}{\numberline {1.9.2}Relevance of Depth for finding the isomorphic subtrees}{6}{subsubsection.1.9.2}%
+\contentsline {subsection}{\numberline {1.10}Find Isomorph Trees with AHU}{6}{subsection.1.10}%
+\contentsline {section}{\numberline {2}Practical Improvements}{6}{section.2}%
+\contentsline {section}{\numberline {3}Algorithm}{6}{section.3}%

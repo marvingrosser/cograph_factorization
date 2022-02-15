@@ -120,12 +120,75 @@
 	\newpage
 	\thispagestyle{fancy}
 	\section{Theoretical Concept}
-	\subsection{Tree}
-	A tree $T$ is a tuple $(r,\mathcal{C})$ with $r$ as Root and $\mathcal{C}$ called childs, a set of trees. $T$ itself may not be in $\mathcal{C}$, neither some child of any node of $T$. Where a node is a Tree to find in $T$.  \\
-	A tree $T$ will be called leaf if $T=(r,\emptyset)$
-	\subsection{Lexicographic Product}
+	\subsection{Trees}
+	THE PROBLEM THAT C CANT BE A NORMAL SET SHOULD BE CLEARED\\
+		Trees are graphs $(V,E)$ which have to be connected, acyclic and undirected. Rooted trees are just trees with one vertice specified as root.
+		We may consider a inductive definition, detached from pure graph theory:\\
+		Let $\mathds{T}_M$ be the set of all trees with labels in $M$:\\\\
+		$T=(r,\mathcal{C}) \in \mathds{T}_M$ if:
+		\begin{itemize}
+			\item $T$ is called leaf $\,\Longleftrightarrow\,\mathcal{C}=\emptyset,\, r\in M$
+			\item $\mathcal{C}\subseteq \mathds{T}_M,\,|\mathcal{C}|\in\mathds{N},\, r\in M$
+		\end{itemize}
+		\subsubsection{Definitions on Trees}
+		Let $T=(r,\mathcal{C})\in \mathds{T}_M$ be a Tree.
+		\begin{itemize}
+			\item \underline{Nodes of $T$, named $\mathcal{N}(T)\subseteq \mathds{T}_M$ are inductively defined by:}
+			\begin{itemize}
+				\item Every child $C=(r_C,\mathcal{C}_C)\in \mathcal{C}$ is called node of $T$
+				\item  All nodes of the children $\mathcal{N}(C)$ are nodes of $T$ as well
+			\end{itemize}
+			\[\implies \mathcal{N}(T)=\{T\}\cup\left (\bigcup_{C\in\mathcal{C}} \mathcal{N}(C) \cup \{C\}\right)\]
+			
+			Nodes will usually denote the corresponding graph node, but with this notation the child nodes are acquired simultaneously. \\The experienced reader will verify, that this matches the later defined complete subtrees. Which should be synonymous from here on.
+			\item \underline{Children of Node $N$ of $T$:}
+			For $N=(r_N, \mathcal{C}_N)$
+			\begin{itemize}
+				\item Children of $N$ as defined the set $\mathcal{C}_N$
+			\end{itemize}
+			\item \underline{Parent of Node $N$ of $T$:}
+				\begin{itemize}
+					\item Parent of $N$, denoted by $\mathcal{P}(N)=P\in \mathcal{N}(T)$ with $N\in \mathcal{C}_P$.\\
+					While $\mathcal{P}(T)=\,undef$
+				\end{itemize}
+			\item \underline{Leafes of $T$:}
+				\begin{itemize}
+					\item $\mathcal{L}(T)= \mathcal{N}(T) \cap \{(r,\emptyset)\,\vert\, r\in M\}\,$ are called leafs as above.
+				\end{itemize}
+		\end{itemize}
+		\subsubsection{Level}
+		The classical definition for  a nodes level is by the distance of the node to the root of the tree.
+		With the above definition we get:
+		Let $T\in\mathds{T}_M$ be a tree, $N$ one of its nodes.  
+		\begin{itemize}
+			\item the level of $N$ will be: \[l_T(N)=n\in \mathds{N}:\qquad\text{ with } \mathcal{P}^{n}(N)=\underbrace{\mathcal{P}(\mathcal{P}(\cdots \mathcal{P}}_{n\text{ times}}(N)))=T \]
+		\end{itemize}
+		\subsubsection{Depth}
+		The depth of some node $N$ of $T$ is like turning the definition of level upside down. With that the depth will be referencing to the shortest path to a leaf of the corresponding complete subtree.\\
+		We will define the depth of node $N=(r_N,\mathcal{C}_N)$ by:
+		\[d(N)= max\left(\{d(C)+1\,\vert\, C\in\mathcal{C}_N\} \cup \{0\}\right)\]
+		From this definition it follows that: $d(N)=0 \Leftrightarrow N$ is leaf.\\\\
+		The depth said to be \underline{unambiguous} if \[d(N)=d(C) + 1\qquad \forall C\in\mathcal{C}_N\] 
+		and the depth of every child of $N$ is unambiguous.\\\\
+		\subsubsection{Subtree}
+
+			$S=(r_S,\mathcal{C}_S)$ is subtree of a given Tree $T=(r_T,\mathcal{C}_T)$, denoted by $S\subseteq T$, if there exists a node $N=(r_N,\mathcal{C}_N)\in \mathcal{N}(T)$ with \[r_N=r_S\,\text{ and }\, \forall K\in \mathcal{C}_S\,\exists C\in  \mathcal{C}_N:\quad   K\subseteq C\]\\
+			$S=(r_S,\mathcal{C}_S)$ will be called \underline{complete subtree}  of $T=(r_T,\mathcal{C}_T)$, denoted by $S\subseteqq T$, if there exists a node $N=(r_N,\mathcal{C}_N)\in \mathcal{N}(T)$ with \[r_N=r_S\,\text{ and }\, \forall K\in \mathcal{C}_S\,\exists C\in  \mathcal{C}_N:\quad   K\subseteqq C\]\\
+		
+	\subsection{Cotree}
+	With the definition above cotrees will be denoted $\mathds{T}_{\mathcal{B}}$\\
+	With $\mathcal{B}=\{0,1\}$ where ''B'' stands for boolean.
+	Every cotree represents a cograph, where every leaf represents a vertice of the cograph. Two of them are connected if their lowest common parent's label, that's the one with lowest depth, is $1$. 
+	\subsubsection{Minimal Cotree}
+	Let $T=(r,\mathcal{C})$ be a cotree. $T$ said to be minimal if for every path in $T$ the sequence of label is always an alternating one.\\
+	\[\text{cotree }\, T=(r,\mathcal{C}) \,\text{ is minimal }\, \Longleftrightarrow \forall (r_C,\mathcal{C}_C)=C\in\mathcal{C}:\quad C \,\text{ is minimal and }\, r_C \not = r \]
+	I will denote the minimal cotree of $T$ with $T_{min}$
+	
+	\subsubsection{Cotree isomorphy}
+	Two cotrees $T,T'$ are called cotree isomorphic if their minimal cotrees $T_{min}=(r_T,\mathcal{C}_T)$ and $T_{min}'=(r_{T'},\mathcal{C}_{T'})$ are rooted tree isomorphic.
+	\subsubsection{Lexicographic Product}
 	Denote the Cotree of a Cograph $\,C$ as $T(C)$\\
-	Let $C_1$ be a Cograph. $C_1$ is Product of two other Cographs $\,P_1$,$P_2\,$ iff  it is Cotree-Isomorphic to \\$T(P_1)\vartriangleleft T(P_2).$\\
+	Let $C_1$ be a Cograph. $C_1$ is Product of two other Cographs $\,P_1$,$P_2\,$ if  it is cotree isomorphic to \\$T(P_1)\vartriangleleft T(P_2).$\\
 	In other Words there exists a cotree, representing the identical cograph of the form:
 		\begin{center}
 		\begin{tikzpicture}[
@@ -159,31 +222,45 @@
 			
 		\end{tikzpicture}
 	\end{center}
-	Where if one would remove every subtree $T(P_2)$ one would get $T(P_1)$.\\
-	$T(P_1)\vartriangleleft T(P_2)$ just means attach $T(P_2)$ where a leaf in $T(P_1)$ is.\\
-	It means as well that there are some problematic structures to deal with.
-	like:\\
-	
-	
+	Where if one would remove every subtree $T(P_2)$ one would get $T(P_1)$, as well as you would remove every former leaf from the tree.\\
+	$T(P_1)\vartriangleleft T(P_2)$ just means attach $T(P_2)$ where a leaf in $T(P_1)$ is.\\\\
+	Particularly a cotree $F$ is Factor of some cotree $T$ denoted by $T\vartriangleleft F$ if
+	\[\forall L\in \mathcal{L}(T_{min})\,\exists S \subseteq T_{min}:\quad L\in\mathcal{L}(S)\,\text{ and }\, S\cong F_{min}\qquad\qquad (1)\] 
+	let those subtrees be $S_1,...,S_n\quad n\in\mathds{N}$
+	\[\forall i,j\in\{1,...,n\}:\quad i\not = j \implies \mathcal{N}(S_i)\backslash \{S_i\}\cap \mathcal{N}(S_j)\backslash \{S_j\}=\emptyset\]
+	e.g. their nodes, except the root, are pairwise disjoint.\\
+	Because $F_{min}$ and $T_{min}$ are minimal we may refer in (1) to the classical rooted tree isomorphy.\\\\
+	From the definition above it schould be clear that $n \,\bigg\vert\, |\mathcal{L}(T_{min})| $ from which follows that $|\mathcal{L}(F_{min})| \,\bigg\vert\, |\mathcal{L}(T_{min})| $.\\\\
+	Another interesting fact arising, for a given cotree $T$, factor cotree $F$ and minimal subtrees $S_1,...,S_n\quad n\in\mathds{N}$:
+	\[\forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)\leq d(F_{min})\,\implies\, N\in \mathcal{N}(S_i) \]
+	With this counterexample it will be clear, why the opposite direction won't hold:
+	\begin{center}
+		\begin{tikzpicture}[
+			level distance=1.5cm,
+			sibling distance=3cm, 
+			level 2/.style={sibling distance =3.3cm},
+			level 3/.style={sibling distance =2cm},
+			triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
+			]
+			\node[circle,red] {$0_{d=3}$}
+			child{node[circle]{$1_{d=2}$} 
+				child{node[circle,red]{$0_{d=1}$} 
+						child{node[circle,red]{$1_{d=0}$}edge from parent [red] }
+						child{node[circle,red]{$1_{d=0}$}edge from parent [red] }
+					}
+				child{node[circle,red]{$0_{d=1}$}
+						child{node[circle,red]{$1_{d=0}$}edge from parent [red] }
+						child{node[circle,red]{$1_{d=0}$}edge from parent [red] }
+					} }
+			child{node[circle,red]{$1_{d=1}$} edge from parent [red] }
+			child{node[circle,red]{$1_{d=1}$} edge from parent [red] };
+		\end{tikzpicture}
+	\end{center}
+	Our factor will be the minimal cotree for the cograph $(V,E)=(\{1,2\},\emptyset)$. The subtrees $S_1,S_2,S_3$ (read from left to right) are marked red. As you see the root of the whole tree is root of $S_3$ too, but with depth $3$ it is indeed not smaller than $d(S_3)$.\\
+	The background of this happening is the ambiguous depth of this node, because without the left subtree, depth of this node would be $1$ as well. \\
+	With this in our mind we should think about creating an unambiguous cotree from a normal one. 
 	\subsection{Balancing Cotrees}
-	\subsection{Treedepth}
-	Let $T$ be a Tree. Its depth $\,d(T)\,$ will be inductively bottom-up defined as follows:
-	\begin{itemize}
-		\item $T$ is leaf: \[d(T)=0\]
-		\item $T$ isn't a leaf,\, $C_1,...,C_n$ the children of $T$: \[d(T)= max(d(C_1)+1,...,d(C_n)+1)\]
-	\end{itemize}
-	\vspace{0.5cm}
-	The depth of a node $N$ with children $\, C_1,...,C_n$ said to be unambiguous iff
-	\[d(N) = d(C_1)+1= ...=d(C_n)+1\]
-	and the children of $N$ have unambiguous depth.
-	
-	\subsection{levels in a tree}
-	The level of a node in  a tree is the distance from that node to the root of the tree.\\
-	Let $T=(r,\mathcal{C})$ be a Tree, the level of a node in $T$ will be inductively top-down defined as follows:
-	\begin{itemize}
-		\item $l(T)=0$\\
-		\item Let $P=(r_P,\mathcal{C}_P)$ be a labeled node. \[\forall C\in\mathcal{C}_P\quad l(C)= l(P) + 1\]
-	\end{itemize}
+
 	\subsection{Labeling}
 	A Labeling for Trees gives every node of the tree a equivalence class with an order between them. Two of them be synonymous if they have the same equivalence classes and there exists an order isomorphism between their equivalence classes.
 	\subsection{Connection of depth and level}
@@ -292,25 +369,40 @@
 	\end{center}
 	With this method we have got a way for ensuring that level-labeling and depth labeling are indeed synonymous, providing us an easy way to modify the AHU-Algorithm after our needs.
 	\subsection{Properties for the lexicographical Product of Cographs}
-		\subsubsection{Minimal Cotree}
-		Let $T=(r,\mathcal{C})$ be a cotree. $T$ said to be minimal if for every path in $T$ the sequence of label is always an alternating one.\\
-		\[\text{cotree }\, T=(r,\mathcal{C}) \,\text{ is minimal }\, \Longleftrightarrow \forall (r_C,\mathcal{C}_C)=C\in\mathcal{C}:\quad C \,\text{ is minimal and }\, r_C \not = r \]
-		I will denote the minimal cotree of $T$ with $T_{min}$
+
+		\subsubsection{Relevance of Depth for finding isomorphic complete subtrees}
 		
-		\subsubsection{Relevance of Depth for finding the isomorphic subtrees}
-			If we want to find a factor of some cograph $C$ with minimal cotree $T(C)_{min}$, we will be searching for a cotree isomorphic subtree, which root is located at depth $d_f$. In particular every node with depth $d_f$ is the root of such a subtree iff the cograf of such subtree is a factor of $C$.\\
-			\underline{Proof:}
+			If we want to find if some given minimal cotree $S=(r_S, \mathcal{C}_S)$ is isomorphic to some  complete subtree $S'=(r_{S'},\mathcal{C}_{S'})$ of some other minimal cotree $T=(r_T, \mathcal{C}_T)$, depth will play a certain roll.
+			\begin{center}
+				\begin{tikzpicture}[
+					level distance=-0.325cm,
+					sibling distance=3cm, 
+					level 2/.style={sibling distance =2cm},
+					triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
+					]
+					\node[] {}
+					child{node[triangle] {$T\hspace{3cm}$} edge from parent [draw = none] 
+						child{node[triangle] {$S$} edge from parent [draw = none]}};
+					
+				\end{tikzpicture}
+			\end{center}
+			As the mindful reader already detected:\\
+			If this complete subtree $S'$ exists, its root will be found in all nodes of $T$ with depth $d(S)$\\\\
+			\underline{Proof:}\\ Because $T$ is minimal it follows $S'$ is minimal. Because it is isomorphic to $S$ and $S$ itself is minimal: the depth of the roots will be the same. \qed
+			
+		\subsubsection{Relevance of Depth for finding factors of some cotree}
+			If we want to find a factor of some cograph $C$ with minimal cotree $T(C)_{min}$, we will be searching for a cotree isomorphic complete subtree, which root is located at depth $d_f$. In particular every node with depth $d_f$ is the root of such a complete subtree iff the cograf of such subtree is a factor of $C$.\\\\
+			\underline{Proof:}\\
+			The proof follows inductively over $d_f$:
+			\begin{itemize}
+				\item Induction base case ($d_f = 0$):\\
+					Because the trivial cograph with one vertice is factor of every cograph the factor is found at every leaf of cotree $T$ 
+				\item Induction hypothesis:\\
+				\item Induction step:\\
+			\end{itemize}
 			
 	\subsection{Find Isomorph Trees with AHU}
 	\section{Practical Improvements}
 	\section{Algorithm}
-		\begin{tikzpicture}[
-		sibling distance=5cm, 
-		level 2/.style={sibling distance =2cm},
-		triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
-		]
-		\node[circle] {0}
-		child{node[circle]{1} 
-			child{node[triangle]{T1}} };
-	\end{tikzpicture}
+		
 \end{document} 

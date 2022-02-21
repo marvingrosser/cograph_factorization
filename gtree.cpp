@@ -25,7 +25,8 @@ string gtree::get_string(string intendation, bool isLast){
         me_s.append("├─");
         intendation.append("| ");
     }
-    me_s.append(this->state? "1\n": "0\n");
+    me_s.append(this->state? "1": "0");
+    me_s.append("\t [").append(to_string(this->depth[0])).append(", ").append(to_string(this->depth[1])).append("]").append("\n");
     for(unsigned short i = 0; i < this->childs.size(); i++){
         me_s.append(this->childs.at(i)->get_string(intendation,(this->childs.size()-1 == i) ));
     }
@@ -49,21 +50,41 @@ gtree::gtree(graph* g){
     }else{
         this->state = false;
     }
+    this->depth= new unsigned int[2];
+        this->depth[0]=-1;
+        this->depth[1]=0;
     for(unsigned long long* component: components){
-        gtree* child = new gtree(g, component, !this->state);
+        unsigned int *cdepth = new unsigned int[2];
+        
+        gtree* child = new gtree(g, component, !this->state, cdepth);
+        
+        this->depth[0]= (cdepth[0] + 1 < this->depth[0]? cdepth[0] + 1 : this->depth[0]);
+        this->depth[1]= (cdepth[1] + 1 > this->depth[1]? cdepth[1] + 1 : this->depth[1]);
+        
         this->childs.push_back(child);
     }
     
 }
-gtree::gtree(graph* g, unsigned long long* component, bool state){
+gtree::gtree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth){
     this->state = state;
     vector<unsigned long long*> components = g->getConnections(state, component);
+    this->depth= new unsigned int[2];
+    this->depth[0]=0;
+    this->depth[1]=0;
     if(components.size() > 1){
+        this->depth[0]=-1;
         for(unsigned long long* thiscomponent: components){
-            gtree* child = new gtree(g, thiscomponent, !this->state);
+            unsigned int *cdepth = new unsigned int[2];
+            gtree* child = new gtree(g, thiscomponent, !this->state,cdepth);
+            
+            this->depth[0]= (cdepth[0] + 1 < this->depth[0]? cdepth[0] + 1 : this->depth[0]);
+            this->depth[1]= (cdepth[1] + 1 > this->depth[1]? cdepth[1] + 1 : this->depth[1]);
+            
             this->childs.push_back(child);
         }
     }
+        pdepth[0] = this->depth[0];
+        pdepth[1] = this->depth[1];
 }
 gtree::~gtree() {
 }

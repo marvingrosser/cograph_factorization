@@ -31,7 +31,7 @@ public:
      * @param component
      * @param state
      */
-    gtree(graph* g, unsigned long long* component, bool state);
+    gtree(graph* g, unsigned long long* component, bool state, unsigned int* pdepth);
     gtree(bool state);
     gtree(const gtree& orig);
     vector<gtree*> getChilds();
@@ -70,6 +70,7 @@ public:
     gtree* getChild(unsigned short i);
     virtual ~gtree();
 private:
+    unsigned int* depth;
     bool state; 
     vector<gtree*> childs;
     

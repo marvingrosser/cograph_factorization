@@ -12,6 +12,15 @@
  */
 
 #include "gtree.h"
+unsigned int gtree::getId(){
+    return this->id;
+}
+void gtree::setId(unsigned int id){
+    this->id = id;
+}
+vector<vector<gtree*>> getFactors(){
+    return *new vector<vector<gtree*>>;
+}
 string gtree::get_string(){
     return this->get_string("",true);
 }
@@ -43,7 +52,6 @@ gtree::gtree(graph* g){
     unsigned long long* lookAtAll = (unsigned long long *)calloc( size/ DATA_SIZE,DATA_SIZE);
     g->verticeInversion(lookAtAll, size);
     vector<unsigned long long*> components= g->getConnections(false,lookAtAll);
-    
     if(components.size() == 1){
         this->state = true;
         components= g->getConnections(true,lookAtAll);
@@ -56,16 +64,16 @@ gtree::gtree(graph* g){
     for(unsigned long long* component: components){
         unsigned int *cdepth = new unsigned int[2];
         
-        gtree* child = new gtree(g, component, !this->state, cdepth);
+        gtree* child = new gtree(g, component, !this->state, cdepth,& depthdict);
         
         this->depth[0]= (cdepth[0] + 1 < this->depth[0]? cdepth[0] + 1 : this->depth[0]);
         this->depth[1]= (cdepth[1] + 1 > this->depth[1]? cdepth[1] + 1 : this->depth[1]);
         
         this->childs.push_back(child);
     }
-    
+    this->writeInDepthDict(&depthdict);
 }
-gtree::gtree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth){
+gtree::gtree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth,vector<vector<gtree*>> *depthdict){
     this->state = state;
     vector<unsigned long long*> components = g->getConnections(state, component);
     this->depth= new unsigned int[2];
@@ -75,7 +83,7 @@ gtree::gtree(graph* g, unsigned long long* component, bool state, unsigned int *
         this->depth[0]=-1;
         for(unsigned long long* thiscomponent: components){
             unsigned int *cdepth = new unsigned int[2];
-            gtree* child = new gtree(g, thiscomponent, !this->state,cdepth);
+            gtree* child = new gtree(g, thiscomponent, !this->state,cdepth, depthdict);
             
             this->depth[0]= (cdepth[0] + 1 < this->depth[0]? cdepth[0] + 1 : this->depth[0]);
             this->depth[1]= (cdepth[1] + 1 > this->depth[1]? cdepth[1] + 1 : this->depth[1]);
@@ -85,6 +93,15 @@ gtree::gtree(graph* g, unsigned long long* component, bool state, unsigned int *
     }
         pdepth[0] = this->depth[0];
         pdepth[1] = this->depth[1];
+        this->writeInDepthDict(depthdict);
+}
+void gtree::writeInDepthDict(vector<vector<gtree*> >* depthdict){
+    for(unsigned int i = this->depth[0]; i <= this->depth[1];i++){
+        if(depthdict->size() < i+1 ){
+            depthdict->push_back(* new vector<gtree*>);
+        }
+        depthdict->at(i).push_back(this);
+    }
 }
 gtree::~gtree() {
 }

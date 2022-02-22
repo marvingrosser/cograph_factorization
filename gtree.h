@@ -19,6 +19,11 @@
 #define DATA_SIZE sizeof(unsigned long long)
 class gtree {
 public:
+    unsigned int getId();
+    void setId(unsigned int id);
+    vector<unsigned int> getKnuthTuple(unsigned int depth);
+    vector<vector<gtree*>> getFactors();
+    void writeInDepthDict(vector<vector<gtree*>> *depthdict);
     gtree();
     /**
      * Construct Cotree from graph
@@ -31,7 +36,7 @@ public:
      * @param component
      * @param state
      */
-    gtree(graph* g, unsigned long long* component, bool state, unsigned int* pdepth);
+    gtree(graph* g, unsigned long long* component, bool state, unsigned int* pdepth, vector<vector<gtree*>> *depthdict);
     gtree(bool state);
     gtree(const gtree& orig);
     vector<gtree*> getChilds();
@@ -70,10 +75,11 @@ public:
     gtree* getChild(unsigned short i);
     virtual ~gtree();
 private:
+    unsigned int id;
     unsigned int* depth;
     bool state; 
     vector<gtree*> childs;
-    
+    vector<vector<gtree*>> depthdict;
 };
 
 #endif /* GTREE_H */

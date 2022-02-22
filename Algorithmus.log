@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.28)  21 FEB 2022 13:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.28)  22 FEB 2022 11:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1269,21 +1269,33 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 ]
 LaTeX Font Info:    Font shape `T1/cmbr/b/n' in size <14.4> not available
 (Font)              Font shape `T1/cmbr/bx/n' tried instead on input line 126.
-LaTeX Font Info:    Trying to load font information for U+dsrom on input line 1
-29.
 
+Underfull \hbox (badness 10000) in paragraph at lines 127--129
+
+ []
+
+LaTeX Font Info:    Trying to load font information for U+dsrom on input line 1
+30.
 (/usr/share/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 )
-Underfull \hbox (badness 10000) in paragraph at lines 127--131
+Underfull \hbox (badness 10000) in paragraph at lines 130--132
 
  []
 
 LaTeX Font Info:    Trying to load font information for TS1+cmbr on input line 
-132.
+133.
 (/usr/share/texmf-dist/tex/latex/cmbright/ts1cmbr.fd
 File: ts1cmbr.fd 2005/04/13 v8.1 (WaS)
 )
+Underfull \hbox (badness 10000) in paragraph at lines 134--135
+
+ []
+
+
+LaTeX Warning: The counter will not be printed.
+             The label is: $\space $ on input line 139.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
@@ -1293,27 +1305,32 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 171--173
+Underfull \hbox (badness 10000) in paragraph at lines 179--180
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 173--175
+Underfull \hbox (badness 10000) in paragraph at lines 182--184
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 173--175
+Underfull \hbox (badness 10000) in paragraph at lines 184--186
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 180--181
+Underfull \hbox (badness 10000) in paragraph at lines 184--186
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 188--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--194
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 202--203
 
  []
 
@@ -1326,17 +1343,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 230--233
+Underfull \hbox (badness 10000) in paragraph at lines 246--248
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 235--239
+Underfull \hbox (badness 10000) in paragraph at lines 246--248
 
  []
 
 
-Overfull \hbox (5.64633pt too wide) in paragraph at lines 235--239
+Underfull \hbox (badness 10000) in paragraph at lines 252--254
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
+
+ []
+
+
+Overfull \hbox (5.64633pt too wide) in paragraph at lines 255--257
 \T1/cmbr/m/n/12 From the def-i-ni-tion above it schould be clear that $ \T1/cmr
 /m/it/12 n [] \OMS/cmbrs/m/n/12 jL\OT1/cmbr/m/n/12 (\T1/cmr/m/it/12 T\OT1/cmbr/
 m/n/12 )\OMS/cmbrs/m/n/12 j $ \T1/cmbr/m/n/12 from which fol-lows that $ \OMS/c
@@ -1346,12 +1373,12 @@ n/12 j$\T1/cmbr/m/n/12 .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 235--239
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
 
  []
 
 LaTeX Font Info:    Font shape `T1/cmbr/m/it' in size <12> not available
-(Font)              Font shape `T1/cmbr/m/sl' tried instead on input line 239.
+(Font)              Font shape `T1/cmbr/m/sl' tried instead on input line 257.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
@@ -1361,12 +1388,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 293--297
+Underfull \hbox (badness 10000) in paragraph at lines 314--318
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 293--297
+Underfull \hbox (badness 10000) in paragraph at lines 314--318
 
  []
 
@@ -1379,12 +1406,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 320--321
+Underfull \hbox (badness 10000) in paragraph at lines 318--319
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 339--343
+Underfull \hbox (badness 10000) in paragraph at lines 343--344
 
  []
 
@@ -1397,13 +1424,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [6]
+Underfull \hbox (badness 10000) in paragraph at lines 362--366
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 362--366
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 379--383
+
+ []
+
 
 LaTeX Font Warning: Font shape `OT1/cmbr/bx/n' in size <8> not available
-(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 371.
+(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 396.
 
 
 LaTeX Font Warning: Font shape `OT1/cmbr/bx/n' in size <6> not available
-(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 371.
+(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 396.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1414,10 +1455,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 419--422
-
- []
-
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
@@ -1427,6 +1464,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [8]
+Underfull \hbox (badness 10000) in paragraph at lines 444--447
+
+ []
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
@@ -1446,16 +1487,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [10] (./Algorithmus.aux)
 Package rerunfilecheck Info: File `Algorithmus.out' has not changed.
-(rerunfilecheck)             Checksum: 997702E2A98CBF5B3EA6F7B8265BF0B9;4198.
+(rerunfilecheck)             Checksum: C56BF8DD44539520A3B478E4C21198BB;3565.
  ) 
 Here is how much of TeX's memory you used:
- 38518 strings out of 478353
- 873578 string characters out of 5854634
- 1302279 words of memory out of 5000000
- 55966 multiletter control sequences out of 15000+600000
+ 38527 strings out of 478353
+ 873619 string characters out of 5854634
+ 1301279 words of memory out of 5000000
+ 55963 multiletter control sequences out of 15000+600000
  420401 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,18n,89p,729b,1858s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,18n,89p,729b,1856s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{www.jstor.org/stable/pdf/2690833.pdf} has been re
 ferenced but does not exist, replaced by a fixed one
 
@@ -1476,10 +1517,10 @@ e/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fo
 nts/type1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti
 1200.pfb>
-Output written on Algorithmus.pdf (10 pages, 238118 bytes).
+Output written on Algorithmus.pdf (10 pages, 238364 bytes).
 PDF statistics:
- 294 PDF objects out of 1000 (max. 8388607)
- 242 compressed objects within 3 object streams
- 46 named destinations out of 1000 (max. 500000)
- 205 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 292 PDF objects out of 1000 (max. 8388607)
+ 240 compressed objects within 3 object streams
+ 58 named destinations out of 1000 (max. 500000)
+ 173 words of extra memory for PDF output out of 10000 (max. 10000000)
 

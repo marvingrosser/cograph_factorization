@@ -126,71 +126,87 @@
 	\subsection{Trees}
 		Trees are graphs $(V,E)$ which have to be connected, acyclic and undirected. Rooted trees are just trees with one vertice specified as root.
 		We may consider a inductive definition, detached from pure graph theory:\\
-		Let $\mathds{T}_M$ be the set of all trees with labels in $M$:\\\\
-		$T=(r,\mathcal{C}) \in \mathds{T}_M$, with $\mathcal{C}$  a multiset, if:
-		\begin{itemize}
-			\item $T$ is called leaf $\,\Longleftrightarrow\,\mathcal{C}=\emptyset,\, r\in M$
-			\item $\mathcal{C}\subseteq \mathds{T}_M,\,|\mathcal{C}|\in\mathds{N},\, r\in M$
-		\end{itemize}
+		\begin{definition}
+			Let $\mathds{T}_M$ be the set of all trees with labels in $M$:\\\\
+			$T=(r,\mathcal{C}) \in \mathds{T}_M$, with $\mathcal{C}$  a multiset, if:
+			\begin{itemize}
+				\item $T$ is called leaf $\,\Longleftrightarrow\,\mathcal{C}=\emptyset,\, r\in M$
+				\item $\mathcal{C}\subseteq \mathds{T}_M,\,|\mathcal{C}|\in\mathds{N},\, r\in M$\\
+			\end{itemize}
+		\end{definition}
 		\subsubsection{Definitions on Trees}
 		Let $T=(r,\mathcal{C})\in \mathds{T}_M$ be a Tree.
-		\begin{itemize}
-			\item \underline{Nodes of $T$, named $\mathcal{N}(T)\subseteq \mathds{T}_M$ are inductively defined by:}
-			\begin{itemize}
-				\item Every child $C=(r_C,\mathcal{C}_C)\in \mathcal{C}$ is called node of $T$
-				\item  All nodes of the children $\mathcal{N}(C)$ are nodes of $T$ as well
-			\end{itemize}
-			\[\implies \mathcal{N}(T)=\{T\}\cup\left (\bigcup_{C\in\mathcal{C}} \mathcal{N}(C) \cup \{C\}\right)\]
-			
-			Nodes will usually denote the corresponding graph node, but with this notation the child nodes are acquired simultaneously. \\The experienced reader will verify, that this matches the later defined complete subtrees. Which should be synonymous from here on.
-			\item \underline{Children of Node $N$ of $T$:}
-			For $N=(r_N, \mathcal{C}_N)$
-			\begin{itemize}
-				\item Children of $N$ as defined the set $\mathcal{C}_N$
-			\end{itemize}
-			\item \underline{Parent of Node $N$ of $T$:}
+		\begin{enumerate}[$ $]
+			\item \begin{definition}
+				\underline{Nodes of $T$, named $\mathcal{N}(T)\subseteq \mathds{T}_M$ are inductively defined by:}
+				\begin{itemize}
+					\item Every child $C=(r_C,\mathcal{C}_C)\in \mathcal{C}$ is called node of $T$
+					\item  All nodes of the children $\mathcal{N}(C)$ are nodes of $T$ as well
+				\end{itemize}
+				\[\implies \mathcal{N}(T)=\{T\}\cup\left (\bigcup_{C\in\mathcal{C}} \mathcal{N}(C) \cup \{C\}\right)\]
+				
+				Nodes will usually denote the corresponding graph node, but with this notation the child nodes are acquired simultaneously. \\The experienced reader will verify, that this matches the later defined complete subtrees. Which should be synonymous from here on.
+			\end{definition}
+			\item \begin{definition}
+				\underline{Children of Node $N$ of $T$:}
+				For $N=(r_N, \mathcal{C}_N)$
+				\begin{itemize}
+					\item Children of $N$ as defined the set $\mathcal{C}_N$
+				\end{itemize}
+			\end{definition}
+			\item \begin{definition}
+				\underline{Parent of Node $N$ of $T$:}
 				\begin{itemize}
 					\item Parent of $N$, denoted by $\mathcal{P}(N)=P\in \mathcal{N}(T)$ with $N\in \mathcal{C}_P$.\\
 					While $\mathcal{P}(T)=\,undef$
 				\end{itemize}
-			\item \underline{Leafes of $T$:}
+			\end{definition}
+			\item \begin{definition}
+				\underline{Leafes of $T$:}
 				\begin{itemize}
 					\item $\mathcal{L}(T)= \mathcal{N}(T) \cap \{(r,\emptyset)\,\vert\, r\in M\}\,$ are called leafs as above.
 				\end{itemize}
-		\end{itemize}
+			\end{definition}
+		\end{enumerate}
 		\subsubsection{Level}
 		The classical definition for  a nodes level is by the distance of the node to the root of the tree.
 		With the above definition we get:
 		Let $T\in\mathds{T}_M$ be a tree, $N$ one of its nodes.  
-		\begin{itemize}
-			\item the level of $N$ will be: \[l_T(N)=n\in \mathds{N}:\qquad\text{ with } \mathcal{P}^{n}(N)=\underbrace{\mathcal{P}(\mathcal{P}(\cdots \mathcal{P}}_{n\text{ times}}(N)))=T \]
-		\end{itemize}
+		\begin{definition}[Level]
+			 The level of $N$ will be: \[l_T(N)=n\in \mathds{N}:\qquad\text{ with } \mathcal{P}^{n}(N)=\underbrace{\mathcal{P}(\mathcal{P}(\cdots \mathcal{P}}_{n\text{ times}}(N)))=T \]
+		\end{definition}
 		\subsubsection{Depth}
 		The depth of some node $N$ of $T$ is like turning the definition of level upside down. With that the depth will be referencing to the shortest path to a leaf of the corresponding complete subtree.\\
-		We will define the depth of node $N=(r_N,\mathcal{C}_N)$ by:
+	\begin{definition}[Depth]
+			We will define the depth of node $N=(r_N,\mathcal{C}_N)$ by:
 		\[d(N)= max\left(\{d(C)+1\,\vert\, C\in\mathcal{C}_N\} \cup \{0\}\right)\]
 		From this definition it follows that: $d(N)=0 \Leftrightarrow N$ is leaf.\\\\
 		The depth said to be \underline{unambiguous} if \[d(N)=d(C) + 1\qquad \forall C\in\mathcal{C}_N\] 
 		and the depth of every child of $N$ is unambiguous.\\\\
-		\subsubsection{Subtree}
+	\end{definition}
+		
 
-			$S=(r_S,\mathcal{C}_S)$ is subtree of a given Tree $T=(r_T,\mathcal{C}_T)$, denoted by $S\subseteq T$, if there exists a node $N=(r_N,\mathcal{C}_N)\in \mathcal{N}(T)$ with \[r_N=r_S\,\text{ and }\, \forall K\in \mathcal{C}_S\,\exists C\in  \mathcal{C}_N:\quad   K\subseteq C\]
-			\begin{itemize}
-				\item	If $N = T$, $\,S$ should be called \underline{rooted subtree} of $T$, denoted by $S\Subset T$.
-				\item 	If $N \cong S$, $\,S$ should be called \underline{complete subtree}  of $T$, denoted by $S\subseteqq T$.\\
-			\end{itemize}
+			\begin{definition}[Subtree]
+				$S=(r_S,\mathcal{C}_S)$ is subtree of a given Tree $T=(r_T,\mathcal{C}_T)$, denoted by $S\subseteq T$, if there exists a node $N=(r_N,\mathcal{C}_N)\in \mathcal{N}(T)$ with \[r_N=r_S\,\text{ and }\, \forall K\in \mathcal{C}_S\,\exists C\in  \mathcal{C}_N:\quad   K\subseteq C\]
+				\begin{itemize}
+					\item	If $N = T$, $\,S$ should be called \underline{rooted subtree} of $T$, denoted by $S\Subset T$.
+					\item 	If $N \cong S$, $\,S$ should be called \underline{complete subtree}  of $T$, denoted by $S\subseteqq T$.\\
+				\end{itemize}
+			\end{definition}
 			
 	\subsection{Cotree}
 	With the definition above cotrees will be denoted $\mathds{T}_{\mathcal{B}}$\\
 	With $\mathcal{B}=\{0,1\}$ where ''B'' stands for boolean.
 	Every cotree represents a cograph, where every leaf represents a vertice of the cograph. Two of them are connected if their lowest common parent's label, that's the one with lowest depth, is $1$. 
-	\subsubsection{Minimal Cotree}
-	Let $T=(r,\mathcal{C})$ be a cotree. $T$ said to be minimal if for every path in $T$ the sequence of label is always an alternating one.\\
-	\[\text{cotree }\, T=(r,\mathcal{C}) \,\text{ is minimal }\, \Longleftrightarrow \forall (r_C,\mathcal{C}_C)=C\in\mathcal{C}:\quad C \,\text{ is minimal, }\, r_C \not = r \text{ and } |\mathcal{C}|\not = 1 \]
-	I will denote the minimal cotree of $T$ with $T_{min}$
+	\begin{definition}[Minimal Cotree]
+		Let $T=(r,\mathcal{C})$ be a cotree. $T$ said to be minimal if for every path in $T$ the sequence of label is always an alternating one.\\
+		\[\text{cotree }\, T=(r,\mathcal{C}) \,\text{ is minimal }\, \Longleftrightarrow \forall (r_C,\mathcal{C}_C)=C\in\mathcal{C}:\quad C \,\text{ is minimal, }\, r_C \not = r \text{ and } |\mathcal{C}|\not = 1 \]
+		I will denote the minimal cotree of $T$ with $T_{min}$
+	\end{definition}
 	
-	\subsubsection{Cotree isomorphy}
-	Two cotrees $T,T'$ are called cotree isomorphic if their minimal cotrees $T_{min}=(r_T,\mathcal{C}_T)$ and $T_{min}'=(r_{T'},\mathcal{C}_{T'})$ are rooted tree isomorphic.
+	\begin{definition}[Cotree isomorphy]
+		Two cotrees $T,T'$ are called cotree isomorphic if their minimal cotrees $T_{min}=(r_T,\mathcal{C}_T)$ and $T_{min}'=(r_{T'},\mathcal{C}_{T'})$ are rooted tree isomorphic.
+	\end{definition}
 	\subsubsection{Lexicographic Product}
 	Denote the Cotree of a Cograph $\,C$ as $T(C)$\\
 	Let $C_1$ be a Cograph. $C_1$ is Product of two other Cographs $\,P_1$,$P_2\,$ if  it is cotree isomorphic to \\$T(P_1)\vartriangleleft T(P_2).$\\
@@ -229,25 +245,30 @@
 	\end{center}
 	Where if one would remove every subtree $T(P_2)$ one would get $T(P_1)$, as well as you would remove every former leaf from the tree.\\
 	$T(P_1)\vartriangleleft T(P_2)$ just means attach $T(P_2)$ where a leaf in $T(P_1)$ is.\\\\
-	Particularly a cotree $F$ is factor of some cotree $T$ denoted by $T\vartriangleleft F$ if
-	\[\forall L\in \mathcal{L}(T)\,\exists S \subseteq T:\quad L\in\mathcal{L}(S)\,\text{ and }\, S\cong F\qquad\qquad (1)\] 
-	let those subtrees be $S_1,...,S_n\quad n\in\mathds{N}$ with minimal height.
-	\[\forall i,j\in\{1,...,n\}:\quad i\not = j \implies \mathcal{N}(S_i)\backslash \{S_i\}\cap \mathcal{N}(S_j)\backslash \{S_j\}=\emptyset\]
-	e.g. their nodes, except the root, are pairwise disjoint. We call them $F$-subtrees of $T$.\\
+	\begin{definition}[Factor of some Cotree]
+		Particularly a cotree $F$ is factor of some cotree $T$ denoted by $T\vartriangleleft F$ if
+		\[\forall L\in \mathcal{L}(T_{min})\,\exists S \subseteq T_{min}:\quad L\in\mathcal{L}(S)\,\text{ and }\, S\cong F\qquad\qquad (1)\] 
+		let those subtrees be $S_1,...,S_n\quad n\in\mathds{N}$ with minimal height.
+		\[\forall i,j\in\{1,...,n\}:\quad i\not = j \implies \mathcal{N}(S_i)\backslash \{S_i\}\cap \mathcal{N}(S_j)\backslash \{S_j\}=\emptyset\qquad (2)\]
+		e.g. their nodes, except the root, are pairwise disjoint. We call them $F$-subtrees of $T$.\\
+	\end{definition}
 	If $F$ and $T$ are minimal we may refer in (1) to the classical rooted tree isomorphy.\\\\
 	From the definition above it schould be clear that $\,n \,\bigg\vert\, |\mathcal{L}(T)|\, $ from which follows that $\,|\mathcal{L}(F)| \,\bigg\vert\, |\mathcal{L}(T)| $.\\
 	\begin{theorem}
-		If $T$ is minimal $S_1,...,S_n$ are minimal or ismorph to the trivial factor.
+		$S_1,...,S_n$ are minimal or ismorph to the trivial factor.
 		\begin{proof}
 			Let $F_{min}=(r_F, \mathcal{C}_F) \cong S_i\quad \forall i\in\{1,...,n\}$ and $|\mathcal{C}_F| > 0$ e.g. $F$ is not the trivial factor\\
-			$S_i$ 
+			Let $S_i=(r_{S_i},\mathcal{C}_{S_i})$ then $|\mathcal{C}_{S_i}|\leq 2$ because it isn't the trivial factor and (2). For the reason that $T$ is minimal the children of $S_i$ as well, and because it there at least two $S_i$ itself has to be minimal.\\
+			If the other hand $F$ is the trivial factor because of (1), $S_i$ will be as well.   
 		\end{proof}
 	\end{theorem}
-	\subsubsection{Something about depth and so on}
+	
+	\begin{theorem}
 	Another interesting fact arising, for a given cotree $T$, factor cotree $F$ and subtrees\\ $S_1,...,S_n\quad n\in\mathds{N}$:
 	\[(1)\qquad\qquad\forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)\leq d(F_{min})\,\implies\, N\in \mathcal{N}(S_i) \]
 	and with that 
 	\[(2)\qquad \forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)= d(F_{min})\,\implies\, N\Supset S_i\cong F_{min} \]
+	\end{theorem}
 	\begin{proof}
 		\begin{enumerate}[(1)]
 			\item Let $N\in \mathcal{N}(T_{min})$ with $d(N)= k\leq d(F_{min})$\\
@@ -293,18 +314,19 @@
 	Depth and Level are two non synonymous methods for labeling nodes in trees.\\
 	But if the tree has unambiguous depth then the two labelings are indeed synonymous with inverse equivalence class ordering.
 	\\\\
-	 \underline{Proof by Induction:} Let $T=(r,\mathcal{C})$ be a Tree with unambiguous depth and $d(T)=n$\\
-	 \begin{itemize}
-	 	\item \underline{Base Case:}\\
+	 \begin{proof}
+	 	by Induction  Let $T=(r,\mathcal{C})$ be a Tree with unambiguous depth and $d(T)=n$\\
+	 	\begin{itemize}
+	 		\item \underline{Base Case:}\\
 	 		For $n=0\quad$ $T$ is a leaf $\implies$ both labelings are synonymous
 	 		\[l_T^{(max)}-l_T(T)=0-0=0=d(T)\]
 	 		with $l_T^{(max)}$ the number of levels of the tree $T$
-	 	\item \underline{Induction Hypothesis:}\\
+	 		\item \underline{Induction Hypothesis:}\\
 	 		Let the labelings be synonymous for trees $T$ with unambiguous depth of $n$.
 	 		$N$ node of $T$ and with order isomorphism:
 	 		\[l_T^{(max)}-l_T(N)=d(N)\]
 	 		with $l_T^{(max)}$ the number of levels of the tree $T$
-	 	\item \underline{Induction Step:}\\
+	 		\item \underline{Induction Step:}\\
 	 		Let $T=(r,\mathcal{C})$ be a tree of unambiguous depth\\
 	 		$\qquad\implies $ all $C\in\mathcal{C}$ are of unambigous depth.\\
 	 		For every node $N$ of $C\in\mathcal{C}:$\[ l_T(N)=l_C(N)+1\] because every child of $T$ is on level 1 and itself is unambiguous.\\
@@ -313,10 +335,11 @@
 	 			l_T^{(max)}-l_T(N)&=l_T^{(max)}-(l_C(N) + 1)=l_C^{(max)} + 1 -(l_C(N) + 1)\\
 	 			&= l_C^{(max)}-l_C(N) \overset{IH}{=} d(N)
 	 		\end{align}
- 			And for $T$: $d(T)=l_T^{(max)} - l_T(T)=l_T^{(max)}$\\
+	 		And for $T$: $d(T)=l_T^{(max)} - l_T(T)=l_T^{(max)}$\\
 	 		with $l_T^{(max)}$ the number of levels of the tree $T$\\
-	 		$\implies$ the two labelings are synonymous, because the order isomorphy is continued  (see (1)).\qed
-	 \end{itemize}
+	 		$\implies$ the two labelings are synonymous, because the order isomorphy is continued  (see (1)).
+	 	\end{itemize}
+	 \end{proof}
 	 \underline{Example:}\\
 	 \begin{center}
 	 	\begin{tikzpicture}[
@@ -339,24 +362,26 @@
 	Because we may alter Cotrees in certain ways to leave them Cotree-Isomorphic to itself, e.g. it represents the same Cograph, we could use that to simplify our problem.\\
 	One way to do so is balancing the tree, that its depth will be unambiguos.
 	\\The Process starts inductively from the leafs, in other words from every node of the tree with depth equal to $0$.\\\\
-	Induction for $d(T)=n$
-	\begin{itemize}
-		\item \underline{Base Case:}
+	\begin{proof}
+		Induction for $d(T)=n$
+		\begin{itemize}
+			\item \underline{Base Case:}
 			\[n=0 \,\implies \, \text{depth is unambiguous because there are no children}\]
-		\item \underline{Induction Hypothesis:}\\
+			\item \underline{Induction Hypothesis:}\\
 			For every child of $T$: $C_1,...,C_m$ the depth is unambiguous.
-		\item \underline{Induction Step:}\\
-		Let $T=(r,\mathcal{C})$ be a tree with $d(T) = n + 1$\\
-		$\implies \,\forall C \in \mathcal{C}:\quad d(C)\leq n\qquad $ as well as $C$'s depth is unambiguous\\
-		let $d_{min} = min\left(\{d(C)\, \vert \, C\in\mathcal{C}\}\right)$\\
-		Now disconnect every child and attach a chain of nodes each with the same label as $r$. The length of the chain said to be $n - d_{min}$.\\
-		Let $N_1,...,N_\delta$ be its nodes, counted from bottom to top. And let $N_0$ be $r$\\
-		Now for every disconnected child $C$ attach it to the chain on node:
-		\[N_{n - d(C)}\]
-		Now $N_0,N_1,...,N_{n-d_{min}}$ have unambiguous depth.\\
-		Node $N_{n-d_{min}}$ has unambiguous depth because all its childs are of depth $d_{min}$.\\
-		If $N_{n-d_{min} - k }$ has unambiguous depth so has $N_{n- d_{min} - k - 1}$, because the depth of every attached child is $d_{min} + k$ as well as for the child node $N_{n-d_{min} - k}$. Every child of $N_{n- d_{min} - k - 1}$ has unambiguous depth. \\\qed
-	\end{itemize}
+			\item \underline{Induction Step:}\\
+			Let $T=(r,\mathcal{C})$ be a tree with $d(T) = n + 1$\\
+			$\implies \,\forall C \in \mathcal{C}:\quad d(C)\leq n\qquad $ as well as $C$'s depth is unambiguous\\
+			let $d_{min} = min\left(\{d(C)\, \vert \, C\in\mathcal{C}\}\right)$\\
+			Now disconnect every child and attach a chain of nodes each with the same label as $r$. The length of the chain said to be $n - d_{min}$.\\
+			Let $N_1,...,N_\delta$ be its nodes, counted from bottom to top. And let $N_0$ be $r$\\
+			Now for every disconnected child $C$ attach it to the chain on node:
+			\[N_{n - d(C)}\]
+			Now $N_0,N_1,...,N_{n-d_{min}}$ have unambiguous depth.\\
+			Node $N_{n-d_{min}}$ has unambiguous depth because all its childs are of depth $d_{min}$.\\
+			If $N_{n-d_{min} - k }$ has unambiguous depth so has $N_{n- d_{min} - k - 1}$, because the depth of every attached child is $d_{min} + k$ as well as for the child node $N_{n-d_{min} - k}$. Every child of $N_{n- d_{min} - k - 1}$ has unambiguous depth. \\
+		\end{itemize}
+	\end{proof}
 	\begin{center}
 		\begin{tikzpicture}[
 			level distance=1.8cm,

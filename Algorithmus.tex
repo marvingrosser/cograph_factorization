@@ -205,7 +205,8 @@
 	\end{definition}
 	
 	\begin{definition}[Cotree isomorphy]
-		Two cotrees $T,T'$ are called cotree isomorphic if their minimal cotrees $T_{min}=(r_T,\mathcal{C}_T)$ and $T_{min}'=(r_{T'},\mathcal{C}_{T'})$ are rooted tree isomorphic.
+		Two cotrees $T,T'$ are called cotree isomorphi written \\$T\cong_C T'$ if their minimal cotrees $T_{min}=(r_T,\mathcal{C}_T)$ and $T_{min}'=(r_{T'},\mathcal{C}_{T'})$ are rooted tree isomorphic: 
+		$T_{min} \cong T_{min}'$
 	\end{definition}
 	\subsubsection{Lexicographic Product}
 	Denote the Cotree of a Cograph $\,C$ as $T(C)$\\
@@ -247,7 +248,7 @@
 	$T(P_1)\vartriangleleft T(P_2)$ just means attach $T(P_2)$ where a leaf in $T(P_1)$ is.\\\\
 	\begin{definition}[Factor of some Cotree]
 		Particularly a cotree $F$ is factor of some cotree $T$ denoted by $T\vartriangleleft F$ if
-		\[\forall L\in \mathcal{L}(T_{min})\,\exists S \subseteq T_{min}:\quad L\in\mathcal{L}(S)\,\text{ and }\, S\cong F\qquad\qquad (1)\] 
+		\[\forall L\in \mathcal{L}(T_{min})\,\exists S \subseteq T_{min}:\quad L\in\mathcal{L}(S)\,\text{ and }\, S\cong_C F\qquad\qquad (1)\] 
 		let those subtrees be $S_1,...,S_n\quad n\in\mathds{N}$ with minimal height.
 		\[\forall i,j\in\{1,...,n\}:\quad i\not = j \implies \mathcal{N}(S_i)\backslash \{S_i\}\cap \mathcal{N}(S_j)\backslash \{S_j\}=\emptyset\qquad (2)\]
 		e.g. their nodes, except the root, are pairwise disjoint. We call them $F$-subtrees of $T$.\\
@@ -257,8 +258,8 @@
 	\begin{theorem}
 		$S_1,...,S_n$ are minimal or ismorph to the trivial factor.
 		\begin{proof}
-			Let $F_{min}=(r_F, \mathcal{C}_F) \cong S_i\quad \forall i\in\{1,...,n\}$ and $|\mathcal{C}_F| > 0$ e.g. $F$ is not the trivial factor\\
-			Let $S_i=(r_{S_i},\mathcal{C}_{S_i})$ then $|\mathcal{C}_{S_i}|\leq 2$ because it isn't the trivial factor and (2). For the reason that $T$ is minimal the children of $S_i$ as well, and because it there at least two $S_i$ itself has to be minimal.\\
+			Let $F_{min}=(r_F, \mathcal{C}_F) \cong_C S_i\quad \forall i\in\{1,...,n\}$ and $|\mathcal{C}_F| > 0$ e.g. $F$ is not the trivial factor\\
+			Let $S_i=(r_{S_i},\mathcal{C}_{S_i})$ then $|\mathcal{C}_{S_i}|\leq 2$ because it isn't the trivial factor and (2). For the reason that $T$ is minimal the children of $S_i$ are as well, and because it there at least two $C\in \mathcal{C}_{S_i}$ itself has to be minimal.\\
 			If the other hand $F$ is the trivial factor because of (1), $S_i$ will be as well.   
 		\end{proof}
 	\end{theorem}
@@ -418,10 +419,22 @@
 			
 		\end{tikzpicture}
 	\end{center}
-	We denote a given tree as balanced if it arises from an arbitrary minimal cotree put trough this algorithm. Written $\beta(T_{min})$.\\
+	We denote a given tree as balanced if it arises from the minimal cotree of an arbitrary cotree put trough this algorithm. Written $\beta(T)=\beta(T_{min})$.\\
 	With this method we have got a way for ensuring that level-labeling and depth labeling are indeed synonymous, providing us an easy way to modify the AHU-Algorithm after our needs.
 	\begin{theorem}
-		For a minimal cotree $T_{min}$ and two cotree isomorphic subtrees $S_1,S_2\subseteq T_{min}$ with $\mathcal{L}(T_{min})\cap \mathcal{L}(S_1) \not = \emptyset \not = \mathcal{L}(T_{min})\cap \mathcal{L}(S_2)$
+		For two cotrees $T_1,T_2$ with $T_1 \cong_C T_2$ it holds that $\beta(T_1)\cong \beta(T_2)$ 
+	\begin{proof} 
+		From $T_1 \cong_C T_2$ it follows that $T_{1_{min}}\cong T_{2_{min}}$. Because the Algorithm depends just on the depth of the nodes of the tree, and the two minimal cotrees are isomorphic they get altered the same way which means $\beta(T_1)\cong \beta(T_2)$
+	\end{proof}
+	\end{theorem}
+	\begin{theorem}
+		For a minimal cotree $T_{min}$ and a minimal subtree $S\subseteq T_{min}$ with $\mathcal{L}(T_{min})\cap \mathcal{L}(S) \not = \emptyset$, e.g. they share at least one leaf:\\
+		$\beta (S)\subseteq \beta(T_{min})$ and its root will be found on depth $d(\beta (S))$
+		\begin{proof}
+			Let be $N\in \mathcal{N}(T_{min})$ with $S\Subset N$. It follows that $d(S) \leq d(N)$ and $d(\beta (S)) \leq d(\beta (N)),$ because they share at least one leaf. Now let $S=(r_S, \mathcal{C}_S), N=(r_N, \mathcal{C}_N)$ and  $D\in \mathcal{N}(\beta(N))$ with $\forall C_N \in \mathcal{C}_N:\quad D\not \cong_C C\quad \land\quad  d(D) = d(\beta(S))$. In other words $D$ is the node introduced by the algorithm with the depth of $S$.\\
+			
+			MAYBE INDUCTION for subsettrees with same root?
+		\end{proof}
 	\end{theorem}
 	\subsection{Properties for the lexicographical Product of Cographs}
 
@@ -466,10 +479,15 @@
 		The theorem states that for those cotrees we may identify the nodes $D$ of $T$ with $S_i \Subset D$ just by their depth. With that the search for factors will be doable.\\
 		But because this are special forms of cotrees we need to get this statement for cotrees originated from some unambiguous but arbitrary minimal cotrees. 
 		TWO SUBTREES (ISOMORPH) OF SOME COTREE ARE ISOMORPH FOR BALANCED TREE
-		
+		\begin{theorem}
+			Let $T,F\in\mathds{T}_{\mathcal{B}}$ be cotrees with $T\vartriangleleft F$.\\ $S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial factor. I state that:
+			\[(1)\qquad \qquad \forall N\in \mathcal{N}(\beta(T))\, \exists i\in\{1,...,n\}:\quad d(N)\leq d(\beta(F))\,\Longleftrightarrow\, N\in \mathcal{N}(\beta(S_i)) \]
+			and which follows
+			\[(2)\qquad \forall N\in \mathcal{N}(\beta(T))\, \exists i\in\{1,...,n\}:\quad d(N)= d(\beta(F))\,\Longleftrightarrow\, N \Supset \beta(S_i)\cong \beta(F) \]
+		\end{theorem}
 		\subsubsection{Relevance of Depth for finding factors of some cotree}
 		HERE WHY WE FIND EVERY NODE WITH DEPTH DF AS ROOT OF SOME Si, BUT WITH THAT WE CANNOT GET EVERY SUBTREE.
-			
+		
 	\subsection{Find Isomorph Trees with AHU}
 	\hyperlink{www.jstor.org/stable/pdf/2690833.pdf}{A brilliant paper about this topic}: [Tree Isomorphism Algorithms: Speed vs. Clarity,\quad
 	Author(s): Douglas M. Campbell and David Radford]\\

@@ -422,9 +422,12 @@
 	We denote a given tree as balanced if it arises from the minimal cotree of an arbitrary cotree put trough this algorithm. Written $\beta(T)=\beta(T_{min})$.\\
 	With this method we have got a way for ensuring that level-labeling and depth labeling are indeed synonymous, providing us an easy way to modify the AHU-Algorithm after our needs.
 	\begin{theorem}
-		For two cotrees $T_1,T_2$ with $T_1 \cong_C T_2$ it holds that $\beta(T_1)\cong \beta(T_2)$ 
+		For two cotrees $T_1,T_2$ it holds that \[T_1 \cong_C T_2 \quad \Longleftrightarrow \quad\beta(T_1)\cong \beta(T_2)\] 
 	\begin{proof} 
-		From $T_1 \cong_C T_2$ it follows that $T_{1_{min}}\cong T_{2_{min}}$. Because the Algorithm depends just on the depth of the nodes of the tree, and the two minimal cotrees are isomorphic they get altered the same way which means $\beta(T_1)\cong \beta(T_2)$
+		$''\Rightarrow''$
+		From $T_1 \cong_C T_2$ it follows that $T_{1_{min}}\cong T_{2_{min}}$. Because the Algorithm depends just on the depth of the nodes of the tree, and the two minimal cotrees are isomorphic they get altered the same way which means $\beta(T_1)\cong \beta(T_2)$\\
+		$''\Leftarrow''$
+		From $\beta(T_1)\cong \beta(T_2)$ it follows that $T_{1_{min}}=\beta(T_1)_{min}\cong \beta(T_1)_{min}=T_{2_{min}}$ and from that $T_1 \cong_C T_2$
 	\end{proof}
 	\end{theorem}
 	\begin{theorem}

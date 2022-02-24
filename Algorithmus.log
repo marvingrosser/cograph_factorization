@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.28)  24 FEB 2022 11:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.28)  24 FEB 2022 12:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1457,11 +1457,6 @@ LaTeX Font Warning: Font shape `OT1/cmbr/bx/n' in size <6> not available
 (Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 397.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 434--435
-
- []
-
-
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
 (fancyhdr)                \setlength{\headheight}{15.0pt}.
@@ -1470,7 +1465,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 457--460
+Underfull \hbox (badness 10000) in paragraph at lines 437--438
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 460--463
 
  []
 
@@ -1532,7 +1532,7 @@ e/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fo
 nts/type1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti
 1200.pfb>
-Output written on Algorithmus.pdf (11 pages, 241089 bytes).
+Output written on Algorithmus.pdf (11 pages, 241383 bytes).
 PDF statistics:
  299 PDF objects out of 1000 (max. 8388607)
  246 compressed objects within 3 object streams

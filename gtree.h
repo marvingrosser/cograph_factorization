@@ -16,12 +16,14 @@
 #include "vertice.h"
 #include <vector>
 #include <string.h>
+#include <set>
 #define DATA_SIZE sizeof(unsigned long long)
+
 class gtree {
 public:
     unsigned int getId();
     void setId(unsigned int id);
-    vector<unsigned int> getKnuthTuple(unsigned int depth);
+    multiset<unsigned int> getKnuthTuple(unsigned int depth);
     vector<vector<gtree*>> getFactors();
     void writeInDepthDict(vector<vector<gtree*>> *depthdict);
     gtree();
@@ -75,6 +77,8 @@ public:
     gtree* getChild(unsigned short i);
     virtual ~gtree();
 private:
+    int compareKnuthTuples(multiset<unsigned int> t1, multiset<unsigned int> t2); // Write own multisetcomparator
+    void constructChildren(graph * g, vector<unsigned long long*> * components,vector<vector<gtree*>> *depthdict );
     unsigned int id;
     unsigned int* depth;
     bool state; 

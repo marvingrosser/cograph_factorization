@@ -12,13 +12,56 @@
  */
 
 #include "gtree.h"
+struct multicomp {
+  bool operator() (const multiset<unsigned int>& lhs, const multiset<unsigned int>& rhs) const
+  
+  {
+      unsigned int beg = (lhs.begin() < rhs.begin()? lhs.begin(): rhs.begin());
+      unsigned int end = (lhs.begin() > rhs.begin()? lhs.begin(): rhs.begin());
+      for(std::multiset<unsigned int>::iterator it = beg; it != end; ++it){
+      
+      
+      }
+      return true;
+  }
+};
+struct KT{
+    multiset<unsigned int> tuple;
+    vector<gtree*> adresses;
+};
+multiset<unsigned int> gtree::getKnuthTuple(unsigned int depth){
+    multiset<unsigned int> tuple;
+    for(gtree* child: this->childs){
+        unsigned int cid = child->getId();
+        tuple.insert(cid);
+    }
+    return tuple;
+}
 unsigned int gtree::getId(){
     return this->id;
 }
 void gtree::setId(unsigned int id){
     this->id = id;
 }
-vector<vector<gtree*>> getFactors(){
+vector<vector<gtree*>> gtree::getFactors(){
+    multiset<multiset<unsigned int>> MS;
+    multiset<unsigned int> ns;
+    ns.insert(2);
+    ns.insert(2);
+    ns.insert(4);
+    ns.insert(4);
+    MS.insert(ns);
+    ns.erase(2);
+    ns.erase(4);
+    ns.insert(2);
+    ns.insert(4);
+    MS.insert(ns);
+    ns.erase(2);
+    ns.erase(4);
+    ns.insert(2);
+    ns.insert(3);
+    ns.insert(4);
+    MS.insert(ns);
     return *new vector<vector<gtree*>>;
 }
 string gtree::get_string(){
@@ -47,6 +90,23 @@ gtree::gtree() {
 
 gtree::gtree(const gtree& orig) {
 }
+void gtree::constructChildren(graph* g, vector<unsigned long long*>* components,vector<vector<gtree*>> *depthdict ){
+    this->depth= new unsigned int[2];
+            this->depth[0]=0;
+            this->depth[1]=0;
+        if(components->size() > 1){
+            this->depth[0]=-1;
+            for(unsigned long long* thiscomponent: *components){
+                unsigned int *cdepth = new unsigned int[2];
+                gtree* child = new gtree(g, thiscomponent, !this->state,cdepth, depthdict);
+                
+                this->depth[0]= (cdepth[0] + 1 < this->depth[0]? cdepth[0] + 1 : this->depth[0]);
+                this->depth[1]= (cdepth[1] + 1 > this->depth[1]? cdepth[1] + 1 : this->depth[1]);
+                
+                this->childs.push_back(child);
+            }
+        }
+}
 gtree::gtree(graph* g){
     unsigned short size = g->getSize();
     unsigned long long* lookAtAll = (unsigned long long *)calloc( size/ DATA_SIZE,DATA_SIZE);
@@ -58,38 +118,14 @@ gtree::gtree(graph* g){
     }else{
         this->state = false;
     }
-    this->depth= new unsigned int[2];
-        this->depth[0]=-1;
-        this->depth[1]=0;
-    for(unsigned long long* component: components){
-        unsigned int *cdepth = new unsigned int[2];
-        
-        gtree* child = new gtree(g, component, !this->state, cdepth,& depthdict);
-        
-        this->depth[0]= (cdepth[0] + 1 < this->depth[0]? cdepth[0] + 1 : this->depth[0]);
-        this->depth[1]= (cdepth[1] + 1 > this->depth[1]? cdepth[1] + 1 : this->depth[1]);
-        
-        this->childs.push_back(child);
-    }
+    this->constructChildren(g,&components,&this->depthdict);
     this->writeInDepthDict(&depthdict);
 }
 gtree::gtree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth,vector<vector<gtree*>> *depthdict){
     this->state = state;
     vector<unsigned long long*> components = g->getConnections(state, component);
-    this->depth= new unsigned int[2];
-    this->depth[0]=0;
-    this->depth[1]=0;
-    if(components.size() > 1){
-        this->depth[0]=-1;
-        for(unsigned long long* thiscomponent: components){
-            unsigned int *cdepth = new unsigned int[2];
-            gtree* child = new gtree(g, thiscomponent, !this->state,cdepth, depthdict);
-            
-            this->depth[0]= (cdepth[0] + 1 < this->depth[0]? cdepth[0] + 1 : this->depth[0]);
-            this->depth[1]= (cdepth[1] + 1 > this->depth[1]? cdepth[1] + 1 : this->depth[1]);
-            
-            this->childs.push_back(child);
-        }
+    {
+        this->constructChildren(g,&components,depthdict);
     }
         pdepth[0] = this->depth[0];
         pdepth[1] = this->depth[1];

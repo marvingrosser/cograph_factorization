@@ -143,7 +143,7 @@
 					\item Every child $C=(r_C,\mathcal{C}_C)\in \mathcal{C}$ is called node of $T$
 					\item  All nodes of the children $\mathcal{N}(C)$ are nodes of $T$ as well
 				\end{itemize}
-				\[\implies \mathcal{N}(T)=\{T\}\cup\left (\bigcup_{C\in\mathcal{C}} \mathcal{N}(C) \cup \{C\}\right)\]
+				\[\implies \mathcal{N}(T)=\{T\}\cup\left (\bigcup_{C\in\mathcal{C}} \mathcal{N}(C) \right)\]
 				
 				Nodes will usually denote the corresponding graph node, but with this notation the child nodes are acquired simultaneously. \\The experienced reader will verify, that this matches the later defined complete subtrees. Which should be synonymous from here on.
 			\end{definition}
@@ -487,9 +487,27 @@
 			\[(1)\qquad \qquad \forall N\in \mathcal{N}(\beta(T))\, \exists i\in\{1,...,n\}:\quad d(N)\leq d(\beta(F))\,\Longleftrightarrow\, N\in \mathcal{N}(\beta(S_i)) \]
 			and which follows
 			\[(2)\qquad \forall N\in \mathcal{N}(\beta(T))\, \exists i\in\{1,...,n\}:\quad d(N)= d(\beta(F))\,\Longleftrightarrow\, N \Supset \beta(S_i)\cong \beta(F) \]
+			\begin{proof}
+				\begin{enumerate}[(1)]
+					\item ''$\Rightarrow$''\quad Let  $ N\in \mathcal{N}(\beta(T))$ with $ d(N)\leq d(\beta(F))$. It should be clear that $N=\beta (N)$.\\ Because $\exists i\in\{1,...,n\}\forall L \in \mathcal{L}(N)$ with $L\in \mathcal{L}(S_i)$, because from $S_{i_{min}} \cong F_{min}$ it follows that $\beta (S_i) \cong \beta (F)\quad$[Th. 1.3]. Therefore $N \in \mathcal(\beta(S_i))$.  \\
+							''$\Leftarrow$''\quad Let $N\in \mathcal{N}(\beta (S_i))$. From Theorem 1.3 and $ S_{i_{min}} \cong F_{min}$ it follows that $\beta (F) \cong \beta (S_i)$ which implies $d(\beta (S_i))=d(\beta (F))$ and with that $N\leq d(\beta(F))$
+					\item ''$\Rightarrow$''\quad Let $N\in \mathcal{N}(\beta(T)):\quad d(N) = d(\beta (F))$ , it is clear that $N=\beta(N)$. Now let $L\in \mathcal{L}(N)$ be a leaf of $N$. We know that there $\exists i\in \{1,...,n\}$ with $L\in \mathcal{L}(\beta (S_i))$. Then $d(\beta(S_i)) = d(\beta (F)) = d(N)$. So if $N \not \Supset \beta(S_i)$ this contradicts the assumption, because then $N$ has to be above or below $\beta(S_i)$. With that $N  \Supset \beta(S_i)\cong \beta (F)$\\
+					''$\Leftarrow$''\quad Let $\mathcal{N}(\beta(T)) \ni N \Supset \beta(S_i) \cong \beta(F)$ because of the unambiguity of $N,\beta(S_i),\beta (F)$ and share at least one child they surely have the same depth.\\
+					$\implies d(N)=d(\beta(S_i))=d(\beta(F))$
+				\end{enumerate}
+			\end{proof}
 		\end{theorem}
-		\subsubsection{Relevance of Depth for finding factors of some cotree}
-		HERE WHY WE FIND EVERY NODE WITH DEPTH DF AS ROOT OF SOME Si, BUT WITH THAT WE CANNOT GET EVERY SUBTREE.
+		The great thing about this theorem is, we proved that we may find the Roots of the $F$-Subtrees of $T$ on the same height. This will give us a way to use the AHU Algorithm on the depth, where onece there is over one depth just one id, suggesting that every subtree appending there will be isomorphic to the others. 
+		\subsubsection{The NP-complete part of the story}
+		The Hard Part about finding Factors will be the cotrees $T$ in which at least one node $N$ has at least two $S_i, S_j$ as its rooted subtrees.\\
+		The key idea for solving this is, after converting $T$ to $\beta(T)$ with unambiguous depth, we may split up nodes, in $m$ isomorphic nodes. 
+		\begin{definition}
+			Let $T$ be a cotree, $\beta(T)$ the cotree with unambiguous depth arising from $T$. And $\exists m\in \mathds{N}\backslash\{1\}\,\forall N=(r_N,\mathcal{C}_N)\in \mathcal{N}(\beta(T))\backslash \mathcal{L}(\beta(T)):\quad m \,\big |\,|\mathcal{C}_N|$
+		\end{definition}
+		\begin{theorem}
+				Let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ $S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial factor. And there $\exists N\in\mathcal{N}(\beta(T)) \forall i\in \{1,...,m\}\, m\leq n$ with $N\Supset \beta(S_i)$.\\
+				We may split every node $P\in \mathcal{N}(N)$ from bottom up, to get the subtrees $S_1,...,S_m$ with them sharing not one node.
+		\end{theorem}
 		
 	\subsection{Find Isomorph Trees with AHU}
 	\hyperlink{www.jstor.org/stable/pdf/2690833.pdf}{A brilliant paper about this topic}: [Tree Isomorphism Algorithms: Speed vs. Clarity,\quad

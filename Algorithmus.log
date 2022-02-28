@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.28)  28 FEB 2022 12:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.28)  28 FEB 2022 15:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1510,8 +1510,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [12] (./Algorithmus.aux)
-Package rerunfilecheck Info: File `Algorithmus.out' has not changed.
-(rerunfilecheck)             Checksum: A47C6896019BF0D5A158E4B638A9D1AB;3456.
+
+Package rerunfilecheck Warning: File `Algorithmus.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Algorithmus.out':
+(rerunfilecheck)             Before: A47C6896019BF0D5A158E4B638A9D1AB;3456
+(rerunfilecheck)             After:  FAAF527913105C6E4D5E3C34BBC23A72;3398.
  ) 
 Here is how much of TeX's memory you used:
  38535 strings out of 478353
@@ -1541,7 +1547,7 @@ e/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fo
 nts/type1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti
 1200.pfb>
-Output written on Algorithmus.pdf (12 pages, 243302 bytes).
+Output written on Algorithmus.pdf (12 pages, 243176 bytes).
 PDF statistics:
  307 PDF objects out of 1000 (max. 8388607)
  253 compressed objects within 3 object streams

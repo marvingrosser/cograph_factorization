@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.28)  28 FEB 2022 15:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.28)  3 MAR 2022 15:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1330,7 +1330,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 193--194
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--203
+Underfull \hbox (badness 10000) in paragraph at lines 206--207
 
  []
 
@@ -1343,27 +1343,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 247--249
+Underfull \hbox (badness 10000) in paragraph at lines 251--253
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--249
+Underfull \hbox (badness 10000) in paragraph at lines 251--253
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 253--255
+Underfull \hbox (badness 10000) in paragraph at lines 257--259
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--258
+Underfull \hbox (badness 10000) in paragraph at lines 260--262
 
  []
 
 
-Overfull \hbox (5.64633pt too wide) in paragraph at lines 256--258
+Overfull \hbox (5.64633pt too wide) in paragraph at lines 260--262
 \T1/cmbr/m/n/12 From the def-i-ni-tion above it schould be clear that $ \T1/cmr
 /m/it/12 n [] \OMS/cmbrs/m/n/12 jL\OT1/cmbr/m/n/12 (\T1/cmr/m/it/12 T\OT1/cmbr/
 m/n/12 )\OMS/cmbrs/m/n/12 j $ \T1/cmbr/m/n/12 from which fol-lows that $ \OMS/c
@@ -1373,12 +1373,12 @@ n/12 j$\T1/cmbr/m/n/12 .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--258
+Underfull \hbox (badness 10000) in paragraph at lines 260--262
 
  []
 
 LaTeX Font Info:    Font shape `T1/cmbr/m/it' in size <12> not available
-(Font)              Font shape `T1/cmbr/m/sl' tried instead on input line 258.
+(Font)              Font shape `T1/cmbr/m/sl' tried instead on input line 262.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
@@ -1397,22 +1397,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 315--319
+Underfull \hbox (badness 10000) in paragraph at lines 319--323
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 315--319
+Underfull \hbox (badness 10000) in paragraph at lines 319--323
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 319--320
+Underfull \hbox (badness 10000) in paragraph at lines 323--324
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 344--345
+Underfull \hbox (badness 10000) in paragraph at lines 348--349
 
  []
 
@@ -1425,17 +1425,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 363--367
+Underfull \hbox (badness 10000) in paragraph at lines 367--371
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 363--367
+Underfull \hbox (badness 10000) in paragraph at lines 367--371
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 380--384
+Underfull \hbox (badness 10000) in paragraph at lines 384--388
 
  []
 
@@ -1450,11 +1450,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [7]
 
 LaTeX Font Warning: Font shape `OT1/cmbr/bx/n' in size <8> not available
-(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 397.
+(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 401.
 
 
 LaTeX Font Warning: Font shape `OT1/cmbr/bx/n' in size <6> not available
-(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 397.
+(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 401.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1465,12 +1465,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 437--438
+Underfull \hbox (badness 10000) in paragraph at lines 441--442
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 460--463
+Underfull \hbox (badness 10000) in paragraph at lines 464--467
 
  []
 
@@ -1492,6 +1492,24 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [10]
+LaTeX Font Info:    Font shape `T1/cmbr/m/it' in size <8> not available
+(Font)              Font shape `T1/cmbr/m/sl' tried instead on input line 520.
+LaTeX Font Info:    Font shape `T1/cmbr/m/it' in size <6> not available
+(Font)              Font shape `T1/cmbr/m/sl' tried instead on input line 520.
+
+Overfull \hbox (20.62161pt too wide) detected at line 520
+\OMS/cmbrs/m/n/12 8\T1/cmr/m/it/12 i \OMS/cmbrs/m/n/12 2 f\OT1/cmbr/m/n/12 1\OM
+L/cmbrm/m/it/12 ; :::; \T1/cmr/m/it/12 m\OMS/cmbrs/m/n/12 g8\T1/cmr/m/it/12 M \
+OT1/cmbr/m/n/12 = (\T1/cmr/m/it/12 r[]\OML/cmbrm/m/it/12 ; \OMS/cmbrs/m/n/12 C[
+]\OT1/cmbr/m/n/12 ) \OMS/cmbrs/m/n/12 2 N\OT1/cmbr/m/n/12 (\T1/cmr/m/it/12 N\OT
+1/cmbr/m/n/12 ) :  \OMS/cmbrs/m/n/12 P\OT1/cmbr/m/n/12 (\T1/cmr/m/it/12 M\OT1/c
+mbr/m/n/12 ) = \T1/cmr/m/it/12 P \OT1/cmbr/m/n/12 = (\T1/cmr/m/it/12 r[]\OML/cm
+brm/m/it/12 ; \OMS/cmbrs/m/n/12 C[]\OT1/cmbr/m/n/12 )[]\T1/cmr/m/it/12 r[] \OT1
+/cmbr/m/n/12 = \T1/cmr/m/it/12 r[]  \OT1/cmbr/m/n/12 =[]\OMS/cmbrs/m/n/12 )  \T
+1/cmr/m/it/12 N \OMS/cmbrs/m/n/12 2 N\OT1/cmbr/m/n/12 (\OML/cmbrm/m/it/12 ^^L\O
+T1/cmbr/m/n/12 (\T1/cmr/m/it/12 S[]\OT1/cmbr/m/n/12 ))
+ []
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
@@ -1510,21 +1528,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [12] (./Algorithmus.aux)
-
-Package rerunfilecheck Warning: File `Algorithmus.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Algorithmus.out':
-(rerunfilecheck)             Before: A47C6896019BF0D5A158E4B638A9D1AB;3456
-(rerunfilecheck)             After:  FAAF527913105C6E4D5E3C34BBC23A72;3398.
+Package rerunfilecheck Info: File `Algorithmus.out' has not changed.
+(rerunfilecheck)             Checksum: FAAF527913105C6E4D5E3C34BBC23A72;3398.
  ) 
 Here is how much of TeX's memory you used:
- 38535 strings out of 478353
- 873694 string characters out of 5854634
+ 38542 strings out of 478353
+ 873781 string characters out of 5854634
  1302279 words of memory out of 5000000
- 55963 multiletter control sequences out of 15000+600000
- 420401 words of font info for 66 fonts, out of 8000000 for 9000
+ 55967 multiletter control sequences out of 15000+600000
+ 422005 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,18n,89p,729b,1856s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{www.jstor.org/stable/pdf/2690833.pdf} has been re
@@ -1547,10 +1559,10 @@ e/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fo
 nts/type1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti
 1200.pfb>
-Output written on Algorithmus.pdf (12 pages, 243176 bytes).
+Output written on Algorithmus.pdf (12 pages, 246512 bytes).
 PDF statistics:
- 307 PDF objects out of 1000 (max. 8388607)
- 253 compressed objects within 3 object streams
- 66 named destinations out of 1000 (max. 500000)
+ 310 PDF objects out of 1000 (max. 8388607)
+ 256 compressed objects within 3 object streams
+ 68 named destinations out of 1000 (max. 500000)
  173 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -193,6 +193,10 @@
 					\item 	If $N \cong S$, $\,S$ should be called \underline{complete subtree}  of $T$, denoted by $S\subseteqq T$.\\
 				\end{itemize}
 			\end{definition}
+			\begin{definition}
+				For $S\subseteq T$ both Trees we denote $\mathcal{N}(S)\ni N=(r_N, \mathcal{C}_N) \,\hat{\in}\, \mathcal{N}(T) $ if there exists $M=(r_M, \mathcal{C}_M)\in \mathcal{N}(T)$ with $r_M=r_N$ and $\mathcal{C}_M \cap \mathcal{C}_N \not = \emptyset$\\
+				In other Words $\exists M\in \mathcal{N}(T): \quad N\Subset M$
+			\end{definition}
 			
 	\subsection{Cotree}
 	With the definition above cotrees will be denoted $\mathds{T}_{\mathcal{B}}$\\
@@ -266,15 +270,15 @@
 	
 	\begin{theorem}
 	Another interesting fact arising, for a given cotree $T$, factor cotree $F$ and subtrees\\ $S_1,...,S_n\quad n\in\mathds{N}$:
-	\[(1)\qquad\qquad\forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)\leq d(F_{min})\,\implies\, N\in \mathcal{N}(S_i) \]
-	and with that 
+	\[(1)\qquad\qquad\forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)< d(F_{min})\,\implies\, N\in \mathcal{N}(S_i) \]
+	and  
 	\[(2)\qquad \forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)= d(F_{min})\,\implies\, N\Supset S_i\cong F_{min} \]
 	\end{theorem}
 	\begin{proof}
 		\begin{enumerate}[(1)]
-			\item Let $N\in \mathcal{N}(T_{min})$ with $d(N)= k\leq d(F_{min})$\\
+			\item Let $N\in \mathcal{N}(T_{min})$ with $d(N)= k< d(F_{min})$\\
 			This means for every leaf $L\in \mathcal{L}(N)$ ther exists $\mathds{N}\ni t\leq k$ with $N$ being the $ t'th$ parent of $L$.\\
-			Because every leaf of $T$: $\, L\in \mathcal{L}(T_{min})$ is in some $F-$subtree of $T$, namely $S_i$, with $k \leq d(S_i)=d(F_{min})$ it follows that $N$ is a node of some of those subtrees $S_i$.
+			Because every leaf of $T$: $\, L\in \mathcal{L}(T_{min})$ is in some $F-$subtree of $T$, namely $S_i$, with $k < d(S_i)=d(F_{min})$ it follows that $N$ is a node of some of those subtrees $S_i$.
 			\item  Let $N\in \mathcal{N}(T_{min})$ with $d(N)= k=d(F_{min})$\\
 			This means for every leaf $L\in \mathcal{L}(N)$ ther exists $\mathds{N}\ni t\leq k$ with $N$ being $L's\,\, t'th$ parent.\\
 			Now suppose $N\not \Supset S_i$ for all $F-$subtrees of $T$ $S_i$.
@@ -463,8 +467,8 @@
 		\subsubsection{Unambigous depth, Balanced Cotrees and Factorization}
 		\begin{theorem}
 			Let $T_{min},F_{min}\in\mathds{T}_{\mathcal{B}}$ be cotrees with $T_{min}\vartriangleleft F_{min}$ and unambiguous depths.\\ $S_1,...,S_n\subseteq T$ the $F_{min}$-subtrees of $T_{min}$. I state that:
-			\[(1)\qquad \qquad \forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)\leq d(F_{min})\,\Longleftrightarrow\, N\in \mathcal{N}(S_i) \]
-			and which follows
+			\[(1)\qquad \qquad \forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)<d(F_{min})\,\Longleftrightarrow\, N\in \mathcal{N}(S_i) \]
+			and
 			\[(2)\qquad \forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)= d(F_{min})\,\Longleftrightarrow\, N \Supset S_i\cong F_{min} \]
 		\end{theorem}
 	\begin{proof}
@@ -472,7 +476,7 @@
 			\item ''$\Rightarrow$'' proved above.\\
 			''$\Leftarrow$'' Let $N\in\mathcal{N}(T_{min})$ with $N\in \mathcal{N}(S_i)$ for some $i\in\{1,...,n\}$\\
 			$N's$ depth will be unambiguous because $T_{min}$ has unambiguous depth. As well as $S_i$, for the reason that $\mathcal{L}(S_i)\subset \mathcal{L}(T_{min})$ and all $S_i's$ are pairwise disjoint except for their root $R\in \mathcal{N}(T_{min})$ which itself has unambiguous depth.\\
-			Because there $\exists D\in \mathcal{N}(T_{min})\,  $ with $\,S_i\Subset D$ and both are unambiguous from which follws that $d(S_i)=d(D)=d(F_{min})$. And because $N\in \mathcal{N}(D)$ it follows that $d(N)\leq d(D)=d(F_{min})$ 
+			Because there $\exists D\in \mathcal{N}(T_{min})\,  $ with $\,S_i\Subset D$ and both are unambiguous from which follws that $d(S_i)=d(D)=d(F_{min})$. And because $N\in \mathcal{N}(D)$ it follows that $d(N)< d(D)=d(F_{min})$ 
 			\item ''$\Rightarrow$'' proved above.\\
 			''$\Leftarrow$'' Let $N\in\mathcal{N}(T_{min})$ with $N \Subset S_i$ for some $i\in\{1,...,n\}$. They have at least one common leaf with each other.\\
 			$N's$ depth will be unambiguous because $T_{min}$ has unambiguous depth, as well as $S_i$.\\
@@ -484,13 +488,13 @@
 		TWO SUBTREES (ISOMORPH) OF SOME COTREE ARE ISOMORPH FOR BALANCED TREE
 		\begin{theorem}
 			Let $T,F\in\mathds{T}_{\mathcal{B}}$ be cotrees with $T\vartriangleleft F$.\\ $S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial factor. I state that:
-			\[(1)\qquad \qquad \forall N\in \mathcal{N}(\beta(T))\, \exists i\in\{1,...,n\}:\quad d(N)\leq d(\beta(F))\,\Longleftrightarrow\, N\in \mathcal{N}(\beta(S_i)) \]
-			and which follows
+			\[(1)\qquad \qquad \forall N\in \mathcal{N}(\beta(T))\, \exists i\in\{1,...,n\}:\quad d(N)< d(\beta(F))\,\Longleftrightarrow\, N\in \mathcal{N}(\beta(S_i)) \]
+			and 
 			\[(2)\qquad \forall N\in \mathcal{N}(\beta(T))\, \exists i\in\{1,...,n\}:\quad d(N)= d(\beta(F))\,\Longleftrightarrow\, N \Supset \beta(S_i)\cong \beta(F) \]
 			\begin{proof}
 				\begin{enumerate}[(1)]
-					\item ''$\Rightarrow$''\quad Let  $ N\in \mathcal{N}(\beta(T))$ with $ d(N)\leq d(\beta(F))$. It should be clear that $N=\beta (N)$.\\ Because $\exists i\in\{1,...,n\}\forall L \in \mathcal{L}(N)$ with $L\in \mathcal{L}(S_i)$, because from $S_{i_{min}} \cong F_{min}$ it follows that $\beta (S_i) \cong \beta (F)\quad$[Th. 1.3]. Therefore $N \in \mathcal(\beta(S_i))$.  \\
-							''$\Leftarrow$''\quad Let $N\in \mathcal{N}(\beta (S_i))$. From Theorem 1.3 and $ S_{i_{min}} \cong F_{min}$ it follows that $\beta (F) \cong \beta (S_i)$ which implies $d(\beta (S_i))=d(\beta (F))$ and with that $N\leq d(\beta(F))$
+					\item ''$\Rightarrow$''\quad Let  $ N\in \mathcal{N}(\beta(T))$ with $ d(N)< d(\beta(F))$. It should be clear that $N=\beta (N)$.\\ Because $\exists i\in\{1,...,n\}\forall L \in \mathcal{L}(N)$ with $L\in \mathcal{L}(S_i)$, because from $S_{i_{min}} \cong F_{min}$ it follows that $\beta (S_i) \cong \beta (F)\quad$[Th. 1.3]. Therefore $N \in \mathcal(\beta(S_i))$.  \\
+							''$\Leftarrow$''\quad Let $N\in \mathcal{N}(\beta (S_i))$. From Theorem 1.3 and $ S_{i_{min}} \cong F_{min}$ it follows that $\beta (F) \cong \beta (S_i)$ which implies $d(\beta (S_i))=d(\beta (F))$ and with that $N<d(\beta(F))$
 					\item ''$\Rightarrow$''\quad Let $N\in \mathcal{N}(\beta(T)):\quad d(N) = d(\beta (F))$ , it is clear that $N=\beta(N)$. Now let $L\in \mathcal{L}(N)$ be a leaf of $N$. We know that there $\exists i\in \{1,...,n\}$ with $L\in \mathcal{L}(\beta (S_i))$. Then $d(\beta(S_i)) = d(\beta (F)) = d(N)$. So if $N \not \Supset \beta(S_i)$ this contradicts the assumption, because then $N$ has to be above or below $\beta(S_i)$. With that $N  \Supset \beta(S_i)\cong \beta (F)$\\
 					''$\Leftarrow$''\quad Let $\mathcal{N}(\beta(T)) \ni N \Supset \beta(S_i) \cong \beta(F)$ because of the unambiguity of $N,\beta(S_i),\beta (F)$ and share at least one child they surely have the same depth.\\
 					$\implies d(N)=d(\beta(S_i))=d(\beta(F))$
@@ -502,11 +506,25 @@
 		The Hard Part about finding Factors will be the cotrees $T$ in which at least one node $N$ has at least two $S_i, S_j$ as its rooted subtrees.\\
 		The key idea for solving this is, after converting $T$ to $\beta(T)$ with unambiguous depth, we may split up nodes, in $m$ isomorphic nodes. 
 		\begin{definition}
-			Let $T$ be a cotree, $\beta(T)$ the cotree with unambiguous depth arising from $T$. And $\exists m\in \mathds{N}\backslash\{1\}\,\forall N=(r_N,\mathcal{C}_N)\in \mathcal{N}(\beta(T))\backslash \mathcal{L}(\beta(T)):\quad m \,\big |\,|\mathcal{C}_N|$
+			Let $T$ be a cotree.. $N=(r_N,\mathcal{C}_N)\in \mathcal{N}(T)$ with $\mathcal{P}(N)=P=(r_P,\mathcal{C}_P)$ and $r_P=r_N$. $\mathcal{C}_N=\{(C_1,m_1),...,(C_n,m_n)\}\, $ (in thought of a multiset). Let $d_1,...,d_k \big| ggT(m_1,...,m_n)\not= 1$. Then:
+			To split $N$ ($\zeta(N)$) in respect to $d_i,\,\, i \in\{1,...,k\}$ means:
+			\begin{itemize}
+				\item $\mathcal{C}_{P'} := \mathcal{C}_P\ N \cup \{(\hat{N},d_i )\}$ with
+				\[\hat{N}=(r_{\hat{N}}, \mathcal{C}_{\hat{N}})\qquad r_{\hat{N}}=r_N,\quad \mathcal{C}_{\hat{N}}=\{(C_1,m_1/d_i),...,(C_n,m_n/d_i)\}\]
+			\end{itemize} 
+			This is well defined, because $d_i \big | ggt(m_1,...,m_n)$.\\ The cotree resulting from this $T'$ is cotree isomorphic to $T$ because in $T_{min}\,$ $N$ will be collapsed into $P$ because they share the label. For $T'_{min}\,$ all $\hat{N}$ will be collapsed into $P'$ as well. With that and beacause nothing else changed in the splitting of $N$: $T'_{min}\cong T_{min}$ impling $T$ and $T'$ are cotree isomorphic.\qed
 		\end{definition}
+	\begin{theorem}
+			Let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ 	$S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial 		factor. And there $\exists N\in\mathcal{N}(\beta(T)) \forall i\in \{1,...,m\}\, m\leq 	n$ with $N\Supset \beta(S_i)$. And $d(\beta(F))=k$\\
+			Then 
+			\[\forall i \in \{1,...,m\}\forall M=(r_M, \mathcal{C}_M)\in \mathcal{N}(N):\quad \mathcal{P}(M) = P=(r_P,\mathcal{C}_P)\text{ with } r_P=r_M \implies N\in \mathcal{N}(\beta(S_i))\]			
+		\end{theorem}
 		\begin{theorem}
-				Let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ $S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial factor. And there $\exists N\in\mathcal{N}(\beta(T)) \forall i\in \{1,...,m\}\, m\leq n$ with $N\Supset \beta(S_i)$.\\
-				We may split every node $P\in \mathcal{N}(N)$ from bottom up, to get the subtrees $S_1,...,S_m$ with them sharing not one node.
+				Let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ $S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial factor. And there $\exists N\in\mathcal{N}(\beta(T)) \forall i\in \{1,...,m\}\, m\leq n$ with $N\Supset \beta(S_i)$. And $d(\beta(F))=k$\\
+				Then we may split those trees up that in the new tree $\zeta (T)$ The subtrees are pairwise disjoint.
+				\begin{proof}
+					Start with all nodes of $N\in \mathcal{N}(\beta(T))$ with $d=1$:
+				\end{proof}				
 		\end{theorem}
 		
 	\subsection{Find Isomorph Trees with AHU}

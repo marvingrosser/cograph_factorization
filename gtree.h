@@ -17,13 +17,14 @@
 #include <vector>
 #include <string.h>
 #include <set>
+#include "int_multiset.h"
 #define DATA_SIZE sizeof(unsigned long long)
 
 class gtree {
 public:
     unsigned int getId();
     void setId(unsigned int id);
-    multiset<unsigned int> getKnuthTuple(unsigned int depth);
+    int_multiset getKnuthTuple(unsigned int depth, unsigned int h_index);
     vector<vector<gtree*>> getFactors();
     void writeInDepthDict(vector<vector<gtree*>> *depthdict);
     gtree();
@@ -76,8 +77,9 @@ public:
      */
     gtree* getChild(unsigned short i);
     virtual ~gtree();
+    unsigned int * getDepth();
 private:
-    int compareKnuthTuples(multiset<unsigned int> t1, multiset<unsigned int> t2); // Write own multisetcomparator
+    int compareKnuthTuples(int_multiset t1, int_multiset t2); // Write own multisetcomparator
     void constructChildren(graph * g, vector<unsigned long long*> * components,vector<vector<gtree*>> *depthdict );
     unsigned int id;
     unsigned int* depth;

@@ -12,28 +12,15 @@
  */
 
 #include "gtree.h"
-struct multicomp {
-  bool operator() (const multiset<unsigned int>& lhs, const multiset<unsigned int>& rhs) const
-  
-  {
-      unsigned int beg = (lhs.begin() < rhs.begin()? lhs.begin(): rhs.begin());
-      unsigned int end = (lhs.begin() > rhs.begin()? lhs.begin(): rhs.begin());
-      for(std::multiset<unsigned int>::iterator it = beg; it != end; ++it){
-      
-      
-      }
-      return true;
-  }
-};
-struct KT{
-    multiset<unsigned int> tuple;
-    vector<gtree*> adresses;
-};
-multiset<unsigned int> gtree::getKnuthTuple(unsigned int depth){
-    multiset<unsigned int> tuple;
+unsigned int * gtree::getDepth(){
+    return this->depth;
+}
+int_multiset gtree::getKnuthTuple(unsigned int depth, unsigned int h_index){
+    int_multiset tuple = *new int_multiset(h_index);
     for(gtree* child: this->childs){
-        unsigned int cid = child->getId();
-        tuple.insert(cid);
+        if(child->getDepth()[0] < depth ){
+            tuple.add(child->getId());
+        }
     }
     return tuple;
 }
@@ -44,24 +31,7 @@ void gtree::setId(unsigned int id){
     this->id = id;
 }
 vector<vector<gtree*>> gtree::getFactors(){
-    multiset<multiset<unsigned int>> MS;
-    multiset<unsigned int> ns;
-    ns.insert(2);
-    ns.insert(2);
-    ns.insert(4);
-    ns.insert(4);
-    MS.insert(ns);
-    ns.erase(2);
-    ns.erase(4);
-    ns.insert(2);
-    ns.insert(4);
-    MS.insert(ns);
-    ns.erase(2);
-    ns.erase(4);
-    ns.insert(2);
-    ns.insert(3);
-    ns.insert(4);
-    MS.insert(ns);
+    
     return *new vector<vector<gtree*>>;
 }
 string gtree::get_string(){
@@ -100,7 +70,7 @@ void gtree::constructChildren(graph* g, vector<unsigned long long*>* components,
                 unsigned int *cdepth = new unsigned int[2];
                 gtree* child = new gtree(g, thiscomponent, !this->state,cdepth, depthdict);
                 
-                this->depth[0]= (cdepth[0] + 1 < this->depth[0]? cdepth[0] + 1 : this->depth[0]);
+                this->depth[0]= (cdepth[1] + 1 < this->depth[0]? cdepth[1] + 1 : this->depth[0]);
                 this->depth[1]= (cdepth[1] + 1 > this->depth[1]? cdepth[1] + 1 : this->depth[1]);
                 
                 this->childs.push_back(child);

@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/graph.o \
 	${OBJECTDIR}/gtree.o \
+	${OBJECTDIR}/int_multiset.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/reader.o \
 	${OBJECTDIR}/vertice.o
@@ -75,6 +76,11 @@ ${OBJECTDIR}/gtree.o: gtree.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gtree.o gtree.cpp
+
+${OBJECTDIR}/int_multiset.o: int_multiset.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/int_multiset.o int_multiset.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

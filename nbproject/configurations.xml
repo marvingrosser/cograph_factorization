@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>graph.h</itemPath>
       <itemPath>gtree.h</itemPath>
+      <itemPath>int_multiset.h</itemPath>
       <itemPath>reader.h</itemPath>
       <itemPath>vertice.h</itemPath>
     </logicalFolder>
@@ -18,6 +19,7 @@
                    projectFiles="true">
       <itemPath>graph.cpp</itemPath>
       <itemPath>gtree.cpp</itemPath>
+      <itemPath>int_multiset.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>reader.cpp</itemPath>
       <itemPath>vertice.cpp</itemPath>
@@ -54,6 +56,10 @@
       <item path="gtree.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="gtree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="int_multiset.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="int_multiset.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -93,6 +99,10 @@
       <item path="gtree.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="gtree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="int_multiset.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="int_multiset.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -18,3 +18,4 @@
 \contentsline {subsubsection}{\numberline {1.8.2}Better Indexing}{12}{subsubsection.1.8.2}%
 \contentsline {section}{\numberline {2}Practical Improvements}{12}{section.2}%
 \contentsline {section}{\numberline {3}Algorithm}{12}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Cotree with unambiguous depth from minimal cotree}{12}{subsection.3.1}%

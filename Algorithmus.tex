@@ -8,8 +8,7 @@
 \usepackage[utf8]{inputenc}
 %\usepackage[latin1]{inputenc}
 \usepackage[active]{srcltx}
-\usepackage{algorithm}
-\usepackage[noend]{algorithmic}
+\usepackage[boxed]{algorithm2e}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -27,6 +26,7 @@
 \usepackage{dsfont}
 \usepackage{multicol}
 \usepackage{pgfplots}
+\usepackage{algpseudocode}
 \usetikzlibrary{trees}
 \pgfplotsset{compat=newest}
 \usetikzlibrary{shapes.geometric}
@@ -41,12 +41,9 @@
 }}}
 \renewcommand\qedsymbol{$\blacksquare$}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\Fach}{Grenzwerte}
+
 \newcommand{\Semester}{SoSe 21}
 \newcommand{\Uebungsblatt}{Lexicographic Cotree Factorization} 
-\newcommand{\nl}{\\[0,20cm]}
-\newcommand{\lnl}{\\[0,30cm]}
-\newcommand{\xlnl}{\\[0,75cm]}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -546,5 +543,61 @@
 	The key idea of the following will be that we do that assignment level wise on both trees at the same time. We order those assignments and for $n$ different strings give numbers from $1,...,n$, called indexes. Proceed with one level above and so on.
 	\section{Practical Improvements}
 	\section{Algorithm}
+	\subsection{Cotree with unambiguous depth from minimal cotree}
+	By creating new nodes:
+	\begin{function}
+		\caption{calculateUnambiguousCotree($r_T, \mathcal{C}_T$) for $T_{min}=(r_T, \mathcal{C}_T)\in \mathds{T}_{\mathcal{B}}$}
+		\For{$\forall C=(r_c,\mathcal{C}_C) \in \mathcal{C}_T$}{
+			calculateUnambiguousCotree($r_C, \mathcal{C}_C$) \Comment{Assure Children will be unambiguous}
+		}
+		$\mathcal{D}_{max\{d(C) \,| \, C \in \mathcal{C}_T\} - 1} := \mathcal{C}_T$\\
+		\For{$i:= max\{d(C) \,| \, C \in \mathcal{C}_T\} - 1$ to $i=min\{d(C) \,| \, C \in \mathcal{C}_T\}$}{
+			$\mathcal{C}_i := \{C \,|\, d(C)=i \land C \in \mathcal{C}_T\}$\\
+			$\mathcal{D}_{i+1} := \emptyset$\\
+			$\mathcal{D}_i := \mathcal{D}_i \cup {(r_T,\mathcal{D}_{i+1})}$\\
+			\If{$C_i \not = \emptyset$}{
+				$\mathcal{C}_T := \mathcal{C}_T \backslash \mathcal{C}_i$\\
+				$\mathcal{D}_{i+1} := \mathcal{D}_{i+1} \cup \mathcal{C}_i$
+			}
+		}
+	\end{function}\\
+	By assigning multiple depths to ambiguous nodes:
+	\begin{function}
+		\caption{calculateUnambiguousCotree($r_T, \mathcal{C}_T$) for $T_{min}=(r_T, \mathcal{C}_T)\in \mathds{T}_{\mathcal{B}}$ returns $(r, \mathcal{C}, d_{min}, d_{max})$}
+		$r:=r_T$\\
+		$\mathcal{C}:= \emptyset$\\
+		$d_{min} := \infty$\\
+		$d_{max} :=  - \infty$\\
+			\For{$\forall C=(r_c,\mathcal{C}_C) \in \mathcal{C}_T$}{
+			$(r_{N},\mathcal{C}_{N}, d_{min}^{N},d_{max}^{N}):=  $ calculateUnambiguousCotree($r_C, \mathcal{C}_C$) \\
+			$\mathcal{C}:= \mathcal{C}\,\cup \{(r_{N},\mathcal{C}_{N}, d_{min}^{N},d_{max}^{N})\} $ \\
+			\If{$d_{max}^{N} + 1 < d_{min}$}{
+				$d_{min}:= d_{max}^{N} + 1$
+			}
+			\If{$d_{max}^{N} + 1 > d_{max}$}{
+				$d_{max}:= d_{max}^{N} + 1$
+			}
+		}
+	\Return $(r, \mathcal{C}, d_{min}, d_{max})$
 		
+	\end{function}\\
+	\begin{function}
+		\caption{calculateUnambiguousCotree($r_T, \mathcal{C}_T$) for $T_{min}=(r_T, \mathcal{C}_T)\in \mathds{T}_{\mathcal{B}}$ returns $(r, \mathcal{C}, d_{min}, d_{max})$}
+		$r:=r_T$\\
+		$\mathcal{C}:= \emptyset$\\
+		$d_{min} := \infty$\\
+		$d_{max} :=  - \infty$\\
+		\For{$\forall C=(r_c,\mathcal{C}_C) \in \mathcal{C}_T$}{
+			$(r_{N},\mathcal{C}_{N}, d_{min}^{N},d_{max}^{N}):=  $ calculateUnambiguousCotree($r_C, \mathcal{C}_C$) \\
+			$\mathcal{C}:= \mathcal{C}\,\cup \{(r_{N},\mathcal{C}_{N}, d_{min}^{N},d_{max}^{N})\} $ \\
+			\If{$d_{max}^{N} + 1 < d_{min}$}{
+				$d_{min}:= d_{max}^{N} + 1$
+			}
+			\If{$d_{max}^{N} + 1 > d_{max}$}{
+				$d_{max}:= d_{max}^{N} + 1$
+			}
+		}
+		\Return $(r, \mathcal{C}, d_{min}, d_{max})$
+		
+	\end{function}\\
 \end{document} 

@@ -12,7 +12,7 @@
  */
 
 #include "int_multiset.h"
-
+int_multiset::int_multiset(){}
 int_multiset::int_multiset(unsigned int length) {
     this->data = (ituple*) malloc(length* sizeof(ituple));
     this->length = length;

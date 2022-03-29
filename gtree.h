@@ -17,22 +17,24 @@
 #include <vector>
 #include <string.h>
 #include <set>
-#include "int_multiset.h"
+#include <algorithm>
+#include <map>
 #define DATA_SIZE sizeof(unsigned long long)
 
 class gtree {
 public:
     unsigned int getId();
     void setId(unsigned int id);
-    int_multiset getKnuthTuple(unsigned int depth, unsigned int h_index);
-    vector<vector<gtree*>> getFactors();
+    
+    map<unsigned int,unsigned int> getKnuthTuple(unsigned int depth, bool minimal);
+    vector<vector<gtree>> getFactors(vector<vector<gtree*>> *depthdict, vector<vector<gtree>> factors);
     void writeInDepthDict(vector<vector<gtree*>> *depthdict);
     gtree();
     /**
      * Construct Cotree from graph
      * @param g
      */
-    gtree(graph* g);
+    gtree(graph* g, vector<vector<gtree*>> depthdict);
     /**
      * Construct cotree from graph and pass inversions
      * @param g
@@ -79,13 +81,18 @@ public:
     virtual ~gtree();
     unsigned int * getDepth();
 private:
-    int compareKnuthTuples(int_multiset t1, int_multiset t2); // Write own multisetcomparator
+    unsigned int getGCDFromPrimeTuple(map<unsigned int,unsigned int> primeMultiset, map<unsigned int, unsigned int> multiset);
+    bool isDivisible(map<unsigned int, unsigned int> divident, map<unsigned int, unsigned int> divisor );
+     map<unsigned int,unsigned int> constructLCDTUple( map<unsigned int,unsigned int> tuple, unsigned int gcd);
+    unsigned int lcd(unsigned int a, unsigned int b);
+    unsigned int gcdTuple(map<unsigned int,unsigned int> gcdTuple);
+    int findInMultisetVector(vector< map<unsigned int,unsigned int>> vec,  map<unsigned int,unsigned int> ms);
+    void createIndices(vector<vector<gtree*>> depthdict);
     void constructChildren(graph * g, vector<unsigned long long*> * components,vector<vector<gtree*>> *depthdict );
     unsigned int id;
     unsigned int* depth;
     bool state; 
     vector<gtree*> childs;
-    vector<vector<gtree*>> depthdict;
 };
 
 #endif /* GTREE_H */

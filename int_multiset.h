@@ -22,6 +22,7 @@ struct ituple{
 
 class int_multiset {
 public:
+    int_multiset();
     std::set<unsigned int> getSet();
     int_multiset(unsigned int length);
     void add(unsigned int index);

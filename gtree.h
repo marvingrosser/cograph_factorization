@@ -30,6 +30,14 @@ public:
     vector<vector<gtree>> getFactors(vector<vector<gtree*>> *depthdict, vector<vector<gtree>> factors);
     void writeInDepthDict(vector<vector<gtree*>> *depthdict);
     gtree();
+    gtree(bool state);
+    /**
+     * Construct fully connected graph with k vertices 
+     * @param k
+     *
+     */
+    gtree(unsigned int k);
+    gtree(vector<gtree*>* children, unsigned int from, unsigned int to);
     /**
      * Construct Cotree from graph
      * @param g
@@ -42,7 +50,6 @@ public:
      * @param state
      */
     gtree(graph* g, unsigned long long* component, bool state, unsigned int* pdepth, vector<vector<gtree*>> *depthdict);
-    gtree(bool state);
     gtree(const gtree& orig);
     vector<gtree*> getChilds();
     /**
@@ -78,9 +85,23 @@ public:
      * @return 
      */
     gtree* getChild(unsigned short i);
+    unsigned int getChildNum(unsigned int depth);
     virtual ~gtree();
     unsigned int * getDepth();
+    vector<vector<gtree*>> getFactors();
+    set<vector<unsigned int>> getPrimeFactorizations(unsigned int gcd);
+    vector<unsigned int> getPrimeFactorization(unsigned int x, unsigned int i, vector<unsigned int> factors);
+    set<vector<unsigned int>> permutateFactorMultiset(vector<unsigned int> factors);
 private:
+    /**
+     * get lexicographic factors for Cotree
+     * @param heads
+     * @param depth
+     * @param divisor
+     * @return 
+     */
+    vector<vector<gtree*>> getFactors(vector<gtree*> heads, unsigned int depth, unsigned int divisor, vector<gtree*>* new_factor);
+    vector<gtree*> collectChilds(vector<gtree*> heads, unsigned int depth);
     unsigned int getGCDFromPrimeTuple(map<unsigned int,unsigned int> primeMultiset, map<unsigned int, unsigned int> multiset);
     bool isDivisible(map<unsigned int, unsigned int> divident, map<unsigned int, unsigned int> divisor );
      map<unsigned int,unsigned int> constructLCDTUple( map<unsigned int,unsigned int> tuple, unsigned int gcd);

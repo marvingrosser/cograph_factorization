@@ -26,8 +26,14 @@ int main(int argc, char** argv) {
     std::cout << g->get_string()<< std::endl;
     vector<vector<gtree*>> depthdict;
     gtree * gt = new gtree(g, depthdict);
-    //vector<vector<gtree*>> f = gt->getFactors();
     std::cout << "\nTree: \n\n"<< gt->get_string() <<std::endl;
+    vector<vector<gtree*>> f = gt->getFactors();
+    for(vector<gtree*> factorline : f){
+        for(gtree* factor : factorline){
+            std::cout << factor->get_string() << std::endl << "– – – – – – – – – – – – – – - -" << std::endl;
+        }
+        std::cout << "###############################" << std::endl;
+    }
     
     
     return 0;

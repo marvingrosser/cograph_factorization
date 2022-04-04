@@ -124,6 +124,7 @@ set<vector<unsigned int>> gtree::getPrimeFactorizations(unsigned int gcd){
 }
 gtree::gtree(bool state){
     this->state = state;
+    this->depth = new unsigned int[2];
 }
 gtree::gtree(unsigned int k, unsigned int id){
     this->depth = new unsigned int[2];
@@ -136,7 +137,7 @@ gtree::gtree(unsigned int k, unsigned int id){
     }
     this->state = true;
     this->depth[0]=1;
-        this->depth[1]=1;
+    this->depth[1]=1;
     this->id=id;
     for(unsigned int i = 0; i < k; i++){
         gtree * child = new gtree();
@@ -180,7 +181,6 @@ vector<vector<gtree*>> gtree::getFactors(vector<gtree*> heads, unsigned int dept
                 new_factor->push_back(new gtree((unsigned int)gcds[h]/gcd, heads[h]->getId()));
             
             
-            
         }
         
        
@@ -190,7 +190,7 @@ vector<vector<gtree*>> gtree::getFactors(vector<gtree*> heads, unsigned int dept
         for(std::set<vector<unsigned int>>::iterator it = factorizations.begin() ; it!= factorizations.end(); ++it){
             vector<gtree*> kTower = *new vector<gtree*>;
             for(unsigned int k: *it){
-                gtree * kTree = new gtree(k);
+                gtree * kTree = new gtree(k,k);
                 kTower.push_back(kTree);
             }
             allTowers.push_back(kTower);
@@ -233,7 +233,7 @@ vector<vector<gtree*>> gtree::getFactors(vector<gtree*> heads, unsigned int dept
         unsigned int * ffdepth = new unsigned int[2];
         ffdepth[0] = -1;
         ffdepth[1] = 0;
-        gtree *followingFactorComposition = (followingFactor.empty()? NULL:new gtree(&followingFactor, 0, followingFactor.size(),ffdepth,42069, true));
+        gtree *followingFactorComposition = (followingFactor.empty()? NULL:new gtree(&followingFactor, 0, followingFactor.size(),ffdepth, 42069, true));
         for(vector<gtree*> factorcommingafterme: factorscommingafterme){
             for(vector<gtree*> tower: allTowers){
                 vector<gtree*> concatFactors (tower);
@@ -437,6 +437,7 @@ string gtree::get_string(string intendation, bool isLast){
     
 }
 gtree::gtree() {
+    this->depth = new unsigned int[2];
 }
 
 gtree::gtree(const gtree& orig) {

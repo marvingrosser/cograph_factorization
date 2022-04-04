@@ -22,7 +22,7 @@ using namespace std;
  */
 int main(int argc, char** argv) {
     graph *g = new graph("src/data/problem.graph"); 
-
+    //graph *g = new graph("src/data/graph2.graph"); 
     std::cout << g->get_string()<< std::endl;
     vector<vector<gtree*>> depthdict;
     gtree * gt = new gtree(g, depthdict);

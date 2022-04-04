@@ -29,6 +29,8 @@ public:
     map<unsigned int,unsigned int> getKnuthTuple(unsigned int depth, bool minimal);
     vector<vector<cotree>> getFactors(vector<vector<cotree*>> *depthdict, vector<vector<cotree>> factors);
     void writeInDepthDict(vector<vector<cotree*>> *depthdict);
+    void minimalizeFirstLayer();
+    unsigned int getChildNum();
     cotree();
     cotree(bool state);
     /**
@@ -36,7 +38,7 @@ public:
      * @param k
      *
      */
-    cotree(unsigned int k,unsigned int id);
+    cotree(unsigned int k,unsigned int id, bool state);
     cotree(vector<cotree*>* children, unsigned int from, unsigned int to, unsigned int * depth, unsigned int id, bool state);
     /**
      * Construct Cotree from graph

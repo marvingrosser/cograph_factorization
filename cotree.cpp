@@ -15,8 +15,8 @@
 #include "cotree.h"
 
 unsigned int cotree::getGCDFromPrimeTuple(map<unsigned int,unsigned int> primeMultiset, map<unsigned int,unsigned int> multiset){
-    std::cout << (*(primeMultiset.end())).first << std::endl;
-    std::cout << primeMultiset[(*(primeMultiset.begin())).first] << std::endl;
+    //std::cout << (*(primeMultiset.end())).first << std::endl;
+    //std::cout << primeMultiset[(*(primeMultiset.begin())).first] << std::endl;
     return (unsigned int) (multiset[(*primeMultiset.begin()).first]/primeMultiset[(*primeMultiset.begin()).first]);
 }
 bool cotree::isDivisible(map<unsigned int,unsigned int> divident, map<unsigned int,unsigned int> divisor){
@@ -71,9 +71,7 @@ vector<vector<cotree*>> cotree::getFactors(){
     head.push_back(this);
     vector<cotree*>  lastFactor = *new vector<cotree*>;
     vector<vector<cotree*>> factors = cotree::getFactors(head, this->depth[1],(unsigned int) 1, &lastFactor);
-    for(unsigned int i = 0; i < factors.size(); i++){
-        factors[i].insert(factors[i].begin(), lastFactor.begin(), lastFactor.end());
-    }
+    
     return factors;
 }
 unsigned int cotree::getChildNum(unsigned int depth){
@@ -95,18 +93,20 @@ vector<unsigned int> cotree::getPrimeFactorization(unsigned int x, unsigned int 
         return cotree::getPrimeFactorization(x,i+1,factors);
     }
 }
-set<vector<unsigned int>> cotree::permutateFactorMultiset(vector<unsigned int> factors){
+set<vector<unsigned int>> cotree::permutateFactorMultiset(vector<unsigned int> factors){ //permutates the factorization of some Integer, by varying the placement.
     set<vector<unsigned int>> permutated;
     if(factors.size() == 1){
         permutated.insert(factors);
         return permutated;
-    }
+    }//number already prime
+    
     for(unsigned int i = 0; i < factors.size();i++){
         vector<unsigned int> withoutThisFactor (factors);
-        withoutThisFactor.erase(factors.begin() + i);
+        withoutThisFactor.erase(withoutThisFactor.begin() + i);
+        
         
         set<vector<unsigned int>> recursivePermutation = cotree::permutateFactorMultiset(withoutThisFactor);
-        for(std::set<vector<unsigned int>>::iterator it = recursivePermutation.begin(); it !=recursivePermutation.end(); ++it){
+        for(std::set<vector<unsigned int>>::iterator it = recursivePermutation.begin(); it !=recursivePermutation.end(); ++it){ //bring the permutated factorizations together
             vector<unsigned int> extractedP (*it);
             extractedP.push_back(factors[i]);
             permutated.insert(extractedP);
@@ -115,7 +115,7 @@ set<vector<unsigned int>> cotree::permutateFactorMultiset(vector<unsigned int> f
     }
     return permutated;
 }
-set<vector<unsigned int>> cotree::getPrimeFactorizations(unsigned int gcd){
+set<vector<unsigned int>> cotree::getPrimeFactorizations(unsigned int gcd){ //get Factorizations (order NOT neglegtable) of some Number
     vector<unsigned int> factorization = cotree::getPrimeFactorization(gcd, 2, *new vector<unsigned int>);
     
     //permutate the factorizations
@@ -125,17 +125,13 @@ set<vector<unsigned int>> cotree::getPrimeFactorizations(unsigned int gcd){
 cotree::cotree(bool state){
     this->state = state;
     this->depth = new unsigned int[2];
+    this->depth[0] = 0;
+    this->depth[1] = 0;
 }
-cotree::cotree(unsigned int k, unsigned int id){
+cotree::cotree(unsigned int k, unsigned int id,bool state){ //init a K-Cotree with k vertices (fully connected)
+    if(k==1)k=0;
     this->depth = new unsigned int[2];
-    if(k==1){
-        this->depth[0]=0;
-        this->depth[1]=0;
-        this->state = true;
-        this->id=id;
-        return;
-    }
-    this->state = true;
+    this->state = state;
     this->depth[0]=1;
     this->depth[1]=1;
     this->id=id;
@@ -145,19 +141,24 @@ cotree::cotree(unsigned int k, unsigned int id){
         child->depth = new unsigned int[2];
         child->depth[0] = 0;
         child->depth[1] = 0;
-        child->state = false;
+        child->state = !state;
         child->id = 0;
     }
+}
+unsigned int cotree::getChildNum(){
+    return (unsigned int)this->childs.size();
 }
 vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int depth, unsigned int divisor, vector<cotree*>* new_factor){
     vector<vector<cotree*>> factors;
     if(depth == 0){
         *new_factor = heads ;
+        
+        
         factors.push_back(*new vector<cotree*>);
         return factors;
     }
     
-    std::cout <<"recursion with depth = " << to_string(depth)<<  std::endl;
+    //std::cout <<"recursion with depth = " << to_string(depth)<<  std::endl;
     map<unsigned int, unsigned int> firstTuple = heads.at(0)->getKnuthTuple(depth,false);
     unsigned int gcd = cotree::gcdTuple(firstTuple);
     map<unsigned int,unsigned int> primeMultiset = cotree::constructLCDTUple(firstTuple, gcd);
@@ -176,22 +177,20 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
     }
     if(gcd!=0){//wir müssen hier noch alle möglichkeiten zusqammenführen (also auch normal weiter laufen lassen :))
         //pollish prev factor
-        for(unsigned int h=0; h < heads.size();h++){
-            
-                new_factor->push_back(new cotree((unsigned int)gcds[h]/gcd, heads[h]->getId()));
-            
-            
-        }
+        
         
        
         
         set<vector<unsigned int>> factorizations = cotree::getPrimeFactorizations(gcd);
         vector<vector<cotree*>> allTowers;
+        
         for(std::set<vector<unsigned int>>::iterator it = factorizations.begin() ; it!= factorizations.end(); ++it){
             vector<cotree*> kTower = *new vector<cotree*>;
+            bool rootstate = heads[0]->getState();
             for(unsigned int k: *it){
-                cotree * kTree = new cotree(k,k);
+                cotree * kTree = new cotree(k,k, rootstate);
                 kTower.push_back(kTree);
+                rootstate = !rootstate;
             }
             allTowers.push_back(kTower);
         }
@@ -216,24 +215,18 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
                     headgotpushed = true;
                     newHeads.push_back(&divhead);
                 }
-                /**for(gtree* childOfambiguousDepthNode : child->getChilds()){
-                    unsigned int id = childOfambiguousDepthNode->getId();
-                    if(childOfambiguousDepthNode->depth[1] < depth - 1 && primeMultiset[id] > 0){
-                        primeMultiset[id] = 0;
-                        
-                        newHeads.push_back();
-                        break;
-                    }
-                }*/
             }
         }
         
         vector<cotree*> followingFactor = *new vector<cotree*>; 
-        vector<vector<cotree*>> factorscommingafterme = cotree::getFactors(newHeads, depth - 1, gcds[0],&followingFactor );
+        vector<vector<cotree*>> factorscommingafterme = cotree::getFactors(newHeads, depth - 1, 1,&followingFactor );
+       // 
+        
         unsigned int * ffdepth = new unsigned int[2];
         ffdepth[0] = -1;
         ffdepth[1] = 0;
-        cotree *followingFactorComposition = (followingFactor.empty()? NULL:new cotree(&followingFactor, 0, followingFactor.size(),ffdepth, 42069, true));
+        cotree *followingFactorComposition = (followingFactor.size() == 1 && followingFactor[0]->getChildNum()==0? NULL:new cotree(&followingFactor, 0, followingFactor.size(),ffdepth, heads[0]->getId(), true));
+        if(followingFactorComposition != NULL)followingFactorComposition->minimalizeFirstLayer(); //why does this like nothing????
         for(vector<cotree*> factorcommingafterme: factorscommingafterme){
             for(vector<cotree*> tower: allTowers){
                 vector<cotree*> concatFactors (tower);
@@ -244,6 +237,19 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
                 factors.push_back(concatFactors);
             }
         }
+        //vector<vector<cotree*>> didnSplit = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, 1, new_factor); /new factor wird aus 2 blickwinkeln gefüllt
+        //factors.insert(factors.end(), didnSplit.begin(), didnSplit.end());
+        
+        for(unsigned int h=0; h < heads.size();h++){
+            
+                new_factor->push_back(new cotree((unsigned int)gcds[h]/gcd, 
+                                        heads[h]->getId(), 
+                                        heads[h]->getState() ));
+            
+            
+            
+        }
+        
         vector<cotree*> nf (*new_factor);
         return factors;
         
@@ -264,6 +270,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
             }            
             if(head->getDepth()[1]==depth){
                 cotree* newFactorNode = new cotree(new_factor, factorcounter, factorcounter + childnum, head->getDepth(),head->getId(),head->getState() );
+                newFactorNode->minimalizeFirstLayer();
                 std::vector<cotree*>::iterator it = new_factor->begin() + factorcounter;
                 new_factor->insert(it,newFactorNode);
             }else{
@@ -273,6 +280,17 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
         nf = (*new_factor);
         return prev_factors;
     }
+}
+void cotree::minimalizeFirstLayer(){
+    for(unsigned int i=0; i < this->childs.size(); i++){
+        if(this->getState() == this->childs[i]->getState()){
+            vector<cotree*> childsOfChild = this->childs[i]->getChilds();
+            this->childs.insert(this->childs.end(),childsOfChild.begin(), childsOfChild.end() );
+            this->childs.erase(this->childs.begin() + i);
+            i--;
+        }
+    }
+
 }
 void cotree::deleteAboveDepthAndDivideChilds(unsigned int depth, unsigned int divisor){
     for( unsigned int i = 0; i < this->childs.size(); i++){
@@ -366,12 +384,12 @@ unsigned int * cotree::getDepth(){
         return *new  map<unsigned int,unsigned int>;
     }
     unsigned int num = 0;
-    std::cout << "---"<< std::endl;
+    //std::cout << "---"<< std::endl;
     map<unsigned int,unsigned int> tuple;
     for(cotree* child: this->childs){
         if(child->getDepth()[1] < depth ){
             tuple[child->getId()] = tuple[child->getId()] + 1;
-            std::cout << child->getId()<< ":" << tuple[child->getId()]  <<  std::endl;
+            //std::cout << child->getId()<< ":" << tuple[child->getId()]  <<  std::endl;
         }
     }
     return tuple;
@@ -406,7 +424,6 @@ void cotree::createIndices(vector<vector<cotree*>> depthdict){
         last_depths_index += tuples.size();
         //sort tuples
     }
-
 }
 unsigned int cotree::getId(){
     return this->id;

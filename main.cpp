@@ -28,6 +28,8 @@ int main(int argc, char** argv) {
     cotree * gt = new cotree(g, depthdict);
     std::cout << "\nTree: \n\n"<< gt->get_string() <<std::endl;
     vector<vector<cotree*>> f = gt->getFactors();
+
+    std::cout << "###############################" << std::endl;
     for(vector<cotree*> factorline : f){
         for(cotree* factor : factorline){
             std::cout << factor->get_string() << std::endl << "– – – – – – – – – – – – – – - -" << std::endl;

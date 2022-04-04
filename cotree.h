@@ -21,38 +21,38 @@
 #include <map>
 #define DATA_SIZE sizeof(unsigned long long)
 
-class gtree {
+class cotree {
 public:
     unsigned int getId();
     void setId(unsigned int id);
     void deleteAboveDepthAndDivideChilds(unsigned int depth, unsigned int divisor);
     map<unsigned int,unsigned int> getKnuthTuple(unsigned int depth, bool minimal);
-    vector<vector<gtree>> getFactors(vector<vector<gtree*>> *depthdict, vector<vector<gtree>> factors);
-    void writeInDepthDict(vector<vector<gtree*>> *depthdict);
-    gtree();
-    gtree(bool state);
+    vector<vector<cotree>> getFactors(vector<vector<cotree*>> *depthdict, vector<vector<cotree>> factors);
+    void writeInDepthDict(vector<vector<cotree*>> *depthdict);
+    cotree();
+    cotree(bool state);
     /**
      * Construct fully connected graph with k vertices 
      * @param k
      *
      */
-    gtree(unsigned int k,unsigned int id);
-    gtree(vector<gtree*>* children, unsigned int from, unsigned int to, unsigned int * depth, unsigned int id, bool state);
+    cotree(unsigned int k,unsigned int id);
+    cotree(vector<cotree*>* children, unsigned int from, unsigned int to, unsigned int * depth, unsigned int id, bool state);
     /**
      * Construct Cotree from graph
      * @param g
      */
-    gtree(graph* g, vector<vector<gtree*>> depthdict);
+    cotree(graph* g, vector<vector<cotree*>> depthdict);
     /**
      * Construct cotree from graph and pass inversions
      * @param g
      * @param component
      * @param state
      */
-    gtree(graph* g, unsigned long long* component, bool state, unsigned int* pdepth, vector<vector<gtree*>> *depthdict);
-    gtree(const gtree& orig);
-    gtree(gtree* other);
-    vector<gtree*> getChilds();
+    cotree(graph* g, unsigned long long* component, bool state, unsigned int* pdepth, vector<vector<cotree*>> *depthdict);
+    cotree(const cotree& orig);
+    cotree(cotree* other);
+    vector<cotree*> getChilds();
     /**
      * Construct String representing the graph
      * @return 
@@ -79,17 +79,17 @@ public:
      * adds Child to Childs
      * @param child
      */
-    void addChild(gtree * child);
+    void addChild(cotree * child);
     /**
      * returns child with certain indeces
      * @param i
      * @return 
      */
-    gtree* getChild(unsigned short i);
+    cotree* getChild(unsigned short i);
     unsigned int getChildNum(unsigned int depth);
-    virtual ~gtree();
+    virtual ~cotree();
     unsigned int * getDepth();
-    vector<vector<gtree*>> getFactors();
+    vector<vector<cotree*>> getFactors();
     set<vector<unsigned int>> getPrimeFactorizations(unsigned int gcd);
     vector<unsigned int> getPrimeFactorization(unsigned int x, unsigned int i, vector<unsigned int> factors);
     set<vector<unsigned int>> permutateFactorMultiset(vector<unsigned int> factors);
@@ -101,20 +101,20 @@ private:
      * @param divisor
      * @return 
      */
-    vector<vector<gtree*>> getFactors(vector<gtree*> heads, unsigned int depth, unsigned int divisor, vector<gtree*>* new_factor);
-    vector<gtree*> collectChilds(vector<gtree*> heads, unsigned int depth);
+    vector<vector<cotree*>> getFactors(vector<cotree*> heads, unsigned int depth, unsigned int divisor, vector<cotree*>* new_factor);
+    vector<cotree*> collectChilds(vector<cotree*> heads, unsigned int depth);
     unsigned int getGCDFromPrimeTuple(map<unsigned int,unsigned int> primeMultiset, map<unsigned int, unsigned int> multiset);
     bool isDivisible(map<unsigned int, unsigned int> divident, map<unsigned int, unsigned int> divisor );
      map<unsigned int,unsigned int> constructLCDTUple( map<unsigned int,unsigned int> tuple, unsigned int gcd);
     unsigned int lcd(unsigned int a, unsigned int b);
     unsigned int gcdTuple(map<unsigned int,unsigned int> gcdTuple);
     int findInMultisetVector(vector< map<unsigned int,unsigned int>> vec,  map<unsigned int,unsigned int> ms);
-    void createIndices(vector<vector<gtree*>> depthdict);
-    void constructChildren(graph * g, vector<unsigned long long*> * components,vector<vector<gtree*>> *depthdict );
+    void createIndices(vector<vector<cotree*>> depthdict);
+    void constructChildren(graph * g, vector<unsigned long long*> * components,vector<vector<cotree*>> *depthdict );
     unsigned int id;
     unsigned int* depth;
     bool state; 
-    vector<gtree*> childs;
+    vector<cotree*> childs;
 };
 
 #endif /* GTREE_H */

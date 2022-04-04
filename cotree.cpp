@@ -12,14 +12,14 @@
  */
 //Probably own sorting function on depthdict, or go for gcd in Multiset that we have prob biggest Instance and smallest as well (smallest divisor of gcd)
 
-#include "gtree.h"
+#include "cotree.h"
 
-unsigned int gtree::getGCDFromPrimeTuple(map<unsigned int,unsigned int> primeMultiset, map<unsigned int,unsigned int> multiset){
+unsigned int cotree::getGCDFromPrimeTuple(map<unsigned int,unsigned int> primeMultiset, map<unsigned int,unsigned int> multiset){
     std::cout << (*(primeMultiset.end())).first << std::endl;
     std::cout << primeMultiset[(*(primeMultiset.begin())).first] << std::endl;
     return (unsigned int) (multiset[(*primeMultiset.begin()).first]/primeMultiset[(*primeMultiset.begin()).first]);
 }
-bool gtree::isDivisible(map<unsigned int,unsigned int> divident, map<unsigned int,unsigned int> divisor){
+bool cotree::isDivisible(map<unsigned int,unsigned int> divident, map<unsigned int,unsigned int> divisor){
     if(divident.size() == divisor.size()){
         if(divident==divisor) return true;
         unsigned int olddiv;
@@ -37,14 +37,14 @@ bool gtree::isDivisible(map<unsigned int,unsigned int> divident, map<unsigned in
     }
     return false;
 }
-map<unsigned int,unsigned int> gtree::constructLCDTUple( map<unsigned int,unsigned int> tuple, unsigned int gcd){
+map<unsigned int,unsigned int> cotree::constructLCDTUple( map<unsigned int,unsigned int> tuple, unsigned int gcd){
      map<unsigned int,unsigned int> sTuple= tuple;
     for(std::map<unsigned int,unsigned int>::iterator stit=sTuple.begin(); stit!=sTuple.end(); ++stit){
         sTuple[stit->first] = (unsigned int)(stit->second / gcd);
     }
      return sTuple;
 }
-unsigned int gtree::lcd(unsigned int a, unsigned int b){
+unsigned int cotree::lcd(unsigned int a, unsigned int b){
     for(unsigned int i=2; i < (a > b? b/2: a/2 ); i++){
         if(a%i==0 && b%i==0){
             return i;
@@ -53,7 +53,7 @@ unsigned int gtree::lcd(unsigned int a, unsigned int b){
     return 1;
 }
 
-unsigned int gtree::gcdTuple( map<unsigned int,unsigned int> gcdTuple){
+unsigned int cotree::gcdTuple( map<unsigned int,unsigned int> gcdTuple){
 
     unsigned int gcd = gcdTuple[gcdTuple.begin()->first];
     for(std::map<unsigned int,unsigned int>::iterator gsit=gcdTuple.begin(); gsit!=gcdTuple.end(); ++gsit){
@@ -66,17 +66,17 @@ unsigned int gtree::gcdTuple( map<unsigned int,unsigned int> gcdTuple){
     return gcd;
 }
 //calculate factors of given cotree (lexicographic)
-vector<vector<gtree*>> gtree::getFactors(){
-    vector<gtree*> head = *new vector<gtree*>;
+vector<vector<cotree*>> cotree::getFactors(){
+    vector<cotree*> head = *new vector<cotree*>;
     head.push_back(this);
-    vector<gtree*>  lastFactor = *new vector<gtree*>;
-    vector<vector<gtree*>> factors = gtree::getFactors(head, this->depth[1],(unsigned int) 1, &lastFactor);
+    vector<cotree*>  lastFactor = *new vector<cotree*>;
+    vector<vector<cotree*>> factors = cotree::getFactors(head, this->depth[1],(unsigned int) 1, &lastFactor);
     for(unsigned int i = 0; i < factors.size(); i++){
         factors[i].insert(factors[i].begin(), lastFactor.begin(), lastFactor.end());
     }
     return factors;
 }
-unsigned int gtree::getChildNum(unsigned int depth){
+unsigned int cotree::getChildNum(unsigned int depth){
     unsigned int num = 0;
     for(unsigned int i=0; i < this->childs.size(); i++){
         if(this->childs[i]->getDepth()[1] < depth){
@@ -85,17 +85,17 @@ unsigned int gtree::getChildNum(unsigned int depth){
     }
     return num;
 }
-vector<unsigned int> gtree::getPrimeFactorization(unsigned int x, unsigned int i,vector<unsigned int> factors){
+vector<unsigned int> cotree::getPrimeFactorization(unsigned int x, unsigned int i,vector<unsigned int> factors){
     if(x<i){
         return factors;
     }else if(x % i == 0){
         factors.push_back(i);
-        return gtree::getPrimeFactorization(x/i, i , factors);
+        return cotree::getPrimeFactorization(x/i, i , factors);
     }else{
-        return gtree::getPrimeFactorization(x,i+1,factors);
+        return cotree::getPrimeFactorization(x,i+1,factors);
     }
 }
-set<vector<unsigned int>> gtree::permutateFactorMultiset(vector<unsigned int> factors){
+set<vector<unsigned int>> cotree::permutateFactorMultiset(vector<unsigned int> factors){
     set<vector<unsigned int>> permutated;
     if(factors.size() == 1){
         permutated.insert(factors);
@@ -105,7 +105,7 @@ set<vector<unsigned int>> gtree::permutateFactorMultiset(vector<unsigned int> fa
         vector<unsigned int> withoutThisFactor (factors);
         withoutThisFactor.erase(factors.begin() + i);
         
-        set<vector<unsigned int>> recursivePermutation = gtree::permutateFactorMultiset(withoutThisFactor);
+        set<vector<unsigned int>> recursivePermutation = cotree::permutateFactorMultiset(withoutThisFactor);
         for(std::set<vector<unsigned int>>::iterator it = recursivePermutation.begin(); it !=recursivePermutation.end(); ++it){
             vector<unsigned int> extractedP (*it);
             extractedP.push_back(factors[i]);
@@ -115,18 +115,18 @@ set<vector<unsigned int>> gtree::permutateFactorMultiset(vector<unsigned int> fa
     }
     return permutated;
 }
-set<vector<unsigned int>> gtree::getPrimeFactorizations(unsigned int gcd){
-    vector<unsigned int> factorization = gtree::getPrimeFactorization(gcd, 2, *new vector<unsigned int>);
+set<vector<unsigned int>> cotree::getPrimeFactorizations(unsigned int gcd){
+    vector<unsigned int> factorization = cotree::getPrimeFactorization(gcd, 2, *new vector<unsigned int>);
     
     //permutate the factorizations
-    return gtree::permutateFactorMultiset(factorization);
+    return cotree::permutateFactorMultiset(factorization);
     
 }
-gtree::gtree(bool state){
+cotree::cotree(bool state){
     this->state = state;
     this->depth = new unsigned int[2];
 }
-gtree::gtree(unsigned int k, unsigned int id){
+cotree::cotree(unsigned int k, unsigned int id){
     this->depth = new unsigned int[2];
     if(k==1){
         this->depth[0]=0;
@@ -140,7 +140,7 @@ gtree::gtree(unsigned int k, unsigned int id){
     this->depth[1]=1;
     this->id=id;
     for(unsigned int i = 0; i < k; i++){
-        gtree * child = new gtree();
+        cotree * child = new cotree();
         this->childs.push_back(child);
         child->depth = new unsigned int[2];
         child->depth[0] = 0;
@@ -149,24 +149,24 @@ gtree::gtree(unsigned int k, unsigned int id){
         child->id = 0;
     }
 }
-vector<vector<gtree*>> gtree::getFactors(vector<gtree*> heads, unsigned int depth, unsigned int divisor, vector<gtree*>* new_factor){
-    vector<vector<gtree*>> factors;
+vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int depth, unsigned int divisor, vector<cotree*>* new_factor){
+    vector<vector<cotree*>> factors;
     if(depth == 0){
         *new_factor = heads ;
-        factors.push_back(*new vector<gtree*>);
+        factors.push_back(*new vector<cotree*>);
         return factors;
     }
     
     std::cout <<"recursion with depth = " << to_string(depth)<<  std::endl;
     map<unsigned int, unsigned int> firstTuple = heads.at(0)->getKnuthTuple(depth,false);
-    unsigned int gcd = gtree::gcdTuple(firstTuple);
-    map<unsigned int,unsigned int> primeMultiset = gtree::constructLCDTUple(firstTuple, gcd);
+    unsigned int gcd = cotree::gcdTuple(firstTuple);
+    map<unsigned int,unsigned int> primeMultiset = cotree::constructLCDTUple(firstTuple, gcd);
     vector<unsigned int> gcds;
     gcds.push_back(gcd);
     for(unsigned int h = 1; h < heads.size(); h++){
         map<unsigned int,unsigned int> kt = heads.at(h)->getKnuthTuple(depth,false);
-        if(gtree::isDivisible(kt, primeMultiset)){
-            unsigned int newgcd = gtree::getGCDFromPrimeTuple(primeMultiset, kt);
+        if(cotree::isDivisible(kt, primeMultiset)){
+            unsigned int newgcd = cotree::getGCDFromPrimeTuple(primeMultiset, kt);
             gcds.push_back(newgcd);
             gcd = __gcd(newgcd, gcd);
         }else{
@@ -178,35 +178,35 @@ vector<vector<gtree*>> gtree::getFactors(vector<gtree*> heads, unsigned int dept
         //pollish prev factor
         for(unsigned int h=0; h < heads.size();h++){
             
-                new_factor->push_back(new gtree((unsigned int)gcds[h]/gcd, heads[h]->getId()));
+                new_factor->push_back(new cotree((unsigned int)gcds[h]/gcd, heads[h]->getId()));
             
             
         }
         
        
         
-        set<vector<unsigned int>> factorizations = gtree::getPrimeFactorizations(gcd);
-        vector<vector<gtree*>> allTowers;
+        set<vector<unsigned int>> factorizations = cotree::getPrimeFactorizations(gcd);
+        vector<vector<cotree*>> allTowers;
         for(std::set<vector<unsigned int>>::iterator it = factorizations.begin() ; it!= factorizations.end(); ++it){
-            vector<gtree*> kTower = *new vector<gtree*>;
+            vector<cotree*> kTower = *new vector<cotree*>;
             for(unsigned int k: *it){
-                gtree * kTree = new gtree(k,k);
+                cotree * kTree = new cotree(k,k);
                 kTower.push_back(kTree);
             }
             allTowers.push_back(kTower);
         }
         if(allTowers.empty()){
-            allTowers.push_back(*new vector<gtree*>);
+            allTowers.push_back(*new vector<cotree*>);
         }
         
-        vector<gtree*> newHeads;
+        vector<cotree*> newHeads;
         
-        vector<gtree*> singlehead;
+        vector<cotree*> singlehead;
         singlehead.push_back(heads[0]);
-        gtree divhead = new gtree(heads[0]); 
+        cotree divhead = new cotree(heads[0]); 
         divhead.deleteAboveDepthAndDivideChilds(depth-1, gcds[0]);
         bool headgotpushed = false;
-        for(gtree* child: gtree::collectChilds(singlehead , depth - 1)){
+        for(cotree* child: cotree::collectChilds(singlehead , depth - 1)){
             unsigned int id = child->getId();
             if(primeMultiset[id] > 0){
                 newHeads.push_back(child);
@@ -228,15 +228,15 @@ vector<vector<gtree*>> gtree::getFactors(vector<gtree*> heads, unsigned int dept
             }
         }
         
-        vector<gtree*> followingFactor = *new vector<gtree*>; 
-        vector<vector<gtree*>> factorscommingafterme = gtree::getFactors(newHeads, depth - 1, gcds[0],&followingFactor );
+        vector<cotree*> followingFactor = *new vector<cotree*>; 
+        vector<vector<cotree*>> factorscommingafterme = cotree::getFactors(newHeads, depth - 1, gcds[0],&followingFactor );
         unsigned int * ffdepth = new unsigned int[2];
         ffdepth[0] = -1;
         ffdepth[1] = 0;
-        gtree *followingFactorComposition = (followingFactor.empty()? NULL:new gtree(&followingFactor, 0, followingFactor.size(),ffdepth, 42069, true));
-        for(vector<gtree*> factorcommingafterme: factorscommingafterme){
-            for(vector<gtree*> tower: allTowers){
-                vector<gtree*> concatFactors (tower);
+        cotree *followingFactorComposition = (followingFactor.empty()? NULL:new cotree(&followingFactor, 0, followingFactor.size(),ffdepth, 42069, true));
+        for(vector<cotree*> factorcommingafterme: factorscommingafterme){
+            for(vector<cotree*> tower: allTowers){
+                vector<cotree*> concatFactors (tower);
                 if(followingFactorComposition!=NULL){
                     concatFactors.push_back(followingFactorComposition);
                 }
@@ -244,27 +244,27 @@ vector<vector<gtree*>> gtree::getFactors(vector<gtree*> heads, unsigned int dept
                 factors.push_back(concatFactors);
             }
         }
-        vector<gtree*> nf (*new_factor);
+        vector<cotree*> nf (*new_factor);
         return factors;
         
         
                 
     }else{
-        vector<vector<gtree*>> prev_factors = gtree::getFactors(gtree::collectChilds(heads, depth - 1), depth - 1, 1, new_factor);
+        vector<vector<cotree*>> prev_factors = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, 1, new_factor);
         
         //here we have to build up the new factor from bottom up
-        vector<gtree*> nf (*new_factor);
+        vector<cotree*> nf (*new_factor);
         unsigned int factorcounter = 0;
         
-        for(gtree* head:heads){
+        for(cotree* head:heads){
             unsigned int childnum = head->getChildNum(depth); ;
             if(head->getId() == new_factor->at(factorcounter)->getId()){
                 factorcounter++;
                 continue;
             }            
             if(head->getDepth()[1]==depth){
-                gtree* newFactorNode = new gtree(new_factor, factorcounter, factorcounter + childnum, head->getDepth(),head->getId(),head->getState() );
-                std::vector<gtree*>::iterator it = new_factor->begin() + factorcounter;
+                cotree* newFactorNode = new cotree(new_factor, factorcounter, factorcounter + childnum, head->getDepth(),head->getId(),head->getState() );
+                std::vector<cotree*>::iterator it = new_factor->begin() + factorcounter;
                 new_factor->insert(it,newFactorNode);
             }else{
                 factorcounter += childnum;
@@ -274,7 +274,7 @@ vector<vector<gtree*>> gtree::getFactors(vector<gtree*> heads, unsigned int dept
         return prev_factors;
     }
 }
-void gtree::deleteAboveDepthAndDivideChilds(unsigned int depth, unsigned int divisor){
+void cotree::deleteAboveDepthAndDivideChilds(unsigned int depth, unsigned int divisor){
     for( unsigned int i = 0; i < this->childs.size(); i++){
         if(this->childs[i]->getDepth()[1] > depth){
             this->childs.erase(this->childs.begin() + i);
@@ -282,7 +282,7 @@ void gtree::deleteAboveDepthAndDivideChilds(unsigned int depth, unsigned int div
         }
     }
     map<unsigned int, unsigned int> myKT = this->getKnuthTuple(depth, false);
-    map<unsigned int, unsigned int> myKTprime = gtree::constructLCDTUple(myKT,divisor);
+    map<unsigned int, unsigned int> myKTprime = cotree::constructLCDTUple(myKT,divisor);
     for(unsigned int i = 0; i < this->childs.size(); i++){
         if(myKTprime[this->childs[i]->getId()] > 0){
             myKTprime[this->childs[i]->getId()]--;
@@ -294,7 +294,7 @@ void gtree::deleteAboveDepthAndDivideChilds(unsigned int depth, unsigned int div
     
    
 }
-gtree::gtree(gtree * other){
+cotree::cotree(cotree * other){
     this->state = other->state;
     this->childs = other->getChilds();
     this->id = other->id;
@@ -302,7 +302,7 @@ gtree::gtree(gtree * other){
     this->depth[0] = other->depth[0];
     this->depth[1] = other->depth[1];
 }
-gtree::gtree(vector<gtree*> *children, unsigned int from, unsigned int to, unsigned int *hdepth, unsigned int hid, bool state){
+cotree::cotree(vector<cotree*> *children, unsigned int from, unsigned int to, unsigned int *hdepth, unsigned int hid, bool state){
     this->depth = new unsigned int[2];
     
     this->depth[0] = hdepth[0];
@@ -319,13 +319,13 @@ gtree::gtree(vector<gtree*> *children, unsigned int from, unsigned int to, unsig
     children->erase(children->begin() + from, children->begin() + to );
     
 }
-vector<gtree*> gtree::collectChilds(vector<gtree*> heads, unsigned int depth){
-    vector<gtree*> childs;
-    for(gtree* head : heads){
+vector<cotree*> cotree::collectChilds(vector<cotree*> heads, unsigned int depth){
+    vector<cotree*> childs;
+    for(cotree* head : heads){
         if(head->getDepth()[0] <= depth){
             childs.push_back(head);
         }
-        for( gtree* child: head->getChilds()){
+        for( cotree* child: head->getChilds()){
             if(child->getDepth()[1] == depth){
                 childs.push_back(child);
             }
@@ -333,17 +333,17 @@ vector<gtree*> gtree::collectChilds(vector<gtree*> heads, unsigned int depth){
     }
     return childs;
 }
-vector<vector<gtree>> gtree::getFactors(vector<vector<gtree*>> * depthdict, vector<vector<gtree>> factors){
+vector<vector<cotree>> cotree::getFactors(vector<vector<cotree*>> * depthdict, vector<vector<cotree>> factors){
     for(int d = depthdict->size()-1; d > -1 ; d--){
         
         
         map<unsigned int, unsigned int> firstTuple = depthdict->at(d).at(0)->getKnuthTuple(d,false);
-        unsigned int gcd = gtree::gcdTuple(firstTuple);
-        map<unsigned int,unsigned int> primeMultiset=gtree::constructLCDTUple(firstTuple, gcd);
+        unsigned int gcd = cotree::gcdTuple(firstTuple);
+        map<unsigned int,unsigned int> primeMultiset=cotree::constructLCDTUple(firstTuple, gcd);
         for(int i = 1; i < depthdict->at(d).size(); i++){//we have to assure that we don't have the case, that the gcd of two tuples wont come after others  
             map<unsigned int,unsigned int> kt = depthdict->at(d).at(i)->getKnuthTuple(d,false);
-            if(gtree::isDivisible(kt, primeMultiset)){
-                unsigned int newgcd = gtree::getGCDFromPrimeTuple(primeMultiset, kt);
+            if(cotree::isDivisible(kt, primeMultiset)){
+                unsigned int newgcd = cotree::getGCDFromPrimeTuple(primeMultiset, kt);
                 gcd = __gcd(newgcd, gcd);
             }else{
                 break;
@@ -358,17 +358,17 @@ vector<vector<gtree>> gtree::getFactors(vector<vector<gtree*>> * depthdict, vect
  * 
  * 
  */
-unsigned int * gtree::getDepth(){
+unsigned int * cotree::getDepth(){
     return this->depth;
 }
- map<unsigned int,unsigned int> gtree::getKnuthTuple(unsigned int depth, bool minimal){
+ map<unsigned int,unsigned int> cotree::getKnuthTuple(unsigned int depth, bool minimal){
     if(minimal && depth < this->depth[1]){
         return *new  map<unsigned int,unsigned int>;
     }
     unsigned int num = 0;
     std::cout << "---"<< std::endl;
     map<unsigned int,unsigned int> tuple;
-    for(gtree* child: this->childs){
+    for(cotree* child: this->childs){
         if(child->getDepth()[1] < depth ){
             tuple[child->getId()] = tuple[child->getId()] + 1;
             std::cout << child->getId()<< ":" << tuple[child->getId()]  <<  std::endl;
@@ -377,7 +377,7 @@ unsigned int * gtree::getDepth(){
     return tuple;
 }
 
-int gtree::findInMultisetVector(vector< map<unsigned int,unsigned int>> vec, map<unsigned int,unsigned int> ms){
+int cotree::findInMultisetVector(vector< map<unsigned int,unsigned int>> vec, map<unsigned int,unsigned int> ms){
     for(int i = 0; i < vec.size();i++){
         if(vec.at(i) == ms){
             return i;
@@ -385,7 +385,7 @@ int gtree::findInMultisetVector(vector< map<unsigned int,unsigned int>> vec, map
     }
     return -1;
 }
-void gtree::createIndices(vector<vector<gtree*>> depthdict){
+void cotree::createIndices(vector<vector<cotree*>> depthdict){
     unsigned int last_depths_index = 1;
     for(unsigned int d=1; d < depthdict.size(); d++){
         vector< map<unsigned int,unsigned int>> tuples;
@@ -394,7 +394,7 @@ void gtree::createIndices(vector<vector<gtree*>> depthdict){
             if(kt.empty()){
                 continue;
             }
-            int index = gtree::findInMultisetVector(tuples, kt);
+            int index = cotree::findInMultisetVector(tuples, kt);
             if(index > -1){
                 depthdict[d][i]->setId(last_depths_index + index + 1);
             }else{
@@ -408,17 +408,17 @@ void gtree::createIndices(vector<vector<gtree*>> depthdict){
     }
 
 }
-unsigned int gtree::getId(){
+unsigned int cotree::getId(){
     return this->id;
 }
-void gtree::setId(unsigned int id){
+void cotree::setId(unsigned int id){
     this->id = id;
 }
 
-string gtree::get_string(){
+string cotree::get_string(){
     return this->get_string("",true);
 }
-string gtree::get_string(string intendation, bool isLast){
+string cotree::get_string(string intendation, bool isLast){
     string me_s = intendation;
     
     if(isLast){
@@ -436,13 +436,13 @@ string gtree::get_string(string intendation, bool isLast){
     return me_s;
     
 }
-gtree::gtree() {
+cotree::cotree() {
     this->depth = new unsigned int[2];
 }
 
-gtree::gtree(const gtree& orig) {
+cotree::cotree(const cotree& orig) {
 }
-void gtree::constructChildren(graph* g, vector<unsigned long long*>* components,vector<vector<gtree*>> *depthdict ){
+void cotree::constructChildren(graph* g, vector<unsigned long long*>* components,vector<vector<cotree*>> *depthdict ){
     this->depth= new unsigned int[2];
             this->depth[0]=0;
             this->depth[1]=0;
@@ -451,7 +451,7 @@ void gtree::constructChildren(graph* g, vector<unsigned long long*>* components,
             this->depth[0]=-1;
             for(unsigned long long* thiscomponent: *components){
                 unsigned int *cdepth = new unsigned int[2];
-                gtree* child = new gtree(g, thiscomponent, !this->state,cdepth, depthdict);
+                cotree* child = new cotree(g, thiscomponent, !this->state,cdepth, depthdict);
                 
                 this->depth[0]= (cdepth[1] + 1 < this->depth[0]? cdepth[1] + 1 : this->depth[0]);
                 this->depth[1]= (cdepth[1] + 1 > this->depth[1]? cdepth[1] + 1 : this->depth[1]);
@@ -462,7 +462,7 @@ void gtree::constructChildren(graph* g, vector<unsigned long long*>* components,
             this->id = (this->state? 1:0);
         }
 }
-gtree::gtree(graph* g, vector<vector<gtree*>> depthdict){
+cotree::cotree(graph* g, vector<vector<cotree*>> depthdict){
     unsigned short size = g->getSize();
     unsigned long long* lookAtAll = (unsigned long long *)calloc( size/ DATA_SIZE,DATA_SIZE);
     g->verticeInversion(lookAtAll, size);
@@ -477,7 +477,7 @@ gtree::gtree(graph* g, vector<vector<gtree*>> depthdict){
     this->writeInDepthDict(&depthdict);
     this->createIndices(depthdict);
 }
-gtree::gtree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth,vector<vector<gtree*>> *depthdict){
+cotree::cotree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth,vector<vector<cotree*>> *depthdict){
     this->state = state;
     vector<unsigned long long*> components = g->getConnections(state, component);
     {
@@ -487,32 +487,32 @@ gtree::gtree(graph* g, unsigned long long* component, bool state, unsigned int *
         pdepth[1] = this->depth[1];
         this->writeInDepthDict(depthdict);
 }
-void gtree::writeInDepthDict(vector<vector<gtree*> >* depthdict){
+void cotree::writeInDepthDict(vector<vector<cotree*> >* depthdict){
     for(unsigned int i = this->depth[0]; i <= this->depth[1];i++){
         if(depthdict->size() < i+1 ){
-            depthdict->push_back(* new vector<gtree*>);
+            depthdict->push_back(* new vector<cotree*>);
         }
         depthdict->at(i).push_back(this);
     }
 }
-gtree::~gtree() {
+cotree::~cotree() {
 }
 
 
-vector<gtree*> gtree::getChilds(){
+vector<cotree*> cotree::getChilds(){
     return childs;
 }
 
-bool gtree::getState(){
+bool cotree::getState(){
     return this->state;
 }
-void gtree::setState(bool state){
+void cotree::setState(bool state){
     this->state = state;
 }
-void gtree::addChild(gtree* child){
+void cotree::addChild(cotree* child){
     this->childs.push_back(child);
 }
 
-gtree* gtree::getChild(unsigned short i){
+cotree* cotree::getChild(unsigned short i){
     return this->childs.at(i);
 }

@@ -35,9 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/cotree.o \
 	${OBJECTDIR}/graph.o \
-	${OBJECTDIR}/gtree.o \
-	${OBJECTDIR}/int_multiset.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/reader.o \
 	${OBJECTDIR}/vertice.o
@@ -67,20 +66,15 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/factorization_graph: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/factorization_graph ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/cotree.o: cotree.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/cotree.o cotree.cpp
+
 ${OBJECTDIR}/graph.o: graph.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/graph.o graph.cpp
-
-${OBJECTDIR}/gtree.o: gtree.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gtree.o gtree.cpp
-
-${OBJECTDIR}/int_multiset.o: int_multiset.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/int_multiset.o int_multiset.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

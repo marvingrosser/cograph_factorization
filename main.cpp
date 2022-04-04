@@ -15,7 +15,7 @@
 
 using namespace std;
 #include "graph.h"
-#include "gtree.h"
+#include "cotree.h"
 #include <vector>
 /*
  * 
@@ -24,12 +24,12 @@ int main(int argc, char** argv) {
     graph *g = new graph("src/data/problem.graph"); 
     //graph *g = new graph("src/data/graph2.graph"); 
     std::cout << g->get_string()<< std::endl;
-    vector<vector<gtree*>> depthdict;
-    gtree * gt = new gtree(g, depthdict);
+    vector<vector<cotree*>> depthdict;
+    cotree * gt = new cotree(g, depthdict);
     std::cout << "\nTree: \n\n"<< gt->get_string() <<std::endl;
-    vector<vector<gtree*>> f = gt->getFactors();
-    for(vector<gtree*> factorline : f){
-        for(gtree* factor : factorline){
+    vector<vector<cotree*>> f = gt->getFactors();
+    for(vector<cotree*> factorline : f){
+        for(cotree* factor : factorline){
             std::cout << factor->get_string() << std::endl << "– – – – – – – – – – – – – – - -" << std::endl;
         }
         std::cout << "###############################" << std::endl;

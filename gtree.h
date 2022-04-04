@@ -25,7 +25,7 @@ class gtree {
 public:
     unsigned int getId();
     void setId(unsigned int id);
-    
+    void deleteAboveDepthAndDivideChilds(unsigned int depth, unsigned int divisor);
     map<unsigned int,unsigned int> getKnuthTuple(unsigned int depth, bool minimal);
     vector<vector<gtree>> getFactors(vector<vector<gtree*>> *depthdict, vector<vector<gtree>> factors);
     void writeInDepthDict(vector<vector<gtree*>> *depthdict);
@@ -36,8 +36,8 @@ public:
      * @param k
      *
      */
-    gtree(unsigned int k);
-    gtree(vector<gtree*>* children, unsigned int from, unsigned int to);
+    gtree(unsigned int k,unsigned int id);
+    gtree(vector<gtree*>* children, unsigned int from, unsigned int to, unsigned int * depth, unsigned int id, bool state);
     /**
      * Construct Cotree from graph
      * @param g
@@ -51,6 +51,7 @@ public:
      */
     gtree(graph* g, unsigned long long* component, bool state, unsigned int* pdepth, vector<vector<gtree*>> *depthdict);
     gtree(const gtree& orig);
+    gtree(gtree* other);
     vector<gtree*> getChilds();
     /**
      * Construct String representing the graph

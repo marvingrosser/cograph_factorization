@@ -175,7 +175,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
             break;
         }
     }
-    if(gcd!=0){//wir müssen hier noch alle möglichkeiten zusqammenführen (also auch normal weiter laufen lassen :))
+    if(gcd!=0){//wir müssen hier noch alle möglichkeiten zusqammenführen (also auch normal weiter laufen lassen )
         //pollish prev factor
         
         
@@ -220,13 +220,18 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
         
         vector<cotree*> followingFactor = *new vector<cotree*>; 
         vector<vector<cotree*>> factorscommingafterme = cotree::getFactors(newHeads, depth - 1, 1,&followingFactor );
-       // 
+       
         
         unsigned int * ffdepth = new unsigned int[2];
         ffdepth[0] = -1;
         ffdepth[1] = 0;
-        cotree *followingFactorComposition = (followingFactor.size() == 1 && followingFactor[0]->getChildNum()==0? NULL:new cotree(&followingFactor, 0, followingFactor.size(),ffdepth, heads[0]->getId(), true));
+        
+        cotree *followingFactorComposition = (followingFactor.size() == 1 && followingFactor[0]->getChildNum()==0?
+            NULL:
+            new cotree(&followingFactor, 0, followingFactor.size(),ffdepth, heads[0]->getId(), true));
+        
         if(followingFactorComposition != NULL)followingFactorComposition->minimalizeFirstLayer(); //why does this like nothing????
+        
         for(vector<cotree*> factorcommingafterme: factorscommingafterme){
             for(vector<cotree*> tower: allTowers){
                 vector<cotree*> concatFactors (tower);
@@ -237,7 +242,8 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
                 factors.push_back(concatFactors);
             }
         }
-        //vector<vector<cotree*>> didnSplit = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, 1, new_factor); /new factor wird aus 2 blickwinkeln gefüllt
+        vector<cotree*> nf (*new_factor);
+        //vector<vector<cotree*>> didnSplit = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, 1, new_factor); //new factor wird aus 2 blickwinkeln gefüllt
         //factors.insert(factors.end(), didnSplit.begin(), didnSplit.end());
         
         for(unsigned int h=0; h < heads.size();h++){
@@ -250,7 +256,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
             
         }
         
-        vector<cotree*> nf (*new_factor);
+        nf = (*new_factor);
         return factors;
         
         
@@ -273,6 +279,8 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
                 newFactorNode->minimalizeFirstLayer();
                 std::vector<cotree*>::iterator it = new_factor->begin() + factorcounter;
                 new_factor->insert(it,newFactorNode);
+                factorcounter++;
+                nf = (*new_factor);
             }else{
                 factorcounter += childnum;
             }

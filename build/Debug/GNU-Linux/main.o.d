@@ -1,6 +1,6 @@
-build/Debug/GNU-Linux/main.o: main.cpp graph.h vertice.h reader.h \
+build/Debug/GNU-Linux/main.o: main.cpp cograph.h vertice.h reader.h \
  cotree.h
-graph.h:
+cograph.h:
 vertice.h:
 reader.h:
 cotree.h:

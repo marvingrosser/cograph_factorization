@@ -17,7 +17,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "graph.h"
+#include "cograph.h"
 #include <iostream>
 using namespace std;
 using std::string;

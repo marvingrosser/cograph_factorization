@@ -4,8 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>InputHandler.h</itemPath>
+      <itemPath>cograph.h</itemPath>
       <itemPath>cotree.h</itemPath>
-      <itemPath>graph.h</itemPath>
       <itemPath>reader.h</itemPath>
       <itemPath>vertice.h</itemPath>
     </logicalFolder>
@@ -16,8 +17,9 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>InputHandler.cpp</itemPath>
+      <itemPath>cograph.cpp</itemPath>
       <itemPath>cotree.cpp</itemPath>
-      <itemPath>graph.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>reader.cpp</itemPath>
       <itemPath>vertice.cpp</itemPath>
@@ -47,13 +49,17 @@
           <standard>11</standard>
         </ccTool>
       </compileType>
+      <item path="InputHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="InputHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="cograph.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="cograph.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="cotree.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="cotree.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="graph.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="graph.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -86,13 +92,17 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="InputHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="InputHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="cograph.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="cograph.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="cotree.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="cotree.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="graph.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="graph.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

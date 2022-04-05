@@ -15,7 +15,7 @@
 #define VERTICE_H
 #include <string>
 #include <vector>
-#include "graph.h"
+#include "cograph.h"
 
 #define DATA_SIZE sizeof(unsigned long long)
 class graph;

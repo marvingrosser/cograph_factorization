@@ -14,7 +14,7 @@
 #include <cstdlib>
 
 using namespace std;
-#include "graph.h"
+#include "cograph.h"
 #include "cotree.h"
 #include <vector>
 /*

@@ -21,8 +21,8 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    graph *g = new graph("src/data/problem.graph"); 
-    //graph *g = new graph("src/data/graph2.graph"); 
+    //graph *g = new graph("src/data/k12.graph"); 
+    graph *g = new graph("src/data/graph2.graph"); 
     std::cout << g->get_string()<< std::endl;
     vector<vector<cotree*>> depthdict;
     cotree * gt = new cotree(g, depthdict);

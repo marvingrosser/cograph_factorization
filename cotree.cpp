@@ -181,7 +181,7 @@ vector<cotree*> cotree::collectChilds(vector<cotree*> heads, unsigned int depth)
     return childs;
 }
 void cotree::getFactors(vector<vector<cotree*>> * depthdict, vector<vector<cotree>> *factors){
-    for(int d = depthdict->size()-1; d > -1 ; d--){
+    for(int d = depthdict->size()-1; d > -1 ; d--){//Vereine dies mit der Konstruktion von den IDS, da jene möglicher weise geändert werden müssten
         
         
         map<unsigned int, unsigned int> firstTuple = depthdict->at(d).at(0)->getKnuthTuple(d,false);
@@ -199,6 +199,12 @@ void cotree::getFactors(vector<vector<cotree*>> * depthdict, vector<vector<cotre
                 break;
             }
             
+        }
+        
+        if(gcd != 0){
+            //construct K-Tower
+        }else{
+            //go up, or : check if Tuplecount devides n (Vorkommen der Ids in allen Tuplen zählen)
         }
     }
     return;
@@ -235,12 +241,31 @@ int cotree::findInMultisetVector(vector< map<unsigned int,unsigned int>> vec, ma
     }
     return -1;
 }
-void cotree::createIndices(vector<vector<cotree*>> depthdict){
+void cotree::createIndices(vector<vector<cotree*>> depthdict){ //merge this with the factor-Algorithm (BottomUp)
     unsigned int last_depths_index = 1;
     for(unsigned int d=1; d < depthdict.size(); d++){
-        vector< map<unsigned int,unsigned int>> tuples;
+        //vector< map<unsigned int,unsigned int>> tuples;
+        vector<map<unsigned int, unsigned int>> primeTuples;
+        vector<unsigned int[2]> gcds;
         for(unsigned int i=0; i < depthdict[d].size(); i++){
-             map<unsigned int,unsigned int> kt = depthdict[d][i]->getKnuthTuple(d,true);
+             map<unsigned int,unsigned int> kt = depthdict[d][i]->getKnuthTuple(d,false);
+             unsigned int newgcd;
+             for(map<unsigned int, unsigned int> primeTuple : primeTuples){
+                 if(cotree::isDivisible(kt, primeTuple)){
+                 
+                 }else{
+                 
+                 }
+                
+             }
+             
+             
+             
+             
+             
+             
+             
+             
             if(kt.empty()){
                 continue;
             }
@@ -255,7 +280,14 @@ void cotree::createIndices(vector<vector<cotree*>> depthdict){
         }
         last_depths_index += tuples.size();
         //sort tuples
+        if(gcd!=0){
+    
+        }else{
+    
+        }
     }
+    
+    
 }
 unsigned int cotree::getId(){
     return this->id;

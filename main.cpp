@@ -27,15 +27,10 @@ int main(int argc, char** argv) {
     vector<vector<cotree*>> depthdict;
     cotree * gt = new cotree(g, depthdict);
     std::cout << "\nTree: \n\n"<< gt->get_string() <<std::endl;
-    vector<vector<cotree*>> f = gt->getFactors();
+    gt->getFactors(&depthdict, new vector<vector<cotree>>);
 
     std::cout << "###############################" << std::endl;
-    for(vector<cotree*> factorline : f){
-        for(cotree* factor : factorline){
-            std::cout << factor->get_string() << std::endl << "– – – – – – – – – – – – – – - -" << std::endl;
-        }
-        std::cout << "###############################" << std::endl;
-    }
+    
     
     
     return 0;

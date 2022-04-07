@@ -115,6 +115,7 @@ private:
     void createIndices(vector<vector<cotree*>> depthdict);
     void constructChildren(graph * g, vector<unsigned long long*> * components,vector<vector<cotree*>> *depthdict );
     unsigned int id;
+    unsigned int ids_multiplicity;
     unsigned int* depth;
     bool state; 
     vector<cotree*> childs;

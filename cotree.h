@@ -27,11 +27,11 @@ public:
     void setId(unsigned int id);
     void deleteAboveDepthAndDivideChilds(unsigned int depth, unsigned int divisor);
     map<unsigned int,unsigned int> getKnuthTuple(unsigned int depth, bool minimal);
-    vector<vector<cotree>> getFactors(vector<vector<cotree*>> *depthdict, vector<vector<cotree>> factors);
+    void getFactors(vector<vector<cotree*>> *depthdict, vector<vector<cotree>> *factors);
     void writeInDepthDict(vector<vector<cotree*>> *depthdict);
-    void minimalizeFirstLayer();
+    
     unsigned int getChildNum();
-    void buildBoUpCotree(vector<cotree*> heads, vector<vector<cotree*>> *new_factor, unsigned int depth, unsigned int j);
+    
     cotree();
     cotree(bool state);
     /**
@@ -92,7 +92,7 @@ public:
     unsigned int getChildNum(unsigned int depth);
     virtual ~cotree();
     unsigned int * getDepth();
-    vector<vector<cotree*>> getFactors();
+
     set<vector<unsigned int>> getPrimeFactorizations(unsigned int gcd);
     vector<unsigned int> getPrimeFactorization(unsigned int x, unsigned int i, vector<unsigned int> factors);
     set<vector<unsigned int>> permutateFactorMultiset(vector<unsigned int> factors);
@@ -104,7 +104,7 @@ private:
      * @param divisor
      * @return 
      */
-    vector<vector<cotree*>> getFactors(vector<cotree*> heads, unsigned int depth, unsigned int divisor, vector<vector<cotree*>>* new_factor);
+    
     vector<cotree*> collectChilds(vector<cotree*> heads, unsigned int depth);
     unsigned int getGCDFromPrimeTuple(map<unsigned int,unsigned int> primeMultiset, map<unsigned int, unsigned int> multiset);
     bool isDivisible(map<unsigned int, unsigned int> divident, map<unsigned int, unsigned int> divisor );

@@ -65,16 +65,7 @@ unsigned int cotree::gcdTuple( map<unsigned int,unsigned int> gcdTuple){
             
     return gcd;
 }
-//calculate factors of given cotree (lexicographic)
-vector<vector<cotree*>> cotree::getFactors(){
-    vector<cotree*> head = *new vector<cotree*>;
-    head.push_back(this);
-    vector<vector<cotree*>>  lastFactor = *new vector<vector<cotree*>>;
-    lastFactor.push_back(* new vector<cotree*>);
-    vector<vector<cotree*>> factors = cotree::getFactors(head, this->depth[1],(unsigned int) 0, &lastFactor);
-    //build with last factor together!
-    return factors;
-}
+
 unsigned int cotree::getChildNum(unsigned int depth){
     unsigned int num = 0;
     for(unsigned int i=0; i < this->childs.size(); i++){
@@ -149,211 +140,7 @@ cotree::cotree(unsigned int k, unsigned int id,bool state){ //init a K-Cotree wi
 unsigned int cotree::getChildNum(){
     return (unsigned int)this->childs.size();
 }
-vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int depth, unsigned int i, vector<vector<cotree*>>* new_factor){
-    vector<vector<cotree*>> factors;
-    vector<vector<cotree*>> f (*new_factor); 
-    if(depth == 0){
-        new_factor->at(i) = heads ;
-        
-        
-        factors.push_back(*new vector<cotree*>);
-        return factors;
-    }
-    
-    //std::cout <<"recursion with depth = " << to_string(depth)<<  std::endl;
-    map<unsigned int, unsigned int> firstTuple = heads.at(0)->getKnuthTuple(depth,false);
-    unsigned int gcd = cotree::gcdTuple(firstTuple);
-    map<unsigned int,unsigned int> primeMultiset = cotree::constructLCDTUple(firstTuple, gcd);
-    vector<unsigned int> gcds;
-    gcds.push_back(gcd);
-    for(unsigned int h = 1; h < heads.size(); h++){
-        map<unsigned int,unsigned int> kt = heads.at(h)->getKnuthTuple(depth,false);
-        if(cotree::isDivisible(kt, primeMultiset)){
-            unsigned int newgcd = cotree::getGCDFromPrimeTuple(primeMultiset, kt);
-            gcds.push_back(newgcd);
-            gcd = __gcd(newgcd, gcd);
-        }else{
-            gcd = 0;
-            break;
-        }
-    }
-    if(gcd!=0){//wir müssen hier noch alle möglichkeiten zusqammenführen (also auch normal weiter laufen lassen )
-        //pollish prev factor
-        
-        
-       
-        
-        set<vector<unsigned int>> factorizations = cotree::getPrimeFactorizations(gcd);
-        vector<vector<cotree*>> allTowers;
-        
-        for(std::set<vector<unsigned int>>::iterator it = factorizations.begin() ; it!= factorizations.end(); ++it){
-            vector<cotree*> kTower = *new vector<cotree*>;
-            bool rootstate = heads[0]->getState();
-            for(unsigned int k: *it){
-                cotree * kTree = new cotree(k,k, rootstate);
-                kTower.push_back(kTree);
-                rootstate = !rootstate;
-            }
-            allTowers.push_back(kTower);
-        }
-        if(allTowers.empty()){
-            allTowers.push_back(*new vector<cotree*>);
-        }
-        
-        vector<cotree*> newHeads;
-        
-        vector<cotree*> singlehead;
-        singlehead.push_back(heads[0]);
-        cotree divhead = new cotree(heads[0]); 
-        divhead.deleteAboveDepthAndDivideChilds(depth-1, gcds[0]);
-        bool headgotpushed = false;
-        for(cotree* child: cotree::collectChilds(singlehead , depth - 1)){
-            unsigned int id = child->getId();
-            if(primeMultiset[id] > 0){
-                newHeads.push_back(child);
-                primeMultiset[id] = primeMultiset[id] - 1;
-            }else{
-                if(singlehead[0] == child && !headgotpushed){
-                    headgotpushed = true;
-                    newHeads.push_back(&divhead);
-                }
-            }
-        }
-        
-        vector<vector<cotree*>> followingFactors = *new vector<vector<cotree*>>; 
-        followingFactors.push_back(*new vector<cotree*>);
-        vector<vector<cotree*>> factorscommingafterme = cotree::getFactors(newHeads, depth - 1, 0,&followingFactors );
-       
-        
-        unsigned int * ffdepth = new unsigned int[2];
-        ffdepth[0] = -1;
-        ffdepth[1] = 0;
-        vector<cotree*> followingFactorCompositions = *new vector<cotree*>;
-        for(unsigned int i = 0; i < followingFactors.size();i++){
-            followingFactorCompositions.push_back((followingFactors[i].size() == 1 && followingFactors[i][0]->getChildNum()==0?
-            NULL:
-            new cotree(&followingFactors[i], 0, followingFactors[i].size(),ffdepth, heads[0]->getId(), true)));
-            if(followingFactorCompositions[i] != NULL)followingFactorCompositions[i]->minimalizeFirstLayer(); //why does this like nothing????
-        }
-        new_factor->push_back(*new vector<cotree*>);
-        
 
-        vector<vector<cotree*>> didntSplit = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, i + 1, new_factor); //new factor wird aus 2 blickwinkeln gefüllt
-        vector<vector<cotree*>> nf (*new_factor);
-        if(didntSplit[0].empty()){
-            new_factor->erase(new_factor->begin() + i + 1);
-        }else{
-            std::cout << "np" << std::endl;
-            for(vector<cotree*> fac: didntSplit ){
-                factors.push_back(fac);
-            }
-        }
-        cotree::buildBoUpCotree(heads, new_factor, depth,i + 1);
-        
-        
-        for(vector<cotree*> factorcommingafterme: factorscommingafterme){
-            for(vector<cotree*> tower: allTowers){
-                for(unsigned int i=0; i < followingFactorCompositions.size();i++){
-                    vector<cotree*> concatFactors (tower);
-                    if(followingFactorCompositions[i] != NULL){
-                        concatFactors.push_back(followingFactorCompositions[i]);
-                    }
-                    concatFactors.insert(concatFactors.end(), factorcommingafterme.begin(),factorcommingafterme.end());
-                    factors.push_back(concatFactors);
-                }
-            }
-        }
-        
-        
-        //wenn didntSplit leer ist müssen wir den spaß garnicht anschauen, da dann ja kein neuer Faktor gefunden wurde.
-        
-        
-        //factors.insert(factors.end(), didnSplit.begin(), didnSplit.end());
-        
-        for(unsigned int h=0; h < heads.size();h++){
-            
-                new_factor->at(i).push_back(new cotree((unsigned int)gcds[h]/gcd, 
-                                        heads[h]->getId(), 
-                                        heads[h]->getState() ));
-            
-            
-            
-        }
-        
-        nf = (*new_factor);
-        return factors;
-        
-        
-                
-    }else{
-
-        vector<vector<cotree*>> prev_factors = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, i, new_factor);
-        vector<vector<cotree*>> nf (*new_factor);
-        //here we have to build up the new factor from bottom up
-        
-        
-        cotree::buildBoUpCotree(heads, new_factor, depth,i);
-        
-        nf = (*new_factor);
-        return prev_factors;
-    }
-}
-void cotree::buildBoUpCotree(vector<cotree*> heads, vector<vector<cotree*>>* new_factors, unsigned int depth, unsigned int j){
-    vector<vector<cotree*>> nf (*new_factors);
-    for(unsigned int i=j; i< new_factors->size();i++){
-        //if(new_factors->at(i).empty())return;
-            
-        unsigned int factorcounter = 0;
-        
-        for(cotree* head:heads){
-            unsigned int childnum = head->getChildNum(depth); ;
-            if(head->getId() == new_factors->at(i).at(factorcounter)->getId()){
-                factorcounter++;
-                continue;
-            }            
-            if(head->getDepth()[1]==depth){
-                cotree* newFactorNode = new cotree(&new_factors->at(i), factorcounter, factorcounter + childnum, head->getDepth(),head->getId(),head->getState() );
-                newFactorNode->minimalizeFirstLayer();
-                std::vector<cotree*>::iterator it = new_factors->at(i).begin() + factorcounter;
-                new_factors->at(i).insert(it,newFactorNode);
-                factorcounter++;
-            }else{
-                factorcounter += childnum;
-            }
-        }
-    }
-}
-void cotree::minimalizeFirstLayer(){
-    for(unsigned int i=0; i < this->childs.size(); i++){
-        if(this->getState() == this->childs[i]->getState()){
-            vector<cotree*> childsOfChild = this->childs[i]->getChilds();
-            this->childs.insert(this->childs.end(),childsOfChild.begin(), childsOfChild.end() );
-            this->childs.erase(this->childs.begin() + i);
-            i--;
-        }
-    }
-
-}
-void cotree::deleteAboveDepthAndDivideChilds(unsigned int depth, unsigned int divisor){
-    for( unsigned int i = 0; i < this->childs.size(); i++){
-        if(this->childs[i]->getDepth()[1] > depth){
-            this->childs.erase(this->childs.begin() + i);
-            i--;
-        }
-    }
-    map<unsigned int, unsigned int> myKT = this->getKnuthTuple(depth, false);
-    map<unsigned int, unsigned int> myKTprime = cotree::constructLCDTUple(myKT,divisor);
-    for(unsigned int i = 0; i < this->childs.size(); i++){
-        if(myKTprime[this->childs[i]->getId()] > 0){
-            myKTprime[this->childs[i]->getId()]--;
-        }else{
-            this->childs.erase(this->childs.begin() + i);
-            i--;
-        }
-    }
-    
-   
-}
 cotree::cotree(cotree * other){
     this->state = other->state;
     this->childs = other->getChilds();
@@ -393,14 +180,17 @@ vector<cotree*> cotree::collectChilds(vector<cotree*> heads, unsigned int depth)
     }
     return childs;
 }
-vector<vector<cotree>> cotree::getFactors(vector<vector<cotree*>> * depthdict, vector<vector<cotree>> factors){
+void cotree::getFactors(vector<vector<cotree*>> * depthdict, vector<vector<cotree>> *factors){
     for(int d = depthdict->size()-1; d > -1 ; d--){
         
         
         map<unsigned int, unsigned int> firstTuple = depthdict->at(d).at(0)->getKnuthTuple(d,false);
+        
         unsigned int gcd = cotree::gcdTuple(firstTuple);
-        map<unsigned int,unsigned int> primeMultiset=cotree::constructLCDTUple(firstTuple, gcd);
-        for(int i = 1; i < depthdict->at(d).size(); i++){//we have to assure that we don't have the case, that the gcd of two tuples wont come after others  
+        
+        map<unsigned int,unsigned int> primeMultiset = cotree::constructLCDTUple(firstTuple, gcd);
+        
+        for(int i = 1; i < depthdict->at(d).size(); i++){
             map<unsigned int,unsigned int> kt = depthdict->at(d).at(i)->getKnuthTuple(d,false);
             if(cotree::isDivisible(kt, primeMultiset)){
                 unsigned int newgcd = cotree::getGCDFromPrimeTuple(primeMultiset, kt);
@@ -411,7 +201,7 @@ vector<vector<cotree>> cotree::getFactors(vector<vector<cotree*>> * depthdict, v
             
         }
     }
-    return factors;
+    return;
 } 
 /**
  * 

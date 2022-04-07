@@ -69,10 +69,9 @@ unsigned int cotree::gcdTuple( map<unsigned int,unsigned int> gcdTuple){
 vector<vector<cotree*>> cotree::getFactors(){
     vector<cotree*> head = *new vector<cotree*>;
     head.push_back(this);
-    vector<vector<cotree*>>  lastFactor = *new vector<vector<cotree*>>;
-    lastFactor.push_back(* new vector<cotree*>);
-    vector<vector<cotree*>> factors = cotree::getFactors(head, this->depth[1],(unsigned int) 0, &lastFactor);
-    //build with last factor together!
+    vector<cotree*>  lastFactor = *new vector<cotree*>;
+    vector<vector<cotree*>> factors = cotree::getFactors(head, this->depth[1],(unsigned int) 1, &lastFactor);
+    
     return factors;
 }
 unsigned int cotree::getChildNum(unsigned int depth){
@@ -149,11 +148,10 @@ cotree::cotree(unsigned int k, unsigned int id,bool state){ //init a K-Cotree wi
 unsigned int cotree::getChildNum(){
     return (unsigned int)this->childs.size();
 }
-vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int depth, unsigned int i, vector<vector<cotree*>>* new_factor){
+vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int depth, unsigned int divisor, vector<cotree*>* new_factor){
     vector<vector<cotree*>> factors;
-    vector<vector<cotree*>> f (*new_factor); 
     if(depth == 0){
-        new_factor->at(i) = heads ;
+        *new_factor = heads ;
         
         
         factors.push_back(*new vector<cotree*>);
@@ -220,59 +218,37 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
             }
         }
         
-        vector<vector<cotree*>> followingFactors = *new vector<vector<cotree*>>; 
-        followingFactors.push_back(*new vector<cotree*>);
-        vector<vector<cotree*>> factorscommingafterme = cotree::getFactors(newHeads, depth - 1, 0,&followingFactors );
+        vector<cotree*> followingFactor = *new vector<cotree*>; 
+        vector<vector<cotree*>> factorscommingafterme = cotree::getFactors(newHeads, depth - 1, 1,&followingFactor );
        
         
         unsigned int * ffdepth = new unsigned int[2];
         ffdepth[0] = -1;
         ffdepth[1] = 0;
-        vector<cotree*> followingFactorCompositions = *new vector<cotree*>;
-        for(unsigned int i = 0; i < followingFactors.size();i++){
-            followingFactorCompositions.push_back((followingFactors[i].size() == 1 && followingFactors[i][0]->getChildNum()==0?
+        
+        cotree *followingFactorComposition = (followingFactor.size() == 1 && followingFactor[0]->getChildNum()==0?
             NULL:
-            new cotree(&followingFactors[i], 0, followingFactors[i].size(),ffdepth, heads[0]->getId(), true)));
-            if(followingFactorCompositions[i] != NULL)followingFactorCompositions[i]->minimalizeFirstLayer(); //why does this like nothing????
-        }
-        new_factor->push_back(*new vector<cotree*>);
+            new cotree(&followingFactor, 0, followingFactor.size(),ffdepth, heads[0]->getId(), true));
         
-
-        vector<vector<cotree*>> didntSplit = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, i + 1, new_factor); //new factor wird aus 2 blickwinkeln gefüllt
-        vector<vector<cotree*>> nf (*new_factor);
-        if(didntSplit[0].empty()){
-            new_factor->erase(new_factor->begin() + i + 1);
-        }else{
-            std::cout << "np" << std::endl;
-            for(vector<cotree*> fac: didntSplit ){
-                factors.push_back(fac);
-            }
-        }
-        cotree::buildBoUpCotree(heads, new_factor, depth,i + 1);
-        
+        if(followingFactorComposition != NULL)followingFactorComposition->minimalizeFirstLayer(); //why does this like nothing????
         
         for(vector<cotree*> factorcommingafterme: factorscommingafterme){
             for(vector<cotree*> tower: allTowers){
-                for(unsigned int i=0; i < followingFactorCompositions.size();i++){
-                    vector<cotree*> concatFactors (tower);
-                    if(followingFactorCompositions[i] != NULL){
-                        concatFactors.push_back(followingFactorCompositions[i]);
-                    }
-                    concatFactors.insert(concatFactors.end(), factorcommingafterme.begin(),factorcommingafterme.end());
-                    factors.push_back(concatFactors);
+                vector<cotree*> concatFactors (tower);
+                if(followingFactorComposition!=NULL){
+                    concatFactors.push_back(followingFactorComposition);
                 }
+                concatFactors.insert(concatFactors.end(), factorcommingafterme.begin(),factorcommingafterme.end());
+                factors.push_back(concatFactors);
             }
         }
-        
-        
-        //wenn didntSplit leer ist müssen wir den spaß garnicht anschauen, da dann ja kein neuer Faktor gefunden wurde.
-        
-        
+        vector<cotree*> nf (*new_factor);
+        //vector<vector<cotree*>> didnSplit = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, 1, new_factor); //new factor wird aus 2 blickwinkeln gefüllt
         //factors.insert(factors.end(), didnSplit.begin(), didnSplit.end());
         
         for(unsigned int h=0; h < heads.size();h++){
             
-                new_factor->at(i).push_back(new cotree((unsigned int)gcds[h]/gcd, 
+                new_factor->push_back(new cotree((unsigned int)gcds[h]/gcd, 
                                         heads[h]->getId(), 
                                         heads[h]->getState() ));
             
@@ -286,41 +262,31 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
         
                 
     }else{
-
-        vector<vector<cotree*>> prev_factors = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, i, new_factor);
-        vector<vector<cotree*>> nf (*new_factor);
+        vector<vector<cotree*>> prev_factors = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, 1, new_factor);
+        
         //here we have to build up the new factor from bottom up
-        
-        
-        cotree::buildBoUpCotree(heads, new_factor, depth,i);
-        
-        nf = (*new_factor);
-        return prev_factors;
-    }
-}
-void cotree::buildBoUpCotree(vector<cotree*> heads, vector<vector<cotree*>>* new_factors, unsigned int depth, unsigned int j){
-    vector<vector<cotree*>> nf (*new_factors);
-    for(unsigned int i=j; i< new_factors->size();i++){
-        //if(new_factors->at(i).empty())return;
-            
+        vector<cotree*> nf (*new_factor);
         unsigned int factorcounter = 0;
         
         for(cotree* head:heads){
             unsigned int childnum = head->getChildNum(depth); ;
-            if(head->getId() == new_factors->at(i).at(factorcounter)->getId()){
+            if(head->getId() == new_factor->at(factorcounter)->getId()){
                 factorcounter++;
                 continue;
             }            
             if(head->getDepth()[1]==depth){
-                cotree* newFactorNode = new cotree(&new_factors->at(i), factorcounter, factorcounter + childnum, head->getDepth(),head->getId(),head->getState() );
+                cotree* newFactorNode = new cotree(new_factor, factorcounter, factorcounter + childnum, head->getDepth(),head->getId(),head->getState() );
                 newFactorNode->minimalizeFirstLayer();
-                std::vector<cotree*>::iterator it = new_factors->at(i).begin() + factorcounter;
-                new_factors->at(i).insert(it,newFactorNode);
+                std::vector<cotree*>::iterator it = new_factor->begin() + factorcounter;
+                new_factor->insert(it,newFactorNode);
                 factorcounter++;
+                nf = (*new_factor);
             }else{
                 factorcounter += childnum;
             }
         }
+        nf = (*new_factor);
+        return prev_factors;
     }
 }
 void cotree::minimalizeFirstLayer(){

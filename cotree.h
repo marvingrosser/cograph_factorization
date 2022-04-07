@@ -31,7 +31,6 @@ public:
     void writeInDepthDict(vector<vector<cotree*>> *depthdict);
     void minimalizeFirstLayer();
     unsigned int getChildNum();
-    void buildBoUpCotree(vector<cotree*> heads, vector<vector<cotree*>> *new_factor, unsigned int depth, unsigned int j);
     cotree();
     cotree(bool state);
     /**
@@ -104,7 +103,7 @@ private:
      * @param divisor
      * @return 
      */
-    vector<vector<cotree*>> getFactors(vector<cotree*> heads, unsigned int depth, unsigned int divisor, vector<vector<cotree*>>* new_factor);
+    vector<vector<cotree*>> getFactors(vector<cotree*> heads, unsigned int depth, unsigned int divisor, vector<cotree*>* new_factor);
     vector<cotree*> collectChilds(vector<cotree*> heads, unsigned int depth);
     unsigned int getGCDFromPrimeTuple(map<unsigned int,unsigned int> primeMultiset, map<unsigned int, unsigned int> multiset);
     bool isDivisible(map<unsigned int, unsigned int> divident, map<unsigned int, unsigned int> divisor );

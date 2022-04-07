@@ -25,12 +25,18 @@ int main(int argc, char** argv) {
     graph *g = new graph("src/data/graph2.graph"); 
     std::cout << g->get_string()<< std::endl;
     vector<vector<cotree*>> depthdict;
-    cotree * gt = new cotree(g, depthdict);
+    cotree * gt = new cotree(g, &depthdict);
     std::cout << "\nTree: \n\n"<< gt->get_string() <<std::endl;
-    gt->getFactors(&depthdict, new vector<vector<cotree>>);
+    vector<vector<cotree*>> factors = gt->getFactors(depthdict);
 
     std::cout << "###############################" << std::endl;
-    
+    for(vector<cotree*> fline : factors){
+        for(cotree* fac: fline){
+            std::cout << fac->get_string() << std::endl;
+            std::cout << "---------------------------------------" << std::endl;
+        }
+        std::cout << "#######################################" << std::endl;
+    }
     
     
     return 0;

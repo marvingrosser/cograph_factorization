@@ -47,7 +47,7 @@ public:
      * Construct Cotree from graph
      * @param g
      */
-    cotree(graph* g, vector<vector<cotree*>> depthdict);
+    cotree(graph* g, vector<vector<cotree*>> *depthdict);
     /**
      * Construct cotree from graph and pass inversions
      * @param g
@@ -98,6 +98,7 @@ public:
     set<vector<unsigned int>> getPrimeFactorizations(unsigned int gcd);
     vector<unsigned int> getPrimeFactorization(unsigned int x, unsigned int i, vector<unsigned int> factors);
     set<vector<unsigned int>> permutateFactorMultiset(vector<unsigned int> factors);
+    vector<vector<cotree*>> getFactors(vector<vector<cotree*>> depthdict);
 private:
     /**
      * get lexicographic factors for Cotree
@@ -114,7 +115,7 @@ private:
     unsigned int lcd(unsigned int a, unsigned int b);
     unsigned int gcdTuple(map<unsigned int,unsigned int> gcdTuple);
     int findInMultisetVector(vector< map<unsigned int,unsigned int>> vec,  map<unsigned int,unsigned int> ms);
-    void createIndices(vector<vector<cotree*>> depthdict);
+    
     void constructChildren(graph * g, vector<unsigned long long*> * components,vector<vector<cotree*>> *depthdict );
     unsigned int id;
     unsigned int ids_multiplicity;

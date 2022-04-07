@@ -236,12 +236,17 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
             if(followingFactorCompositions[i] != NULL)followingFactorCompositions[i]->minimalizeFirstLayer(); //why does this like nothing????
         }
         new_factor->push_back(*new vector<cotree*>);
-        vector<vector<cotree*>> nf (*new_factor);
+        
 
         vector<vector<cotree*>> didntSplit = cotree::getFactors(cotree::collectChilds(heads, depth - 1), depth - 1, i + 1, new_factor); //new factor wird aus 2 blickwinkeln gefüllt
-        
+        vector<vector<cotree*>> nf (*new_factor);
         if(didntSplit[0].empty()){
             new_factor->erase(new_factor->begin() + i + 1);
+        }else{
+            std::cout << "np" << std::endl;
+            for(vector<cotree*> fac: didntSplit ){
+                factors.push_back(fac);
+            }
         }
         cotree::buildBoUpCotree(heads, new_factor, depth,i + 1);
         
@@ -258,6 +263,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<cotree*> heads, unsigned int d
                 }
             }
         }
+        
         
         //wenn didntSplit leer ist müssen wir den spaß garnicht anschauen, da dann ja kein neuer Faktor gefunden wurde.
         

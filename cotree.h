@@ -23,6 +23,8 @@
 
 class cotree {
 public:
+    void setMultiplicity(unsigned int m);
+    unsigned int getMultiplicity();
     unsigned int getId();
     void setId(unsigned int id);
     void deleteAboveDepthAndDivideChilds(unsigned int depth, unsigned int divisor);

@@ -35,8 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/graph.o \
-	${OBJECTDIR}/gtree.o \
+	${OBJECTDIR}/InputHandler.o \
+	${OBJECTDIR}/cograph.o \
+	${OBJECTDIR}/cotree.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/reader.o \
 	${OBJECTDIR}/vertice.o
@@ -66,15 +67,20 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/factorization_graph: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/factorization_graph ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/graph.o: graph.cpp
+${OBJECTDIR}/InputHandler.o: InputHandler.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/graph.o graph.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InputHandler.o InputHandler.cpp
 
-${OBJECTDIR}/gtree.o: gtree.cpp
+${OBJECTDIR}/cograph.o: cograph.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gtree.o gtree.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/cograph.o cograph.cpp
+
+${OBJECTDIR}/cotree.o: cotree.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/cotree.o cotree.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

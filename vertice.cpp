@@ -38,7 +38,7 @@ string vertice::to_string(){
 string vertice::out_to_string(){
     string outs = "";
     for(int i=0 ; i < this->g->getSize();i++ ){
-        if((this->out[i/8] >> (7 - i % 8))%2 ){
+        if((this->out[i/DATA_SIZE] >> (DATA_SIZE - 1 - i % DATA_SIZE)) % 2 ){
             outs.append("\t --> \t");
             outs.append(this->g->getVerticeByNumber(i)->to_string());
             outs.append("\n");
@@ -60,14 +60,14 @@ void vertice::setGraph(graph* g){
 }
 
 void vertice::initOut(unsigned short number){
-    this->out = (char *)calloc(number/8,sizeof(char));
-    this->out[0] = (char)0;
+    this->out = (unsigned long long *)calloc(number/DATA_SIZE,DATA_SIZE);
+    this->out[0] = (unsigned long long)0;
     
 }
 void vertice::setOneInOut(unsigned short index){
-    this->out[index/8] |= ((unsigned char) 1  << (7 - index % 8))  ;
+    this->out[index/DATA_SIZE] |= ((unsigned long long) 1  << (DATA_SIZE- 1 - index % DATA_SIZE))  ;
 }
 
-char* vertice::getConnections(){
+unsigned long long* vertice::getConnections(){
     return this->out;
 }

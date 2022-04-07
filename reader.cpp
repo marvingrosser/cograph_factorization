@@ -65,7 +65,7 @@ GraphBinary reader::readBinaryFromGraphFile(){
     
     graphData.number = std::stoi(file.substr(0,file.find('\n')));
     
-    graphData.edges = new char[(int)(graphData.number*graphData.number/8)];
+    graphData.edges = new unsigned long long[(int)(graphData.number*graphData.number/DATA_SIZE)];
     
     file = file.substr(file.find('\n'));
     
@@ -77,8 +77,8 @@ GraphBinary reader::readBinaryFromGraphFile(){
     
     for(int i = 0; i < file.size(); i++){
         //std::cout << ((int)file.at(i) - (int)'0')*0x80 << std::endl ;
-        graphData.edges[i/8] = graphData.edges[i/8] << 1;
-        graphData.edges[i/8] = graphData.edges[i/8]  | (((int)file.at(i)) - (int)'0');
+        graphData.edges[i/DATA_SIZE] = graphData.edges[i/DATA_SIZE] << 1;
+        graphData.edges[i/DATA_SIZE] = graphData.edges[i/DATA_SIZE]  | (((int)file.at(i)) - (int)'0');
     }
 
     

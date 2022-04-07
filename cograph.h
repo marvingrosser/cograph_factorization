@@ -19,6 +19,7 @@
 #include "reader.h"
 #include <string.h>
 #include <vector>
+#define DATA_SIZE sizeof(unsigned long long)
 using namespace std;
 using std::string;
 class vertice;
@@ -62,13 +63,13 @@ public:
      * @param lookAt which Verts should be looked at?
      * @return vector of binary representation of components
      */
-    vector<char*> getConnections(bool invert,char* lookAt);
+    vector<unsigned long long*> getConnections(bool invert,unsigned long long* lookAt);
     /**
      * Inverts the given Vertice-Outputs on the Binary Data
      * @param dest  Given input
      * @param size Graph size
      */
-    void verticeInversion(char* dest, unsigned short size);
+    void verticeInversion(unsigned long long* dest, unsigned short size);
 private:
     
     /**
@@ -77,21 +78,21 @@ private:
      * @param other vertdata two
      * @param size size of the graph (length of the arrays)
      */
-    void verticeUnion(char* dest, char* other, unsigned short size);
+    void verticeUnion(unsigned long long* dest, unsigned long long* other, unsigned short size);
     /**
      * Unites the Output of two vertices where the second one is inverted before
      * @param dest vertdata one and in which to store the value
      * @param other vertdata two (which will get inverted before the union)
      * @param size size of the graph (length of the arrays)
      */
-    void verticeInverseUnion(char* dest, char* other, unsigned short size);
+    void verticeInverseUnion(unsigned long long* dest, unsigned long long* other, unsigned short size);
     /**
      * XOR's the Output of two vertices where the second one is inverted before
      * @param dest vertdata one and in which to store the value
      * @param other vertdata two (which will get inverted before the XOR)
      * @param size size of the graph (length of the arrays)
      */
-    void verticeInverseXOR(char * dest, char * other, unsigned short size);
+    void verticeInverseXOR(unsigned long long * dest, unsigned long long * other, unsigned short size);
     
     
 
@@ -102,7 +103,7 @@ private:
      * @param invert Should the graph be inverted?
      * @param pointers Collection ov verticePointers
      */
-    void searchAllConnected(vertice *vert,char* binary, bool invert, vector<vertice*> pointers);
+    void searchAllConnected(vertice *vert,unsigned long long* binary, bool invert, vector<vertice*> pointers);
     
     
     
@@ -112,20 +113,20 @@ private:
      * @param binary the binary data in Char array 
      * @return number of ones in Chararray
      */
-    unsigned int countBinaryOnes(char* binary);
+    unsigned int countBinaryOnes(unsigned long long* binary);
     /**
      * Counts binaray ones on Char in O(m) with m being the number of ones
      * @param binary the binary data as CHar array
      * @return number of ones in Char
      */
-    unsigned int countBinaryOnes(char binary);
+    unsigned int countBinaryOnes(unsigned long long binary);
     /**
      * Returns the State of the bit on the num place in the Char (num>7 --> false)
      * @param num   Index of the bit in the Char
      * @param byte  the binary data in Char
      * @return the corrosponding boolean value
      */
-    bool getBitByNum(short num, char byte);
+    bool getBitByNum(short num, unsigned long long byte);
     /**
      * Calculates the fast Gaussian sum 
      * @param n

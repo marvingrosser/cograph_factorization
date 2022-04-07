@@ -14,20 +14,29 @@
 #include <cstdlib>
 
 using namespace std;
-#include "graph.h"
-#include "gtree.h"
+#include "cograph.h"
+#include "cotree.h"
 #include <vector>
 /*
  * 
  */
 int main(int argc, char** argv) {
-    graph *g = new graph("src/data/problem.graph"); 
-
+    //graph *g = new graph("src/data/k12.graph"); 
+    graph *g = new graph("src/data/graph2.graph"); 
     std::cout << g->get_string()<< std::endl;
-    
-    gtree * gt = new gtree(g);
+    vector<vector<cotree*>> depthdict;
+    cotree * gt = new cotree(g, depthdict);
     std::cout << "\nTree: \n\n"<< gt->get_string() <<std::endl;
+    vector<vector<cotree*>> f = gt->getFactors();
 
+    std::cout << "###############################" << std::endl;
+    for(vector<cotree*> factorline : f){
+        for(cotree* factor : factorline){
+            std::cout << factor->get_string() << std::endl << "– – – – – – – – – – – – – – - -" << std::endl;
+        }
+        std::cout << "###############################" << std::endl;
+    }
+    
     
     return 0;
 }

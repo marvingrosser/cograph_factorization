@@ -7,13 +7,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/marvin/NetbeansProjects/factorization_graph/reader.h</file>
-            <file>file:/home/marvin/NetbeansProjects/factorization_graph/graph.cpp</file>
+            <file>file:/home/marvin/NetbeansProjects/factorization_graph/cotree.cpp</file>
             <file>file:/home/marvin/NetbeansProjects/factorization_graph/vertice.cpp</file>
+            <file>file:/home/marvin/NetbeansProjects/factorization_graph/cograph.cpp</file>
             <file>file:/home/marvin/NetbeansProjects/factorization_graph/main.cpp</file>
-            <file>file:/home/marvin/NetbeansProjects/factorization_graph/graph.h</file>
-            <file>file:/home/marvin/NetbeansProjects/factorization_graph/vertice.h</file>
-            <file>file:/home/marvin/NetbeansProjects/factorization_graph/gtree.cpp</file>
+            <file>file:/home/marvin/NetbeansProjects/factorization_graph/InputHandler.cpp</file>
+            <file>file:/home/marvin/NetbeansProjects/factorization_graph/cotree.h</file>
+            <file>file:/home/marvin/NetbeansProjects/factorization_graph/InputHandler.h</file>
             <file>file:/home/marvin/NetbeansProjects/factorization_graph/reader.cpp</file>
         </group>
     </open-files>

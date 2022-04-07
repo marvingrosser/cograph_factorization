@@ -15,8 +15,9 @@
 #define VERTICE_H
 #include <string>
 #include <vector>
-#include "graph.h"
+#include "cograph.h"
 
+#define DATA_SIZE sizeof(unsigned long long)
 class graph;
 using namespace std;
 using std::vector;
@@ -71,7 +72,7 @@ public:
      * Returns binary Representation of Connections
      * @return binary repr. as Char-array
      */
-    char* getConnections();
+    unsigned long long* getConnections();
 private:
     /**
      * Label
@@ -84,7 +85,7 @@ private:
     /**
      *Connections to other vertices
      */
-    char * out;
+    unsigned long long * out;
 
 };
 

@@ -12,78 +12,86 @@
  */
 
 #include "InputHandler.h"
-
-InputHandler::InputHandler(string arguments) {
+void InputHandler::init(char** args, int argnum){
     this->input = "";
     this->output = "";
     unsigned int i = 0;
-    
-    while(i < arguments.size()){
-        int minus_index = arguments.find('-', i);
-        if(arguments.at(minus_index + 1)=='-'){
-            
-            int next_spaceIndex = arguments.find(' ', minus_index + 2);
-            int next_minusIndex = arguments.find('-', next_spaceIndex);
-            
-            string argName = arguments.substr(minus_index + 2, next_spaceIndex - minus_index -  2  );
-            
-            
-            
-            if(argName == "help"){
-                this->handleHelp();
-                i = minus_index + 2;
-            }else{
-                int first_QTM = arguments.find('"', next_spaceIndex);
-                int second_QTM = arguments.find('"', first_QTM + 1);
-                if(first_QTM < next_minusIndex && second_QTM < next_minusIndex){
-                    std::cout << "Please use \" \" for filepaths" << std::endl;
-                    
-                    break;
-                }
-                
-                string arg = arguments.substr(first_QTM + 1,second_QTM - first_QTM - 2);
-                
-                if (argName == "input"){
-                    this->handleFileI(arg);
-                    i = second_QTM + 1;
-                }else if(argName == "output"){
-                    this->handelFileO(arg);
-                    i = second_QTM + 1;
-                }else{
-                    std::cout << "The command was written poorly. Please try again" << std::endl;
-                    this->handleHelp();
-                    
-                    break;
-            }
-            } 
-            
+    this->si = false;
+    if(argnum==1)this->handleHelp();
+    for(unsigned int i = 1; i < argnum; i++){
+        if(strcmp(args[i],"--input") == 0 || strcmp(args[i], "-i") == 0){
+            i++;
+            this->input = *new string(args[i]);
+        }else if (strcmp(args[i],"--output") == 0 || strcmp(args[i], "-o") == 0){
+            this->output = *new string(args[i]);
+            i++;
+        }else if(strcmp(args[i],"--help") == 0 || strcmp(args[i], "-h") == 0){
+            this->handleHelp();
+        }else if(strcmp(args[i],"--print") == 0 || strcmp(args[i], "-p") == 0){
+            this->si = true;
         }else{
-            i = minus_index + 2;
+            std::cout << "Fehlerhafte Eingabe: \"" << args[i] << "\"" << std::endl;
+            this->handleHelp();
         }
     }
     
-    if(this->input==""){
-        return;
-    }else{
-        this->calculate();
+    if(this->input != ""){
+         this->calculate();
     }
     
     
 }
-InputHandler::InputHandler(char* arguments){
-    
+
+InputHandler::InputHandler(char** arguments, int argnum){
+    this->init(arguments, argnum);
 }
 InputHandler::InputHandler(const InputHandler& orig) {
 }
 
 void InputHandler::calculate(){
     graph *g = new graph(this->input);
+    
+    
+    
+    
+    vector<vector<cotree*>> depthdict;
+    cotree * gt = new cotree(g, &depthdict);
+    if(this->si){
+        std::cout << "\n Input cograph:" << std::endl;
+        std::cout << g->get_string()<< std::endl;
+        std::cout << "\n\n Corresponding cotree: \n\n"<< gt->get_string() <<std::endl;
+    }
+    vector<vector<cotree*>> factors = gt->getFactors(depthdict);
+
+    std::cout << "\n\n#######################################\n\n" << std::endl;
+    for(unsigned int fli = 0; fli < factors.size(); fli++){
+        std::cout << "\nFactorization Nr. " << fli+1 <<"\n-----------------\n"<< std::endl;
+        for(int fi = factors[fli].size()-1; fi >=0;){
+            std::cout << factors[fli][fi]->get_string() << std::endl;
+            if(fi > 0){
+                std::cout << "- - - - - - - - - - - - - - - - - - - -\n" << std::endl;
+            }
+            fi--;
+        }
+        std::cout <<         "\n" << std::endl;
+    }
+    if(this->output != ""){
+    
+    }
 }
 
 InputHandler::~InputHandler() {
 }
 void InputHandler::handleHelp(){
-    std::cout << "Help:" << std::endl;
+    std::cout << "\nUsage:" << std::endl;
+    std::cout << "\tcgfactorization [args]" << std::endl;
+    std::cout << "Example:" << std::endl;
+    std::cout << "\tcgfactorization --input \"graph3.graph\" -pi" << std::endl;
+    std::cout << "\nArguments:" << std::endl;
+    std::cout << "\n\t --help \t\t -h \t\t\t\t show this page" << std::endl;
+    std::cout << "\n\t --printinput \t\t -p \t\t\t\t print the inputgraph and tree" << std::endl;
+    std::cout << "\n\t --input \"filepath\"\t -i \"filepath\"\t\t\t input cograph as file (adjacency matrix)" << std::endl;
+    std::cout << "\n\t --output \"dirpath\"\t -o \"dirpath\"\t\t\t output path for factors as adjacency matrices (f1.graph, f2.graph,...) " << std::endl;
 }
 void InputHandler::handleFileI(string file){
     this->input = file;

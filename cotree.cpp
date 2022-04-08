@@ -383,7 +383,7 @@ void cotree::setId(unsigned int id){
 }
 
 string cotree::get_string(){
-    return this->get_string("",true);
+    return string("  ").append(this->get_string("",true).substr(6, string::npos));
 }
 string cotree::get_string(string intendation, bool isLast){
     string me_s = intendation;

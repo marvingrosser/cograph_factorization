@@ -22,17 +22,19 @@
  */
 class InputHandler {
 public:
-    InputHandler(string arguments);
-    InputHandler(char* arguments);
+
+    InputHandler(char** arguments, int argnum);
     InputHandler(const InputHandler& orig);
     virtual ~InputHandler();
 private:
+    void init(char** args, int argnum);
     void handleHelp();
     void handleFileI(string file);
     void handelFileO(string file);
     void calculate();
     string input;
     string output;
+    bool si;
 
 };
 

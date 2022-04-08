@@ -310,7 +310,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict){ /
             //construct K-Tower here and add them to our factors. As well as the found primefactor
             unsigned int gcd = 0;
             
-            for(unsigned int i = 0; i < gcds.size(); i++){
+            for(unsigned int i = 0; i < gcds.size(); i++){ //splitting of the tuples to make sure that all are prime
                 gcd = __gcd(gcd, gcds[i][0]);
                 if(depthdict[d][i]->getDepth()[1] > d){
                     depthdict[d][i]->setId(gcds.at(i)[1]);
@@ -333,21 +333,31 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict){ /
                 allTowers.push_back(kTower);
             }
                     
-            if(allTowers.empty()){
-                allTowers.push_back(*new vector<cotree*>);
-            }
-            for(unsigned int i = 0; i < factors.size(); i++ ){
+            unsigned int factorcount = factors.size();
+            
+            unsigned int towercount = allTowers.size();
+            
+            for(unsigned int i = 0; i < factorcount; i++ ){
+                
                 factors[i].push_back(new cotree(depthdict[d][0], d-lastdepthfound, primeTuples[0]));
-                if(factors[i][factors[i].size()-1]->getChildNum() < 2 ){
-                    factors[i].pop_back();
+                
+                if(factors[i][factors[i].size()-1]->getChildNum() < 2 ){//check if the factor would be trivial (1) and delete it then
+                    factors[i].pop_back(); 
                 }
-                for(vector<cotree*> tower: allTowers){//we have to fill more factors
-                    factors[i].insert(factors[i].end(), tower.begin(), tower.end());
+                
+                if(towercount > 1)factors.insert(factors.end(), towercount-1, factors[i]); //copy every factor as many times as there exists towers
+                
+            }
+                    
+            for(unsigned int ti = 0; ti < allTowers.size(); ti++){//putting the Ktowers to the new concatenated factors
+                for(unsigned int fi = 0; fi < factorcount; fi++){
+                    factors[fi*towercount+ti].insert(factors[fi*towercount + ti].end(), allTowers[ti].begin(), allTowers[ti].end());
                 }
-            }   
+            }
+                    
             lastdepthfound = d;
         }else{
-            for(unsigned int i = 0; i < gcds.size(); i++){ //splitting of the tuples, that it is sure that all are prime ()
+            for(unsigned int i = 0; i < gcds.size(); i++){ //splitting of the tuples to make sure that all are prime
                 if(depthdict[d][i]->getDepth()[1] > d){
                     depthdict[d][i]->setId(gcds.at(i)[1]);
                     depthdict[d][i]->setMultiplicity(gcds.at(i)[0]);

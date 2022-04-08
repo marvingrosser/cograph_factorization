@@ -1,0 +1,603 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage{fancyheadings}
+\usepackage[english]{babel}
+\usepackage{german}
+\usepackage{cmbright}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage[boxed]{algorithm2e}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[breakable]{tcolorbox}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm]{geometry}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{dsfont}
+\usepackage{multicol}
+\usepackage{pgfplots}
+\usepackage{algpseudocode}
+\usetikzlibrary{trees}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{shapes.geometric}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newcommand{\contradiction}{{\hbox{%
+			\setbox0=\hbox{$\mkern-3mu\times\mkern-3mu$}%
+			\setbox1=\hbox to0pt{\hss$\times$\hss}%
+			\copy0\raisebox{0.5\wd0}{\copy1}\raisebox{-0.5\wd0}{\box1}\box0
+}}}
+\renewcommand\qedsymbol{$\blacksquare$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Semester}{SoSe 21}
+\newcommand{\Uebungsblatt}{Lexicographic Cotree Factorization} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\setlength{\parindent}{0em}
+\topmargin -2.0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+\setlength{\textheight}{9.6in}
+\setlength{\textwidth}{6.9in}
+\addtolength{\hoffset}{-22pt}
+
+
+\newcommand{\limes}[2]{
+	\lim\limits_{x\rightarrow #1}\quad  #2
+}
+\newcommand{\limesh}[1]{
+	\lim\limits_{h\rightarrow 0}\quad  #1
+}
+\newcommand{\limesr}[2]{
+	\lim\limits_{\underset{x > #1}{x\rightarrow #1}}\quad  #2
+}
+\newcommand{\limesl}[2]{
+	\lim\limits_{\underset{x < #1}{x\rightarrow #1}}\quad  #2
+}
+\newcommand{\Aufgabe}[2]{
+	{
+		\vspace*{0.3cm}
+		\begin{tcolorbox}[breakable,colback=yellow!0,colframe=black!65!black,title=\textbf{Aufgabe #1:},width=\linewidth ]
+			{#2}
+		\end{tcolorbox}
+		
+		
+	}
+}
+\newcommand{\Hinweis}[1]{
+	\vspace*{0.3cm}
+	\begin{tcolorbox}[breakable,colback=yellow!10,colframe=yellow!65!black,title=\textbf{Hinweis:},width=\linewidth ]
+		{#1}
+	\end{tcolorbox}
+}
+\newcommand{\SHA}[1]{
+	\vspace*{0.1cm}
+	\begin{tcolorbox}[breakable,colback=blue!5,colframe=blue!65!black,title=\textbf{Richtiger SHA256 Hash:},width=\linewidth ]
+		{\texttt{{#1}}}
+	\end{tcolorbox}
+}
+\newcommand{\Beispiel}[1]{
+	\vspace*{0.2cm}
+	\begin{tcolorbox}[breakable,colback=yellow!0,colframe=green!65!black,title=\textbf{Beispiel:},width=\linewidth ]
+		{#1}
+	\end{tcolorbox}
+}
+\newcommand{\p}[2]{\pi_{#2}^{(#1)}}
+\newcommand{\eing}[1]{\begin{enumerate}[\quad]
+		\item #1
+\end{enumerate}}
+
+\newcommand{\abc}[1]{
+	\begin{enumerate}[(a)]
+		#1
+	\end{enumerate}
+}
+
+\newcommand{\integral}[4]{\int\limits_{#1}^{#2} {#3} {\quad d #4}}
+\newcommand{\summe}[3]{\sum\limits_{#1}^{#2} #3}
+\begin{document}
+	\thispagestyle{fancy}
+	\pagestyle{fancy}
+	\begin{center}
+		\LARGE \sf \textbf{ \Uebungsblatt{}}
+	\end{center}
+	\vspace*{0.1cm}
+	\tableofcontents
+	\newpage
+	\thispagestyle{fancy}
+	\section{Theoretical Concept}
+	\subsection{Trees}
+		Trees are graphs $(V,E)$ which have to be connected, acyclic and undirected. Rooted trees are just trees with one vertice specified as root.
+		We may consider a inductive definition, detached from pure graph theory:\\
+		\begin{definition}
+			Let $\mathds{T}_M$ be the set of all trees with labels in $M$:\\\\
+			$T=(r,\mathcal{C}) \in \mathds{T}_M$, with $\mathcal{C}$  a multiset, if:
+			\begin{itemize}
+				\item $T$ is called leaf $\,\Longleftrightarrow\,\mathcal{C}=\emptyset,\, r\in M$
+				\item $\mathcal{C}\subseteq \mathds{T}_M,\,|\mathcal{C}|\in\mathds{N},\, r\in M$\\
+			\end{itemize}
+		\end{definition}
+		\subsubsection{Definitions on Trees}
+		Let $T=(r,\mathcal{C})\in \mathds{T}_M$ be a Tree.
+		\begin{enumerate}[$ $]
+			\item \begin{definition}
+				\underline{Nodes of $T$, named $\mathcal{N}(T)\subseteq \mathds{T}_M$ are inductively defined by:}
+				\begin{itemize}
+					\item Every child $C=(r_C,\mathcal{C}_C)\in \mathcal{C}$ is called node of $T$
+					\item  All nodes of the children $\mathcal{N}(C)$ are nodes of $T$ as well
+				\end{itemize}
+				\[\implies \mathcal{N}(T)=\{T\}\cup\left (\bigcup_{C\in\mathcal{C}} \mathcal{N}(C) \right)\]
+				
+				Nodes will usually denote the corresponding graph node, but with this notation the child nodes are acquired simultaneously. \\The experienced reader will verify, that this matches the later defined complete subtrees. Which should be synonymous from here on.
+			\end{definition}
+			\item \begin{definition}
+				\underline{Children of Node $N$ of $T$:}
+				For $N=(r_N, \mathcal{C}_N)$
+				\begin{itemize}
+					\item Children of $N$ as defined the set $\mathcal{C}_N$
+				\end{itemize}
+			\end{definition}
+			\item \begin{definition}
+				\underline{Parent of Node $N$ of $T$:}
+				\begin{itemize}
+					\item Parent of $N$, denoted by $\mathcal{P}(N)=P\in \mathcal{N}(T)$ with $N\in \mathcal{C}_P$.\\
+					While $\mathcal{P}(T)=\,undef$
+				\end{itemize}
+			\end{definition}
+			\item \begin{definition}
+				\underline{Leafes of $T$:}
+				\begin{itemize}
+					\item $\mathcal{L}(T)= \mathcal{N}(T) \cap \{(r,\emptyset)\,\vert\, r\in M\}\,$ are called leafs as above.
+				\end{itemize}
+			\end{definition}
+		\end{enumerate}
+		\subsubsection{Level}
+		The classical definition for  a nodes level is by the distance of the node to the root of the tree.
+		With the above definition we get:
+		Let $T\in\mathds{T}_M$ be a tree, $N$ one of its nodes.  
+		\begin{definition}[Level]
+			 The level of $N$ will be: \[l_T(N)=n\in \mathds{N}:\qquad\text{ with } \mathcal{P}^{n}(N)=\underbrace{\mathcal{P}(\mathcal{P}(\cdots \mathcal{P}}_{n\text{ times}}(N)))=T \]
+		\end{definition}
+		\subsubsection{Depth}
+		The depth of some node $N$ of $T$ is like turning the definition of level upside down. With that the depth will be referencing to the shortest path to a leaf of the corresponding complete subtree.\\
+	\begin{definition}[Depth]
+			We will define the depth of node $N=(r_N,\mathcal{C}_N)$ by:
+		\[d(N)= max\left(\{d(C)+1\,\vert\, C\in\mathcal{C}_N\} \cup \{0\}\right)\]
+		From this definition it follows that: $d(N)=0 \Leftrightarrow N$ is leaf.\\\\
+		The depth said to be \underline{unambiguous} if \[d(N)=d(C) + 1\qquad \forall C\in\mathcal{C}_N\] 
+		and the depth of every child of $N$ is unambiguous.\\\\
+	\end{definition}
+		
+
+			\begin{definition}[Subtree]
+				$S=(r_S,\mathcal{C}_S)$ is subtree of a given Tree $T=(r_T,\mathcal{C}_T)$, denoted by $S\subseteq T$, if there exists a node $N=(r_N,\mathcal{C}_N)\in \mathcal{N}(T)$ with \[r_N=r_S\,\text{ and }\, \forall K\in \mathcal{C}_S\,\exists C\in  \mathcal{C}_N:\quad   K\subseteq C\]
+				\begin{itemize}
+					\item	If $N = T$, $\,S$ should be called \underline{rooted subtree} of $T$, denoted by $S\Subset T$.
+					\item 	If $N \cong S$, $\,S$ should be called \underline{complete subtree}  of $T$, denoted by $S\subseteqq T$.\\
+				\end{itemize}
+			\end{definition}
+			\begin{definition}
+				For $S\subseteq T$ both Trees we denote $\mathcal{N}(S)\ni N=(r_N, \mathcal{C}_N) \,\hat{\in}\, \mathcal{N}(T) $ if there exists $M=(r_M, \mathcal{C}_M)\in \mathcal{N}(T)$ with $r_M=r_N$ and $\mathcal{C}_M \cap \mathcal{C}_N \not = \emptyset$\\
+				In other Words $\exists M\in \mathcal{N}(T): \quad N\Subset M$
+			\end{definition}
+			
+	\subsection{Cotree}
+	With the definition above cotrees will be denoted $\mathds{T}_{\mathcal{B}}$\\
+	With $\mathcal{B}=\{0,1\}$ where ''B'' stands for boolean.
+	Every cotree represents a cograph, where every leaf represents a vertice of the cograph. Two of them are connected if their lowest common parent's label, that's the one with lowest depth, is $1$. 
+	\begin{definition}[Minimal Cotree]
+		Let $T=(r,\mathcal{C})$ be a cotree. $T$ said to be minimal if for every path in $T$ the sequence of label is always an alternating one.\\
+		\[\text{cotree }\, T=(r,\mathcal{C}) \,\text{ is minimal }\, \Longleftrightarrow \forall (r_C,\mathcal{C}_C)=C\in\mathcal{C}:\quad C \,\text{ is minimal, }\, r_C \not = r \text{ and } |\mathcal{C}|\not = 1 \]
+		I will denote the minimal cotree of $T$ with $T_{min}$
+	\end{definition}
+	
+	\begin{definition}[Cotree isomorphy]
+		Two cotrees $T,T'$ are called cotree isomorphi written \\$T\cong_C T'$ if their minimal cotrees $T_{min}=(r_T,\mathcal{C}_T)$ and $T_{min}'=(r_{T'},\mathcal{C}_{T'})$ are rooted tree isomorphic: 
+		$T_{min} \cong T_{min}'$
+	\end{definition}
+	\subsubsection{Lexicographic Product}
+	Denote the Cotree of a Cograph $\,C$ as $T(C)$\\
+	Let $C_1$ be a Cograph. $C_1$ is Product of two other Cographs $\,P_1$,$P_2\,$ if  it is cotree isomorphic to \\$T(P_1)\vartriangleleft T(P_2).$\\
+	In other Words there exists a cotree, representing the identical cograph of the form:
+		\begin{center}
+		\begin{tikzpicture}[
+			level distance=1.8cm,
+			sibling distance=3.3cm, 
+			level 2/.style={sibling distance =2cm},
+			triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
+			]
+			\node[circle,draw] {$$}
+			child{node[]{$\cdot^{\cdot^\cdot}$} 
+				child{node[]{}
+					child{node[triangle] {$T(P_2)$}
+					}
+				}
+			child{node[]{$\cdots$} edge from parent [draw=none] child{node[triangle] {$T(P_2)$}}}
+				child{node[]{}
+					child{node[triangle] {$T(P_2)$}}
+					}
+				}
+			child{node[]{$\cdots\cdots $} edge from parent [draw=none]}
+			child{node[]{$\cdot_{\cdot_\cdot}$} 
+				child{node[]{}
+					child{node[triangle] {$T(P_2)$}
+					}
+				}
+				child{node[]{$\cdots$} edge from parent [draw=none] child{node[triangle] {$T(P_2)$}}}
+				child{node[]{}
+					child{node[triangle] {$T(P_2)$}}
+				}
+			};
+			
+		\end{tikzpicture}
+	\end{center}
+	Where if one would remove every subtree $T(P_2)$ one would get $T(P_1)$, as well as you would remove every former leaf from the tree.\\
+	$T(P_1)\vartriangleleft T(P_2)$ just means attach $T(P_2)$ where a leaf in $T(P_1)$ is.\\\\
+	\begin{definition}[Factor of some Cotree]
+		Particularly a cotree $F$ is factor of some cotree $T$ denoted by $T\vartriangleleft F$ if
+		\[\forall L\in \mathcal{L}(T_{min})\,\exists S \subseteq T_{min}:\quad L\in\mathcal{L}(S)\,\text{ and }\, S\cong_C F\qquad\qquad (1)\] 
+		let those subtrees be $S_1,...,S_n\quad n\in\mathds{N}$ with minimal height.
+		\[\forall i,j\in\{1,...,n\}:\quad i\not = j \implies \mathcal{N}(S_i)\backslash \{S_i\}\cap \mathcal{N}(S_j)\backslash \{S_j\}=\emptyset\qquad (2)\]
+		e.g. their nodes, except the root, are pairwise disjoint. We call them $F$-subtrees of $T$.\\
+	\end{definition}
+	If $F$ and $T$ are minimal we may refer in (1) to the classical rooted tree isomorphy.\\\\
+	From the definition above it schould be clear that $\,n \,\bigg\vert\, |\mathcal{L}(T)|\, $ from which follows that $\,|\mathcal{L}(F)| \,\bigg\vert\, |\mathcal{L}(T)| $.\\
+	\begin{theorem}
+		$S_1,...,S_n$ are minimal or ismorph to the trivial factor.
+		\begin{proof}
+			Let $F_{min}=(r_F, \mathcal{C}_F) \cong_C S_i\quad \forall i\in\{1,...,n\}$ and $|\mathcal{C}_F| > 0$ e.g. $F$ is not the trivial factor\\
+			Let $S_i=(r_{S_i},\mathcal{C}_{S_i})$ then $|\mathcal{C}_{S_i}|\leq 2$ because it isn't the trivial factor and (2). For the reason that $T$ is minimal the children of $S_i$ are as well, and because it there at least two $C\in \mathcal{C}_{S_i}$ itself has to be minimal.\\
+			If the other hand $F$ is the trivial factor because of (1), $S_i$ will be as well.   
+		\end{proof}
+	\end{theorem}
+	
+	\begin{theorem}
+	Another interesting fact arising, for a given cotree $T$, factor cotree $F$ and subtrees\\ $S_1,...,S_n\quad n\in\mathds{N}$:
+	\[(1)\qquad\qquad\forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)< d(F_{min})\,\implies\, N\in \mathcal{N}(S_i) \]
+	and  
+	\[(2)\qquad \forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)= d(F_{min})\,\implies\, N\Supset S_i\cong F_{min} \]
+	\end{theorem}
+	\begin{proof}
+		\begin{enumerate}[(1)]
+			\item Let $N\in \mathcal{N}(T_{min})$ with $d(N)= k< d(F_{min})$\\
+			This means for every leaf $L\in \mathcal{L}(N)$ ther exists $\mathds{N}\ni t\leq k$ with $N$ being the $ t'th$ parent of $L$.\\
+			Because every leaf of $T$: $\, L\in \mathcal{L}(T_{min})$ is in some $F-$subtree of $T$, namely $S_i$, with $k < d(S_i)=d(F_{min})$ it follows that $N$ is a node of some of those subtrees $S_i$.
+			\item  Let $N\in \mathcal{N}(T_{min})$ with $d(N)= k=d(F_{min})$\\
+			This means for every leaf $L\in \mathcal{L}(N)$ ther exists $\mathds{N}\ni t\leq k$ with $N$ being $L's\,\, t'th$ parent.\\
+			Now suppose $N\not \Supset S_i$ for all $F-$subtrees of $T$ $S_i$.
+			From (1) it follows that $F\in \mathcal{N}(S_i)$ for some $F-$subtrees of $T$ $S_i$. And with that $d(S_i)>d(F_{min})=k$ which contradicts $S_i\cong F_{min}$
+		\end{enumerate}
+	\end{proof}
+	With this counterexample it will be clear, why the opposite direction won't hold:
+	\begin{center}
+		\begin{tikzpicture}[
+			level distance=1.5cm,
+			sibling distance=3cm, 
+			level 2/.style={sibling distance =3.3cm},
+			level 3/.style={sibling distance =2cm},
+			triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
+			]
+			\node[circle,red] {$0_{d=3}$}
+			child{node[circle]{$1_{d=2}$} 
+				child{node[circle,red]{$0_{d=1}$} 
+						child{node[circle,red]{$1_{d=0}$}edge from parent [red] }
+						child{node[circle,red]{$1_{d=0}$}edge from parent [red] }
+					}
+				child{node[circle,red]{$0_{d=1}$}
+						child{node[circle,red]{$1_{d=0}$}edge from parent [red] }
+						child{node[circle,red]{$1_{d=0}$}edge from parent [red] }
+					} }
+			child{node[circle,red]{$1_{d=1}$} edge from parent [red] }
+			child{node[circle,red]{$1_{d=1}$} edge from parent [red] };
+		\end{tikzpicture}
+	\end{center}
+	Our factor will be the minimal cotree for the cograph $(V,E)=(\{1,2\},\emptyset)$. The subtrees $S_1,S_2,S_3$ (read from left to right) are marked red. As you see the root of the whole tree is root of $S_3$ too, but with depth $3$ it is indeed not smaller than $d(S_3)$.\\
+	The background of this happening is the ambiguous depth of this node, because without the left subtree, depth of this node would be $1$ as well. \\
+	With this in our mind we should think about creating an unambiguous cotree from a normal one. 
+	\subsection{Balancing Cotrees}
+
+	\subsection{Labeling}
+	A Labeling for Trees gives every node of the tree a equivalence class with an order between them. Two of them be synonymous if they have the same equivalence classes and there exists an order isomorphism between their equivalence classes.
+	\subsection{Connection of depth and level}
+	Depth and Level are two non synonymous methods for labeling nodes in trees.\\
+	But if the tree has unambiguous depth then the two labelings are indeed synonymous with inverse equivalence class ordering.
+	\\\\
+	 \begin{proof}
+	 	by Induction  Let $T=(r,\mathcal{C})$ be a Tree with unambiguous depth and $d(T)=n$\\
+	 	\begin{itemize}
+	 		\item \underline{Base Case:}\\
+	 		For $n=0\quad$ $T$ is a leaf $\implies$ both labelings are synonymous
+	 		\[l_T^{(max)}-l_T(T)=0-0=0=d(T)\]
+	 		with $l_T^{(max)}$ the number of levels of the tree $T$
+	 		\item \underline{Induction Hypothesis:}\\
+	 		Let the labelings be synonymous for trees $T$ with unambiguous depth of $n$.
+	 		$N$ node of $T$ and with order isomorphism:
+	 		\[l_T^{(max)}-l_T(N)=d(N)\]
+	 		with $l_T^{(max)}$ the number of levels of the tree $T$
+	 		\item \underline{Induction Step:}\\
+	 		Let $T=(r,\mathcal{C})$ be a tree of unambiguous depth\\
+	 		$\qquad\implies $ all $C\in\mathcal{C}$ are of unambigous depth.\\
+	 		For every node $N$ of $C\in\mathcal{C}:$\[ l_T(N)=l_C(N)+1\] because every child of $T$ is on level 1 and itself is unambiguous.\\
+	 		With that let $N$ be node of child $C\in\mathcal{C}$:
+	 		\begin{align}
+	 			l_T^{(max)}-l_T(N)&=l_T^{(max)}-(l_C(N) + 1)=l_C^{(max)} + 1 -(l_C(N) + 1)\\
+	 			&= l_C^{(max)}-l_C(N) \overset{IH}{=} d(N)
+	 		\end{align}
+	 		And for $T$: $d(T)=l_T^{(max)} - l_T(T)=l_T^{(max)}$\\
+	 		with $l_T^{(max)}$ the number of levels of the tree $T$\\
+	 		$\implies$ the two labelings are synonymous, because the order isomorphy is continued  (see (1)).
+	 	\end{itemize}
+	 \end{proof}
+	 \underline{Example:}\\
+	 \begin{center}
+	 	\begin{tikzpicture}[
+	 		level distance=2cm,
+	 		sibling distance=3cm, 
+	 		level 2/.style={sibling distance =3cm},
+	 		triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
+	 		]
+	 		\node[circle] {$0_{d=2}^{l=0}$}
+	 		child{node[circle]{$1_{d=1}^{l=1}$} 
+	 			child{node[circle]{$0_{d=0}^{l=2}$}}
+	 			child{node[circle]{$0_{d=0}^{l=2}$}} }
+	 		child{node[circle]{$1_{d=1}^{l=1}$} 
+	 			child{node[circle]{$0_{d=0}^{l=2}$}} }
+	 		child{node[circle]{$1_{d=1}^{l=1}$} 
+	 			child{node[circle]{$0_{d=0}^{l=2}$}} };
+	 	\end{tikzpicture}
+	 \end{center}
+	\subsection{Balancing}
+	Because we may alter Cotrees in certain ways to leave them Cotree-Isomorphic to itself, e.g. it represents the same Cograph, we could use that to simplify our problem.\\
+	One way to do so is balancing the tree, that its depth will be unambiguos.
+	\\The Process starts inductively from the leafs, in other words from every node of the tree with depth equal to $0$.\\\\
+	\begin{proof}
+		Induction for $d(T)=n$
+		\begin{itemize}
+			\item \underline{Base Case:}
+			\[n=0 \,\implies \, \text{depth is unambiguous because there are no children}\]
+			\item \underline{Induction Hypothesis:}\\
+			For every child of $T$: $C_1,...,C_m$ the depth is unambiguous.
+			\item \underline{Induction Step:}\\
+			Let $T=(r,\mathcal{C})$ be a tree with $d(T) = n + 1$\\
+			$\implies \,\forall C \in \mathcal{C}:\quad d(C)\leq n\qquad $ as well as $C$'s depth is unambiguous\\
+			let $d_{min} = min\left(\{d(C)\, \vert \, C\in\mathcal{C}\}\right)$\\
+			Now disconnect every child and attach a chain of nodes each with the same label as $r$. The length of the chain said to be $n - d_{min}$.\\
+			Let $N_1,...,N_\delta$ be its nodes, counted from bottom to top. And let $N_0$ be $r$\\
+			Now for every disconnected child $C$ attach it to the chain on node:
+			\[N_{n - d(C)}\]
+			Now $N_0,N_1,...,N_{n-d_{min}}$ have unambiguous depth.\\
+			Node $N_{n-d_{min}}$ has unambiguous depth because all its childs are of depth $d_{min}$.\\
+			If $N_{n-d_{min} - k }$ has unambiguous depth so has $N_{n- d_{min} - k - 1}$, because the depth of every attached child is $d_{min} + k$ as well as for the child node $N_{n-d_{min} - k}$. Every child of $N_{n- d_{min} - k - 1}$ has unambiguous depth. \\
+		\end{itemize}
+	\end{proof}
+	\begin{center}
+		\begin{tikzpicture}[
+			level distance=1.8cm,
+			sibling distance=3cm, 
+			level 2/.style={sibling distance =2cm},
+			triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
+			]
+			\node[circle] {$r$}
+			child{node[] {$d(C_1)=n$}child{node[triangle]{$C_1$} }}
+			child{node[] {$d(C_2)=n-1$} child{node[triangle]{$C_2$}  }}
+			child{node[] {$\mathbf{\cdot} \quad \mathbf{\cdot}  \quad \mathbf{\cdot} $} child{node[]{$\mathbf{\cdot}  \quad \mathbf{\cdot}  \quad \mathbf{\cdot} $}edge from parent [draw=none] }edge from parent [draw=none]}
+			child{node[] {$d(C_m)=n-m+1$} child{node[triangle]{$C_m$} }};
+		\end{tikzpicture}
+		\\$\Downarrow$\\
+		\begin{tikzpicture}[
+			level distance=1.8cm,
+			sibling distance=5cm, 
+			level 2/.style={sibling distance =4cm},
+			triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
+			]
+			\node[circle] {$N_0$}
+			child{node[] {$N_1$}	
+				child{node[] {$N_2$}
+					child{node[] {$\,\,\,\,\,\cdot^{\cdot^{\cdot}}$} 
+						child{node[] {$N_{m-1}$}
+							child{node[] {$d(C_m)=n-m+1$} child{node[triangle]{$C_m$} }}
+						}
+					}
+				child{node[] {$d(C_3)=n-2$} child{node[triangle]{$C_3$}  }} 
+				}
+			child{node[] {$d(C_2)=n-1$} child{node[triangle]{$C_2$}  }}
+			}
+			child{node[] {$d(C_1)=n$}child{node[triangle]{$C_1$} }};
+			
+		\end{tikzpicture}
+	\end{center}
+	We denote a given tree as balanced if it arises from the minimal cotree of an arbitrary cotree put trough this algorithm. Written $\beta(T)=\beta(T_{min})$.\\
+	With this method we have got a way for ensuring that level-labeling and depth labeling are indeed synonymous, providing us an easy way to modify the AHU-Algorithm after our needs.
+	\begin{theorem}
+		For two cotrees $T_1,T_2$ it holds that \[T_1 \cong_C T_2 \quad \Longleftrightarrow \quad\beta(T_1)\cong \beta(T_2)\] 
+	\begin{proof} 
+		$''\Rightarrow''$
+		From $T_1 \cong_C T_2$ it follows that $T_{1_{min}}\cong T_{2_{min}}$. Because the Algorithm depends just on the depth of the nodes of the tree, and the two minimal cotrees are isomorphic they get altered the same way which means $\beta(T_1)\cong \beta(T_2)$\\
+		$''\Leftarrow''$
+		From $\beta(T_1)\cong \beta(T_2)$ it follows that $T_{1_{min}}=\beta(T_1)_{min}\cong \beta(T_1)_{min}=T_{2_{min}}$ and from that $T_1 \cong_C T_2$
+	\end{proof}
+	\end{theorem}
+	\begin{theorem}
+		For a minimal cotree $T_{min}$ and a minimal subtree $S\subseteq T_{min}$ with $\mathcal{L}(T_{min})\cap \mathcal{L}(S) \not = \emptyset$, e.g. they share at least one leaf:\\
+		$\beta (S)\subseteq \beta(T_{min})$ and its root will be found on depth $d(\beta (S))$
+		\begin{proof}
+			Let be $N\in \mathcal{N}(T_{min})$ with $S\Subset N$. It follows that $d(S) \leq d(N)$ and $d(\beta (S)) \leq d(\beta (N)),$ because they share at least one leaf. Now let $S=(r_S, \mathcal{C}_S), N=(r_N, \mathcal{C}_N)$ and  $D\in \mathcal{N}(\beta(N))$ with $\forall C_N \in \mathcal{C}_N:\quad D\not \cong_C C\quad \land\quad  d(D) = d(\beta(S))$. In other words $D$ is the node introduced by the algorithm with the depth of $S$.\\
+			
+			MAYBE INDUCTION for subsettrees with same root?
+		\end{proof}
+	\end{theorem}
+	\subsection{Properties for the lexicographical Product of Cographs}
+
+		\subsubsection{Relevance of Depth for finding isomorphic complete subtrees}
+		
+			If we want to find if some given minimal cotree $S=(r_S, \mathcal{C}_S)$ is isomorphic to some  complete subtree $S'=(r_{S'},\mathcal{C}_{S'})$ of some other minimal cotree $T=(r_T, \mathcal{C}_T)$, depth will play a certain roll.
+			\begin{center}
+				\begin{tikzpicture}[
+					level distance=-0.325cm,
+					sibling distance=3cm, 
+					level 2/.style={sibling distance =2cm},
+					triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
+					]
+					\node[] {}
+					child{node[triangle] {$T\hspace{3cm}$} edge from parent [draw = none] 
+						child{node[triangle] {$S$} edge from parent [draw = none]}};
+					
+				\end{tikzpicture}
+			\end{center}
+			As the mindful reader already detected:\\
+			If this complete subtree $S'$ exists, its root will be found in all nodes of $T$ with depth $d(S)$\\\\
+			\underline{Proof:}\\ Because $T$ is minimal it follows $S'$ is minimal. Because it is isomorphic to $S$ and $S$ itself is minimal: the depth of the roots will be the same. \qed
+		\subsubsection{Unambigous depth, Balanced Cotrees and Factorization}
+		\begin{theorem}
+			Let $T_{min},F_{min}\in\mathds{T}_{\mathcal{B}}$ be cotrees with $T_{min}\vartriangleleft F_{min}$ and unambiguous depths.\\ $S_1,...,S_n\subseteq T$ the $F_{min}$-subtrees of $T_{min}$. I state that:
+			\[(1)\qquad \qquad \forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)<d(F_{min})\,\Longleftrightarrow\, N\in \mathcal{N}(S_i) \]
+			and
+			\[(2)\qquad \forall N\in \mathcal{N}(T_{min})\, \exists i\in\{1,...,n\}:\quad d(N)= d(F_{min})\,\Longleftrightarrow\, N \Supset S_i\cong F_{min} \]
+		\end{theorem}
+	\begin{proof}
+		\begin{enumerate}[(1)]
+			\item ''$\Rightarrow$'' proved above.\\
+			''$\Leftarrow$'' Let $N\in\mathcal{N}(T_{min})$ with $N\in \mathcal{N}(S_i)$ for some $i\in\{1,...,n\}$\\
+			$N's$ depth will be unambiguous because $T_{min}$ has unambiguous depth. As well as $S_i$, for the reason that $\mathcal{L}(S_i)\subset \mathcal{L}(T_{min})$ and all $S_i's$ are pairwise disjoint except for their root $R\in \mathcal{N}(T_{min})$ which itself has unambiguous depth.\\
+			Because there $\exists D\in \mathcal{N}(T_{min})\,  $ with $\,S_i\Subset D$ and both are unambiguous from which follws that $d(S_i)=d(D)=d(F_{min})$. And because $N\in \mathcal{N}(D)$ it follows that $d(N)< d(D)=d(F_{min})$ 
+			\item ''$\Rightarrow$'' proved above.\\
+			''$\Leftarrow$'' Let $N\in\mathcal{N}(T_{min})$ with $N \Subset S_i$ for some $i\in\{1,...,n\}$. They have at least one common leaf with each other.\\
+			$N's$ depth will be unambiguous because $T_{min}$ has unambiguous depth, as well as $S_i$.\\
+			Because both are unambiguous and have common leafs this implies $d(S_i)=d(N)=d(F_{min})$.
+		\end{enumerate}
+	\end{proof}
+		The theorem states that for those cotrees we may identify the nodes $D$ of $T$ with $S_i \Subset D$ just by their depth. With that the search for factors will be doable.\\
+		But because this are special forms of cotrees we need to get this statement for cotrees originated from some unambiguous but arbitrary minimal cotrees. 
+		TWO SUBTREES (ISOMORPH) OF SOME COTREE ARE ISOMORPH FOR BALANCED TREE
+		\begin{theorem}
+			Let $T,F\in\mathds{T}_{\mathcal{B}}$ be cotrees with $T\vartriangleleft F$.\\ $S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial factor. I state that:
+			\[(1)\qquad \qquad \forall N\in \mathcal{N}(\beta(T))\, \exists i\in\{1,...,n\}:\quad d(N)< d(\beta(F))\,\Longleftrightarrow\, N\in \mathcal{N}(\beta(S_i)) \]
+			and 
+			\[(2)\qquad \forall N\in \mathcal{N}(\beta(T))\, \exists i\in\{1,...,n\}:\quad d(N)= d(\beta(F))\,\Longleftrightarrow\, N \Supset \beta(S_i)\cong \beta(F) \]
+			\begin{proof}
+				\begin{enumerate}[(1)]
+					\item ''$\Rightarrow$''\quad Let  $ N\in \mathcal{N}(\beta(T))$ with $ d(N)< d(\beta(F))$. It should be clear that $N=\beta (N)$.\\ Because $\exists i\in\{1,...,n\}\forall L \in \mathcal{L}(N)$ with $L\in \mathcal{L}(S_i)$, because from $S_{i_{min}} \cong F_{min}$ it follows that $\beta (S_i) \cong \beta (F)\quad$[Th. 1.3]. Therefore $N \in \mathcal(\beta(S_i))$.  \\
+							''$\Leftarrow$''\quad Let $N\in \mathcal{N}(\beta (S_i))$. From Theorem 1.3 and $ S_{i_{min}} \cong F_{min}$ it follows that $\beta (F) \cong \beta (S_i)$ which implies $d(\beta (S_i))=d(\beta (F))$ and with that $N<d(\beta(F))$
+					\item ''$\Rightarrow$''\quad Let $N\in \mathcal{N}(\beta(T)):\quad d(N) = d(\beta (F))$ , it is clear that $N=\beta(N)$. Now let $L\in \mathcal{L}(N)$ be a leaf of $N$. We know that there $\exists i\in \{1,...,n\}$ with $L\in \mathcal{L}(\beta (S_i))$. Then $d(\beta(S_i)) = d(\beta (F)) = d(N)$. So if $N \not \Supset \beta(S_i)$ this contradicts the assumption, because then $N$ has to be above or below $\beta(S_i)$. With that $N  \Supset \beta(S_i)\cong \beta (F)$\\
+					''$\Leftarrow$''\quad Let $\mathcal{N}(\beta(T)) \ni N \Supset \beta(S_i) \cong \beta(F)$ because of the unambiguity of $N,\beta(S_i),\beta (F)$ and share at least one child they surely have the same depth.\\
+					$\implies d(N)=d(\beta(S_i))=d(\beta(F))$
+				\end{enumerate}
+			\end{proof}
+		\end{theorem}
+		The great thing about this theorem is, we proved that we may find the Roots of the $F$-Subtrees of $T$ on the same height. This will give us a way to use the AHU Algorithm on the depth, where onece there is over one depth just one id, suggesting that every subtree appending there will be isomorphic to the others. 
+		\subsubsection{Hard part of the story}
+		The Hard Part about finding Factors will be the cotrees $T$ in which at least one node $N$ has at least two $S_i, S_j$ as its rooted subtrees.\\
+		The key idea for solving this is, after converting $T$ to $\beta(T)$ with unambiguous depth, we may split up nodes, in $m$ isomorphic nodes. 
+		\begin{definition}
+			Let $T$ be a cotree.. $N=(r_N,\mathcal{C}_N)\in \mathcal{N}(T)$ with $\mathcal{P}(N)=P=(r_P,\mathcal{C}_P)$ and $r_P=r_N$. $\mathcal{C}_N=\{(C_1,m_1),...,(C_n,m_n)\}\, $ (in thought of a multiset). Let $d_1,...,d_k \big| ggT(m_1,...,m_n)\not= 1$. Then:
+			To split $N$ ($\zeta(N)$) in respect to $d_i,\,\, i \in\{1,...,k\}$ means:
+			\begin{itemize}
+				\item $\mathcal{C}_{P'} := \mathcal{C}_P\ N \cup \{(\hat{N},d_i )\}$ with
+				\[\hat{N}=(r_{\hat{N}}, \mathcal{C}_{\hat{N}})\qquad r_{\hat{N}}=r_N,\quad \mathcal{C}_{\hat{N}}=\{(C_1,m_1/d_i),...,(C_n,m_n/d_i)\}\]
+			\end{itemize} 
+			This is well defined, because $d_i \big | ggt(m_1,...,m_n)$.\\ The cotree resulting from this $T'$ is cotree isomorphic to $T$ because in $T_{min}\,$ $N$ will be collapsed into $P$ because they share the label. For $T'_{min}\,$ all $\hat{N}$ will be collapsed into $P'$ as well. With that and beacause nothing else changed in the splitting of $N$: $T'_{min}\cong T_{min}$ impling $T$ and $T'$ are cotree isomorphic.\qed
+		\end{definition}
+	\begin{theorem}
+			Let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ 	$S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial 		factor. And there $\exists N\in\mathcal{N}(\beta(T)) \forall i\in \{1,...,m\}\, m\leq 	n$ with $N\Supset \beta(S_i)$. And $d(\beta(F))=k$\\
+			Then 
+			\[\forall i \in \{1,...,m\}\forall M=(r_M, \mathcal{C}_M)\in \mathcal{N}(N):\quad \mathcal{P}(M) = P=(r_P,\mathcal{C}_P)\text{ with } r_P=r_M \implies N\in \mathcal{N}(\beta(S_i))\]			
+		\end{theorem}
+		\begin{theorem}
+				Let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ $S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial factor. And there $\exists N\in\mathcal{N}(\beta(T)) \forall i\in \{1,...,m\}\, m\leq n$ with $N\Supset \beta(S_i)$. And $d(\beta(F))=k$\\
+				Then we may split those trees up that in the new tree $\zeta (T)$ The subtrees are pairwise disjoint.
+				\begin{proof}
+					Start with all nodes of $N\in \mathcal{N}(\beta(T))$ with $d=1$:
+				\end{proof}				
+		\end{theorem}
+		
+	\subsection{Find Isomorph Trees with AHU}
+	\hyperlink{www.jstor.org/stable/pdf/2690833.pdf}{A brilliant paper about this topic}: [Tree Isomorphism Algorithms: Speed vs. Clarity,\quad
+	Author(s): Douglas M. Campbell and David Radford]\\
+	The Algorithm of Aho, Hopcroft and Ullman is some brilliant Algorithm for check if some unordered rooted trees are isomorphic. It will work bottom up level wise and in $\mathcal{O}(n)$
+	\subsubsection{Knuth Tuples}
+	An easy way to check for isomorphy are Knuth Tuples. They are constructed using $\Sigma =\{(,)\}\cup M$ inductively for Tree $T\in \mathds{T}_M$:\\
+	$\mathcal{K}: \mathds{T}_M \longrightarrow \Sigma^*$
+	c\begin{itemize}
+		\item $T=(r,\emptyset)\,\Leftrightarrow\, T$  is leaf:$\quad \mathcal{K} (T) =[r]$
+		\item $T=(r,\mathcal{C}): \mathcal{K}(T)=[r \prod_{i\in |\mathcal{C}|} \mathcal K(ord_{\mathcal{K}}(\mathcal{C})_i)]$
+	\end{itemize}
+	where $\prod$ stands for the usual concatenation of words of $\Sigma^*$ and $ord_{\mathcal{K}}(\mathcal{C})_i$ is the $i'th$ element from the ordering of the children after their Knuth String $\mathcal{K}(C)$.\\
+	The ordering could be done by replacing $($ with $1$ and $)$ with $0$ as well as every $m\in M$ with for instance a natural number $n\in \mathds{N}$.\\
+	This is the way this tuples are used in real world computation, because this is much more efficient than comparing strings.
+	\subsubsection{Better Indexing}
+	Because these strings may get really long, checking those strings will be quite painful.\\
+	The key idea of the following will be that we do that assignment level wise on both trees at the same time. We order those assignments and for $n$ different strings give numbers from $1,...,n$, called indexes. Proceed with one level above and so on.
+	\section{Practical Improvements}
+	\section{Algorithm}
+	\subsection{Cotree with unambiguous depth from minimal cotree}
+	By creating new nodes:
+	\begin{function}
+		\caption{calculateUnambiguousCotree($r_T, \mathcal{C}_T$) for $T_{min}=(r_T, \mathcal{C}_T)\in \mathds{T}_{\mathcal{B}}$}
+		\For{$\forall C=(r_c,\mathcal{C}_C) \in \mathcal{C}_T$}{
+			calculateUnambiguousCotree($r_C, \mathcal{C}_C$) \Comment{Assure Children will be unambiguous}
+		}
+		$\mathcal{D}_{max\{d(C) \,| \, C \in \mathcal{C}_T\} - 1} := \mathcal{C}_T$\\
+		\For{$i:= max\{d(C) \,| \, C \in \mathcal{C}_T\} - 1$ to $i=min\{d(C) \,| \, C \in \mathcal{C}_T\}$}{
+			$\mathcal{C}_i := \{C \,|\, d(C)=i \land C \in \mathcal{C}_T\}$\\
+			$\mathcal{D}_{i+1} := \emptyset$\\
+			$\mathcal{D}_i := \mathcal{D}_i \cup {(r_T,\mathcal{D}_{i+1})}$\\
+			\If{$C_i \not = \emptyset$}{
+				$\mathcal{C}_T := \mathcal{C}_T \backslash \mathcal{C}_i$\\
+				$\mathcal{D}_{i+1} := \mathcal{D}_{i+1} \cup \mathcal{C}_i$
+			}
+		}
+	\end{function}\\
+	By assigning multiple depths to ambiguous nodes:
+	\begin{function}
+		\caption{calculateUnambiguousCotree($r_T, \mathcal{C}_T$) for $T_{min}=(r_T, \mathcal{C}_T)\in \mathds{T}_{\mathcal{B}}$ returns $(r, \mathcal{C}, d_{min}, d_{max})$}
+		$r:=r_T$\\
+		$\mathcal{C}:= \emptyset$\\
+		$d_{min} := \infty$\\
+		$d_{max} :=  - \infty$\\
+			\For{$\forall C=(r_c,\mathcal{C}_C) \in \mathcal{C}_T$}{
+			$(r_{N},\mathcal{C}_{N}, d_{min}^{N},d_{max}^{N}):=  $ calculateUnambiguousCotree($r_C, \mathcal{C}_C$) \\
+			$\mathcal{C}:= \mathcal{C}\,\cup \{(r_{N},\mathcal{C}_{N}, d_{min}^{N},d_{max}^{N})\} $ \\
+			\If{$d_{max}^{N} + 1 < d_{min}$}{
+				$d_{min}:= d_{max}^{N} + 1$
+			}
+			\If{$d_{max}^{N} + 1 > d_{max}$}{
+				$d_{max}:= d_{max}^{N} + 1$
+			}
+		}
+	\Return $(r, \mathcal{C}, d_{min}, d_{max})$
+		
+	\end{function}\\
+	\begin{function}
+		\caption{calculateUnambiguousCotree($r_T, \mathcal{C}_T$) for $T_{min}=(r_T, \mathcal{C}_T)\in \mathds{T}_{\mathcal{B}}$ returns $(r, \mathcal{C}, d_{min}, d_{max})$}
+		$r:=r_T$\\
+		$\mathcal{C}:= \emptyset$\\
+		$d_{min} := \infty$\\
+		$d_{max} :=  - \infty$\\
+		\For{$\forall C=(r_c,\mathcal{C}_C) \in \mathcal{C}_T$}{
+			$(r_{N},\mathcal{C}_{N}, d_{min}^{N},d_{max}^{N}):=  $ calculateUnambiguousCotree($r_C, \mathcal{C}_C$) \\
+			$\mathcal{C}:= \mathcal{C}\,\cup \{(r_{N},\mathcal{C}_{N}, d_{min}^{N},d_{max}^{N})\} $ \\
+			\If{$d_{max}^{N} + 1 < d_{min}$}{
+				$d_{min}:= d_{max}^{N} + 1$
+			}
+			\If{$d_{max}^{N} + 1 > d_{max}$}{
+				$d_{max}:= d_{max}^{N} + 1$
+			}
+		}
+		\Return $(r, \mathcal{C}, d_{min}, d_{max})$
+		
+	\end{function}\\
+\end{document} 

@@ -42,6 +42,9 @@ public:
      *
      */
     cotree(unsigned int k,unsigned int id, bool state);
+    cotree(cotree* copy, unsigned int depthtogo);
+    cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned int> primeTuple);
+    
     cotree(vector<cotree*>* children, unsigned int from, unsigned int to, unsigned int * depth, unsigned int id, bool state);
     /**
      * Construct Cotree from graph

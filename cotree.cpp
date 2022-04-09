@@ -15,21 +15,27 @@
 #include "cotree.h"
 
 unsigned int cotree::getGCDFromPrimeTuple(map<unsigned int,unsigned int> primeMultiset, map<unsigned int,unsigned int> multiset){
-    //std::cout << (*(primeMultiset.end())).first << std::endl;
-    //std::cout << primeMultiset[(*(primeMultiset.begin())).first] << std::endl;
+    //because multiset is divisible by primeMultiset we just need to divide the first multiplicities.
     return (unsigned int) (multiset[(*primeMultiset.begin()).first]/primeMultiset[(*primeMultiset.begin()).first]);
 }
 bool cotree::isDivisible(map<unsigned int,unsigned int> divident, map<unsigned int,unsigned int> divisor){
-    if(divident.size() == divisor.size()){
-        if(divident==divisor) return true;
+    
+    if(divident.size() == divisor.size()){//if they dont have the same size, they have to differ with at least one element
+        
+        if(divident==divisor) return true; 
+        
         unsigned int olddiv;
+        //loop throu all indices of the divisor and divide the multiplicities. If all quotients are the same then the multiset is divisible by prime multiset
         for(std::map<unsigned int, unsigned int>::iterator divisorIt=divisor.begin(); divisorIt!= divisor.end(); ++divisorIt){
+            
             unsigned int divisorcount = divisor[(*divisorIt).first];
             unsigned int dividentcount = divident[(*divisorIt).first];
             unsigned int div = (unsigned int)dividentcount/divisorcount;
+            
             if((float) div != (float)((float)dividentcount)/((float) divisorcount) || (olddiv != div && divisorIt!=divisor.begin()) || div == 0){
                 return false;
             }
+            
             olddiv =div;
             
         }
@@ -38,7 +44,9 @@ bool cotree::isDivisible(map<unsigned int,unsigned int> divident, map<unsigned i
     return false;
 }
 map<unsigned int,unsigned int> cotree::constructGCDTuple( map<unsigned int,unsigned int> tuple, unsigned int gcd){
-     map<unsigned int,unsigned int> sTuple= tuple;
+    
+    map<unsigned int,unsigned int> sTuple= tuple;
+    //devide every multiplicity by gcd
     for(std::map<unsigned int,unsigned int>::iterator stit=sTuple.begin(); stit!=sTuple.end(); ++stit){
         sTuple[stit->first] = (unsigned int)(stit->second / gcd);
     }
@@ -49,6 +57,7 @@ map<unsigned int,unsigned int> cotree::constructGCDTuple( map<unsigned int,unsig
 unsigned int cotree::gcdTuple( map<unsigned int,unsigned int> gcdTuple){
 
     unsigned int gcd = gcdTuple[gcdTuple.begin()->first];
+    //get gcd from all multiplicities of the multiset
     for(std::map<unsigned int,unsigned int>::iterator gsit=gcdTuple.begin(); gsit!=gcdTuple.end(); ++gsit){
         gcd = (unsigned int)__gcd((int)gcd, (int)(gsit->second));
         if(gcd == 1){
@@ -60,7 +69,9 @@ unsigned int cotree::gcdTuple( map<unsigned int,unsigned int> gcdTuple){
 }
 
 unsigned int cotree::getChildNum(unsigned int depth){
+    
     unsigned int num = 0;
+    
     for(unsigned int i=0; i < this->childs.size(); i++){
         if(this->childs[i]->getDepth()[1] < depth){
             num++;
@@ -71,7 +82,7 @@ unsigned int cotree::getChildNum(unsigned int depth){
 vector<unsigned int> cotree::getPrimeFactorization(unsigned int x, unsigned int i,vector<unsigned int> factors){
     if(x<i){
         return factors;
-    }else if(x % i == 0){
+    }else if(x % i == 0){ //if i devides x then we found a factor and continue with x/i
         factors.push_back(i);
         return cotree::getPrimeFactorization(x/i, i , factors);
     }else{
@@ -140,15 +151,16 @@ unsigned int * cotree::getDepth(){
  map<unsigned int,unsigned int> cotree::getKnuthTuple(unsigned int depth){
 
     unsigned int num = 0;
-    //std::cout << "---"<< std::endl;
+    
     map<unsigned int,unsigned int> tuple;
+    
     for(cotree* child: this->childs){
-        if(child->getDepth()[1] == depth-1 ){
+        if(child->getDepth()[1] == depth-1 ){ //child lays directly below
             tuple[child->getId()] = tuple[child->getId()] + child->getMultiplicity();
-            //std::cout << child->getId()<< ":" << tuple[child->getId()]  <<  std::endl;
+            
         }
     }
-    if(this->depth[0] < depth){//look at itself aswell
+    if(this->depth[0] < depth){//look at itself as well
         tuple[this->getId()] = tuple[this->getId()] + this->getMultiplicity();
     }
     return tuple;
@@ -165,7 +177,7 @@ cotree::cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned i
                 primeTuple[copy_child->getId()] --;
             }
         }
-        if(primeTuple[copy->getId()] > 0){
+        if(primeTuple[copy->getId()] > 0){ //look at itself 
             for(unsigned int i = 0; i < primeTuple[copy->getId()] ; i++){
                 this->childs.push_back(new cotree(!this->state));
             }
@@ -326,7 +338,7 @@ void cotree::constructChildren(graph* g, vector<unsigned long long*>* components
             this->depth[0]=0;
             this->depth[1]=0;
             this->ids_multiplicity = 1;
-        if(components->size() > 1){
+        if(components->size() > 1){//more than one vertice
             this->id = 0;
             this->depth[0]=-1;
             for(unsigned long long* thiscomponent: *components){
@@ -365,6 +377,7 @@ cotree::cotree(graph* g, unsigned long long* component, bool state, unsigned int
 
         pdepth[0] = this->depth[0];
         pdepth[1] = this->depth[1];
+        
         this->writeInDepthDict(depthdict);
 }
 void cotree::writeInDepthDict(vector<vector<cotree*> >* depthdict){

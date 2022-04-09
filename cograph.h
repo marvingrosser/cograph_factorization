@@ -49,7 +49,10 @@ public:
     
     
 
-
+    /**
+     * 
+     * @return size of this graph
+     */
     unsigned short getSize();
     /**
      * Returns vertice with corrosponding index

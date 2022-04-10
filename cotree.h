@@ -19,10 +19,12 @@
 #include <set>
 #include <algorithm>
 #include <map>
+#include <iterator>
 #define DATA_SIZE sizeof(unsigned long long)
 
 class cotree {
 public:
+    int findInMultisetVector(vector< map<unsigned int,unsigned int>> vec, map<unsigned int,unsigned int> ms);
     /**
      * set Multiplicity of the primeTuple found (id multiplicity)
      * @param m multiplicity

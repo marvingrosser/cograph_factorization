@@ -10,7 +10,6 @@
  * 
  * Created on November 1, 2021, 2:12 PM
  */
-//Probably own sorting function on depthdict, or go for gcd in Multiset that we have prob biggest Instance and smallest as well (smallest divisor of gcd)
 
 #include "cotree.h"
 
@@ -23,7 +22,6 @@ bool cotree::isDivisible(map<unsigned int,unsigned int> divident, map<unsigned i
     if(divident.size() == divisor.size()){//if they dont have the same size, they have to differ with at least one element
         
         if(divident==divisor) return true; 
-        
         unsigned int olddiv;
         //loop throu all indices of the divisor and divide the multiplicities. If all quotients are the same then the multiset is divisible by prime multiset
         for(std::map<unsigned int, unsigned int>::iterator divisorIt=divisor.begin(); divisorIt!= divisor.end(); ++divisorIt){
@@ -235,7 +233,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict){ /
             
             for(unsigned int i = 0; i < gcds.size(); i++){ //splitting of the tuples to make sure that all are prime
                 gcd = __gcd(gcd, gcds[i][0]);
-                if(depthdict[d][i]->getDepth()[1] > d){
+                if(depthdict[d][i]->getDepth()[1] > d ){
                     depthdict[d][i]->setId(gcds.at(i)[1]);
                     depthdict[d][i]->setMultiplicity(gcds.at(i)[0]);
                 }

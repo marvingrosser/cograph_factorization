@@ -499,18 +499,32 @@
 			\end{proof}
 		\end{theorem}
 		The great thing about this theorem is, we proved that we may find the Roots of the $F$-Subtrees of $T$ on the same height. This will give us a way to use the AHU Algorithm on the depth, where onece there is over one depth just one id, suggesting that every subtree appending there will be isomorphic to the others. 
-		\subsubsection{Hard part of the story}
+		\subsubsection{Splitting}
 		The Hard Part about finding Factors will be the cotrees $T$ in which at least one node $N$ has at least two $S_i, S_j$ as its rooted subtrees.\\
-		The key idea for solving this is, after converting $T$ to $\beta(T)$ with unambiguous depth, we may split up nodes, in $m$ isomorphic nodes. 
+		The key idea for solving this is, after converting $T$ to $\beta(T)$ with unambiguous depth, we may split up nodes if they are not prime and can be splitted. With that we always assure that children will indeed always be prime.
 		\begin{definition}
-			Let $T$ be a cotree.. $N=(r_N,\mathcal{C}_N)\in \mathcal{N}(T)$ with $\mathcal{P}(N)=P=(r_P,\mathcal{C}_P)$ and $r_P=r_N$. $\mathcal{C}_N=\{(C_1,m_1),...,(C_n,m_n)\}\, $ (in thought of a multiset). Let $d_1,...,d_k \big| ggT(m_1,...,m_n)\not= 1$. Then:
-			To split $N$ ($\zeta(N)$) in respect to $d_i,\,\, i \in\{1,...,k\}$ means:
+			Let $T$ be a cotree.. $N=(r_N,\mathcal{C}_N)\in \mathcal{N}(T)$ with $\mathcal{P}(N)=P=(r_P,\mathcal{C}_P)$ and $r_P=r_N$. $\mathcal{C}_N=\{(C_1,m_1),...,(C_n,m_n)\}\, $ (in thought of a multiset). Let $g = gcd(m_1,...,m_n)\not= 1$. Then:
+			To split $N$ (written $\zeta(N)$)  means:
 			\begin{itemize}
-				\item $\mathcal{C}_{P'} := \mathcal{C}_P\ N \cup \{(\hat{N},d_i )\}$ with
-				\[\hat{N}=(r_{\hat{N}}, \mathcal{C}_{\hat{N}})\qquad r_{\hat{N}}=r_N,\quad \mathcal{C}_{\hat{N}}=\{(C_1,m_1/d_i),...,(C_n,m_n/d_i)\}\]
+				\item $\mathcal{C}_{P'} := C_P\backslash N \cup  \{(\hat{N},g )\}$ with
+				\[\hat{N}=(r_{\hat{N}}, \mathcal{C}_{\hat{N}})\qquad r_{\hat{N}}=r_N,\quad \mathcal{C}_{\hat{N}}=\{(\zeta(C_1),m_1/g),...,(\zeta(C_n),m_n/g)\}\]
 			\end{itemize} 
-			This is well defined, because $d_i \big | ggt(m_1,...,m_n)$.\\ The cotree resulting from this $T'$ is cotree isomorphic to $T$ because in $T_{min}\,$ $N$ will be collapsed into $P$ because they share the label. For $T'_{min}\,$ all $\hat{N}$ will be collapsed into $P'$ as well. With that and beacause nothing else changed in the splitting of $N$: $T'_{min}\cong T_{min}$ impling $T$ and $T'$ are cotree isomorphic.\qed
+			And then we set:
+			 \[P':= (r_P, \mathcal{C}_{P'})\]
+			This is well defined, because $g\,\big | \,m_1,m_2,...,m_n$. And for the reason that $g=gcd(m_1,...,m_n)$ there $\not\exists d\in \mathds{N}\backslash \{1\}\,$ with $\,d\,\big | \, \frac{m_1}{g},...,\frac{m_n}{g}$, e.g. the multiset $\mathcal{C}_{\hat{N}}$ is prime.\\ The cotree resulting from this $T'$ is cotree isomorphic to $T$ because in $T_{min}\,$ $N$ will be collapsed into $P$ because they share the label. For $T'_{min}\,$ all $\hat{N}$ will be collapsed into $P'$ as well. With that and because nothing else changed in the splitting of $N$: $T'_{min}\cong T_{min}$ impling $T$ and $T'$ are cotree isomorphic.\qed
 		\end{definition}
+		\begin{theorem}
+			It should be clear that  for two cotrees $T,T'\in\mathds{T}_{\mathcal{B}} $ with 
+			\[T\cong_C T'  \,\Longleftrightarrow\, \zeta{(\beta(T))} \cong \zeta{(\beta(T'))
+			}\]
+			\begin{proof}
+				Because $T_1 \cong_C T_2 \quad \Longleftrightarrow \quad\beta(T_1)\cong \beta(T_2)$ and $\zeta$ depending completly on tree structure, both Trees will be altered the same way.
+			\end{proof}
+		\end{theorem}
+		\begin{theorem}
+				Now let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ 	$S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. And $F$ being the first factor found, e.g. $S_1,...,S_n$ having lowest depth of all Factors. Assume that $i_0=0,i_1,...,i_k,i_{k+1}=n\in [0,n]\cap \mathds{N}\,$ with $i_0 < i_1 <...<i_{k+1}$ where  $S_j \Subset P_t =(p_t, \mathcal{C}_{P_t})$ with $i_t<j <i_{t+1}$ . That says just that the Nodes $S_1,...,S_n$ have the same root iff they lay inside the same interval. We also have to assume that we already did $\zeta(S_1),...,\zeta(S_n)$.
+				Then \[\forall \mathcal{P}(P_j)=R_j,\,j\in \{0,...,k\}:\quad R_j=(p_j, \{(S_j, i_{j+1} - i_j )\})\]
+		\end{theorem}
 	\begin{theorem}
 			Let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ 	$S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial 		factor. And there $\exists N\in\mathcal{N}(\beta(T)) \forall i\in \{1,...,m\}\, m\leq 	n$ with $N\Supset \beta(S_i)$. And $d(\beta(F))=k$\\
 			Then 

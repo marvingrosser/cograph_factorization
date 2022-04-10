@@ -91,7 +91,7 @@ void InputHandler::handleHelp(){
     std::cout << "\n\t --help \t\t -h \t\t\t\t show this page" << std::endl;
     std::cout << "\n\t --printinput \t\t -p \t\t\t\t print the inputgraph and tree" << std::endl;
     std::cout << "\n\t --input \"filepath\"\t -i \"filepath\"\t\t\t input cograph as file (adjacency matrix)" << std::endl;
-    std::cout << "\n\t --output \"dirpath\"\t -o \"dirpath\"\t\t\t output path for factors as adjacency matrices (f1.graph, f2.graph,...) " << std::endl;
+    std::cout << "\n\t --output \"dirpath\"\t -o \"dirpath\"\t\t\t output path for factors as \n\t\t\t\t\t\t\t\t adjacency matrices (f1.graph, f2.graph,...)\n\n" << std::endl;
 }
 void InputHandler::handleFileI(string file){
     this->input = file;

@@ -11,7 +11,7 @@
  * Created on October 25, 2021, 2:32 PM
  */
 
-#include "cograph.h"
+#include "../headers/cograph.h"
 void graph::verticeUnion(unsigned long long* dest, unsigned long long* other, unsigned short size){
     for(int i = 0; i < size/DATA_SIZE + 1; i++){
         dest[i] |= other[i];

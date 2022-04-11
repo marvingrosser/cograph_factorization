@@ -14,10 +14,10 @@
 #include <cstdlib>
 
 using namespace std;
-#include "cograph.h"
-#include "cotree.h"
+#include "../headers/cograph.h"
+#include "../headers/cotree.h"
 #include <vector>
-#include "InputHandler.h"
+#include "../headers/InputHandler.h"
 /*
  * 
  */

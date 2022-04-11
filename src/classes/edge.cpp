@@ -11,8 +11,8 @@
  * Created on October 27, 2021, 11:56 AM
  */
 
-#include "edge.h"
-#include "vertice.h"
+#include "../headers/edge.h"
+#include "../headers/vertice.h"
 string edge::to_string(){
     string str = "";
     str.append(this->from->to_string());

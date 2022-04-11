@@ -35,12 +35,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/InputHandler.o \
-	${OBJECTDIR}/cograph.o \
-	${OBJECTDIR}/cotree.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/reader.o \
-	${OBJECTDIR}/vertice.o
+	${OBJECTDIR}/src/classes/InputHandler.o \
+	${OBJECTDIR}/src/classes/cograph.o \
+	${OBJECTDIR}/src/classes/cotree.o \
+	${OBJECTDIR}/src/classes/edge.o \
+	${OBJECTDIR}/src/classes/main.o \
+	${OBJECTDIR}/src/classes/reader.o \
+	${OBJECTDIR}/src/classes/vertice.o
 
 
 # C Compiler Flags
@@ -67,35 +68,40 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/cograph_factorization: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/cograph_factorization ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/InputHandler.o: InputHandler.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/classes/InputHandler.o: src/classes/InputHandler.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/classes
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InputHandler.o InputHandler.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/classes/InputHandler.o src/classes/InputHandler.cpp
 
-${OBJECTDIR}/cograph.o: cograph.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/classes/cograph.o: src/classes/cograph.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/classes
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/cograph.o cograph.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/classes/cograph.o src/classes/cograph.cpp
 
-${OBJECTDIR}/cotree.o: cotree.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/classes/cotree.o: src/classes/cotree.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/classes
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/cotree.o cotree.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/classes/cotree.o src/classes/cotree.cpp
 
-${OBJECTDIR}/main.o: main.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/classes/edge.o: src/classes/edge.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/classes
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/classes/edge.o src/classes/edge.cpp
 
-${OBJECTDIR}/reader.o: reader.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/classes/main.o: src/classes/main.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/classes
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/reader.o reader.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/classes/main.o src/classes/main.cpp
 
-${OBJECTDIR}/vertice.o: vertice.cpp
-	${MKDIR} -p ${OBJECTDIR}
+${OBJECTDIR}/src/classes/reader.o: src/classes/reader.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/classes
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vertice.o vertice.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/classes/reader.o src/classes/reader.cpp
+
+${OBJECTDIR}/src/classes/vertice.o: src/classes/vertice.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/classes
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/classes/vertice.o src/classes/vertice.cpp
 
 # Subprojects
 .build-subprojects:

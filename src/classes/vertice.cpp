@@ -11,7 +11,7 @@
  * Created on October 27, 2021, 11:56 AM
  */
 
-#include "vertice.h"
+#include "../headers/vertice.h"
 graph* vertice::getGraph(){
     return this->g;
 }

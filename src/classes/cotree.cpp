@@ -11,7 +11,7 @@
  * Created on November 1, 2021, 2:12 PM
  */
 
-#include "cotree.h"
+#include "../headers/cotree.h"
 
 unsigned int cotree::getGCDFromPrimeTuple(map<unsigned int,unsigned int> primeMultiset, map<unsigned int,unsigned int> multiset){
     //because multiset is divisible by primeMultiset we just need to divide the first multiplicities.

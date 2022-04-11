@@ -11,7 +11,7 @@
  * Created on April 5, 2022, 11:24 AM
  */
 
-#include "InputHandler.h"
+#include "../headers/InputHandler.h"
 void InputHandler::init(char** args, int argnum){
     this->input = "";
     this->output = "";

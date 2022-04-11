@@ -11,7 +11,7 @@
  * Created on October 25, 2021, 2:33 PM
  */
 
-#include "reader.h"
+#include "../headers/reader.h"
 
 
 reader::reader(string path) {

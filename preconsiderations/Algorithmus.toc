@@ -10,12 +10,10 @@
 \contentsline {subsection}{\numberline {1.5}Connection of depth and level}{6}{subsection.1.5}%
 \contentsline {subsection}{\numberline {1.6}Balancing}{7}{subsection.1.6}%
 \contentsline {subsection}{\numberline {1.7}Properties for the lexicographical Product of Cographs}{9}{subsection.1.7}%
-\contentsline {subsubsection}{\numberline {1.7.1}Relevance of Depth for finding isomorphic complete subtrees}{9}{subsubsection.1.7.1}%
-\contentsline {subsubsection}{\numberline {1.7.2}Unambigous depth, Balanced Cotrees and Factorization}{9}{subsubsection.1.7.2}%
-\contentsline {subsubsection}{\numberline {1.7.3}Splitting}{11}{subsubsection.1.7.3}%
+\contentsline {subsubsection}{\numberline {1.7.1}Unambigous depth, Balanced Cotrees and Factorization}{9}{subsubsection.1.7.1}%
+\contentsline {subsubsection}{\numberline {1.7.2}Splitting}{10}{subsubsection.1.7.2}%
 \contentsline {subsection}{\numberline {1.8}Find Isomorph Trees with AHU}{12}{subsection.1.8}%
 \contentsline {subsubsection}{\numberline {1.8.1}Knuth Tuples}{12}{subsubsection.1.8.1}%
-\contentsline {subsubsection}{\numberline {1.8.2}Better Indexing}{12}{subsubsection.1.8.2}%
 \contentsline {section}{\numberline {2}Practical Improvements}{12}{section.2}%
 \contentsline {section}{\numberline {3}Algorithm}{12}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Cotree with unambiguous depth from minimal cotree}{12}{subsection.3.1}%

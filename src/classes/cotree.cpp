@@ -259,9 +259,12 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict){ /
             
             for(unsigned int i = 0; i < gcds.size(); i++){ //splitting of the tuples to make sure that all are prime
                 gcd = __gcd(gcd, gcds[i][0]);
+                
+            }
+            for(unsigned int i =0 ; i < gcds.size(); i++){
                 if(depthdict[d][i]->getDepth()[1] > d ){
                     depthdict[d][i]->setId(gcds.at(i)[1]);
-                    depthdict[d][i]->setMultiplicity(gcds.at(i)[0]);
+                    depthdict[d][i]->setMultiplicity(gcds.at(i)[0]/gcd);
                     depthdict[d][i]->setFoundK(0);
                 }else{
                     map<unsigned int,unsigned int> kt = depthdict[d][i]->getKnuthTuple(d);
@@ -273,11 +276,11 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict){ /
                         depthdict[d][i]->setId(remainingTuples.size() + 1);
                         remainingTuples.push_back(kt);
                     }
-                        depthdict[d][i]->setFoundK(gcds.at(i)[0]);
+                        depthdict[d][i]->setFoundK(gcds.at(i)[0]/gcd);
                         depthdict[d][i]->setMultiplicity(1);
                     
                 }
-            }
+            } 
             
             set<vector<unsigned int>> factorizations = cotree::getPrimeFactorizations(gcd);
             

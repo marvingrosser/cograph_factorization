@@ -441,26 +441,7 @@
 		\end{proof}
 	\end{theorem}
 	\subsection{Properties for the lexicographical Product of Cographs}
-
-		\subsubsection{Relevance of Depth for finding isomorphic complete subtrees}
-		
-			If we want to find if some given minimal cotree $S=(r_S, \mathcal{C}_S)$ is isomorphic to some  complete subtree $S'=(r_{S'},\mathcal{C}_{S'})$ of some other minimal cotree $T=(r_T, \mathcal{C}_T)$, depth will play a certain roll.
-			\begin{center}
-				\begin{tikzpicture}[
-					level distance=-0.325cm,
-					sibling distance=3cm, 
-					level 2/.style={sibling distance =2cm},
-					triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
-					]
-					\node[] {}
-					child{node[triangle] {$T\hspace{3cm}$} edge from parent [draw = none] 
-						child{node[triangle] {$S$} edge from parent [draw = none]}};
-					
-				\end{tikzpicture}
-			\end{center}
-			As the mindful reader already detected:\\
-			If this complete subtree $S'$ exists, its root will be found in all nodes of $T$ with depth $d(S)$\\\\
-			\underline{Proof:}\\ Because $T$ is minimal it follows $S'$ is minimal. Because it is isomorphic to $S$ and $S$ itself is minimal: the depth of the roots will be the same. \qed
+			
 		\subsubsection{Unambigous depth, Balanced Cotrees and Factorization}
 		\begin{theorem}
 			Let $T_{min},F_{min}\in\mathds{T}_{\mathcal{B}}$ be cotrees with $T_{min}\vartriangleleft F_{min}$ and unambiguous depths.\\ $S_1,...,S_n\subseteq T$ the $F_{min}$-subtrees of $T_{min}$. I state that:
@@ -482,7 +463,7 @@
 	\end{proof}
 		The theorem states that for those cotrees we may identify the nodes $D$ of $T$ with $S_i \Subset D$ just by their depth. With that the search for factors will be doable.\\
 		But because this are special forms of cotrees we need to get this statement for cotrees originated from some unambiguous but arbitrary minimal cotrees. 
-		TWO SUBTREES (ISOMORPH) OF SOME COTREE ARE ISOMORPH FOR BALANCED TREE
+	
 		\begin{theorem}
 			Let $T,F\in\mathds{T}_{\mathcal{B}}$ be cotrees with $T\vartriangleleft F$.\\ $S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial factor. I state that:
 			\[(1)\qquad \qquad \forall N\in \mathcal{N}(\beta(T))\, \exists i\in\{1,...,n\}:\quad d(N)< d(\beta(F))\,\Longleftrightarrow\, N\in \mathcal{N}(\beta(S_i)) \]
@@ -498,7 +479,7 @@
 				\end{enumerate}
 			\end{proof}
 		\end{theorem}
-		The great thing about this theorem is, we proved that we may find the Roots of the $F$-Subtrees of $T$ on the same height. This will give us a way to use the AHU Algorithm on the depth, where onece there is over one depth just one id, suggesting that every subtree appending there will be isomorphic to the others. 
+		The great thing about this theorem is, we proved that we may find the Roots of the $F$-Subtrees of $T$ on the same depth. This will give us a way to use the AHU Algorithm on the depth, where once there is over one depth just one id, suggesting that every subtree appending there will be isomorphic to the others. Of course it will be a little harder than that.
 		\subsubsection{Splitting}
 		The Hard Part about finding Factors will be the cotrees $T$ in which at least one node $N$ has at least two $S_i, S_j$ as its rooted subtrees.\\
 		The key idea for solving this is, after converting $T$ to $\beta(T)$ with unambiguous depth, we may split up nodes if they are not prime and can be splitted. With that we always assure that children will indeed always be prime.
@@ -522,39 +503,70 @@
 			\end{proof}
 		\end{theorem}
 		\begin{theorem}
-				Now let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ 	$S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. And $F$ being the first factor found, e.g. $S_1,...,S_n$ having lowest depth of all Factors. Assume that $i_0=0,i_1,...,i_k,i_{k+1}=n\in [0,n]\cap \mathds{N}\,$ with $i_0 < i_1 <...<i_{k+1}$ where  $S_j \Subset P_t =(p_t, \mathcal{C}_{P_t})$ with $i_t<j <i_{t+1}$ . That says just that the Nodes $S_1,...,S_n$ have the same root iff they lay inside the same interval. We also have to assume that we already did $\zeta(S_1),...,\zeta(S_n)$.
-				Then \[\forall \mathcal{P}(P_j)=R_j,\,j\in \{0,...,k\}:\quad R_j=(p_j, \{(S_j, i_{j+1} - i_j )\})\]
+				Now let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$. And assume we made both unambiguous: $T:= \beta(T), \, F:=\beta(F)$\\ 	$S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. And $F$ being the first factor found, e.g. $S_1,...,S_n$ having lowest depth of all Factors. Assume that $i_0=0,i_1,...,i_k,i_{k+1}=n\in [0,n]\cap \mathds{N}\,$ with $i_0 < i_1 <...<i_{k+1}$ where  $S_j \Subset P_t =(p_t, \mathcal{C}_{P_t})$ with $i_t<j <i_{t+1}$ . That says just that the Nodes $S_1,...,S_n$ have the same root iff they lay inside the same interval. We also have to assume that we already did $\zeta(S_1),...,\zeta(S_n)$.
+				Then \[\forall \mathcal{P}(P_j)=R_j=(r_j, \mathcal{C}_{R_j}),\,j\in \{0,...,k\}:\quad r_j = p_j\quad \implies \quad  R_j\cong_C(p_j, \{(S_j, i_{j+1} - i_j )\} \cup \mathcal{C}_{R_j}\backslash P_j) \]
+				\[\forall \mathcal{P}(P_j)=R_j=(r_j, \mathcal{C}_{R_j}),\,j\in \{0,...,k\}:\quad r_j \not= p_j\quad \implies \quad  P_j\cong_C(p_j, \{(S_j, i_{j+1} - i_j )\}) \]
+				That is if we may split up the nodes where the roots of the F-subtrees of T lay, the parent $R_j$ will indeed have just a number of $S_j$ as children.
+				If we aren't allowed to split $P_j$ we also know that it will have just a number of $S_j$ as children. So for both the only children they got are the $S_j$ from which it follows that the corresponding Knuth Tuple (in respect to multisets) for every Node with $d(P_j)$ will surely have a prime Tuple (in respect to multisets) dividing each of them and isn't divisible by any multisets. It's clear that this Knuth Tuple matches the of $S_j$.\\
+				As stated above, if we ignore the $S_j$ there will be found $K_n$ or $\bar{K_n}$ cographs as cotrees on $P_j$ or $R_j$. This will come in handy later, when showing that there is no other Factor of $T$ that wont be divided by $F$.
 		\end{theorem}
+	If we use the construction in 1.8, the next factor found will be of the form $K_n$ or $\bar{K_n}$. The second one consisting just of $n$ unconnected vertices. But how to choose $n$? \\
 	\begin{theorem}
-			Let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ 	$S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial 		factor. And there $\exists N\in\mathcal{N}(\beta(T)) \forall i\in \{1,...,m\}\, m\leq 	n$ with $N\Supset \beta(S_i)$. And $d(\beta(F))=k$\\
-			Then 
-			\[\forall i \in \{1,...,m\}\forall M=(r_M, \mathcal{C}_M)\in \mathcal{N}(N):\quad \mathcal{P}(M) = P=(r_P,\mathcal{C}_P)\text{ with } r_P=r_M \implies N\in \mathcal{N}(\beta(S_i))\]			
-		\end{theorem}
-		\begin{theorem}
-				Let $T,F\in\mathds{T}_{\mathcal{B}} $ be cotrees with $T\vartriangleleft F$.\\ $S_1,...,S_n\subseteq T$ the $F$-subtrees of $T$. As well as $F$ is not the trivial factor. And there $\exists N\in\mathcal{N}(\beta(T)) \forall i\in \{1,...,m\}\, m\leq n$ with $N\Supset \beta(S_i)$. And $d(\beta(F))=k$\\
-				Then we may split those trees up that in the new tree $\zeta (T)$ The subtrees are pairwise disjoint.
-				\begin{proof}
-					Start with all nodes of $N\in \mathcal{N}(\beta(T))$ with $d=1$:
-				\end{proof}				
-		\end{theorem}
+		Let $m_1,..., m_p\quad p\in \mathds{N}$ be the multiplicities of the $S_j$ from $R_j$ or $P_j$. The new tree will be looking like:\\
+		 \begin{center}
+		 	\begin{tikzpicture}[
+		 		level distance=1.8cm,
+		 		sibling distance=3cm, 
+		 		level 1/.style={sibling distance =5cm, level distance=0.9cm},
+		 		level 2/.style={sibling distance =2cm, level distance=1.8cm},
+		 		triangle/.style={isosceles triangle,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=0},
+		 		triangle2/.style={isosceles triangle,isosceles triangle apex angle=130,draw,shape border rotate=90, dashed, minimum height=10mm, minimum width=15mm, inner sep=22},
+		 		]
+		 		\node[triangle2] {$T'$}
+		 		child{node[] {} 
+		 			child{
+		 				node[] {$r_F^{(1)}$}
+		 				child{node[triangle]{$F$} }}
+	 				child{node[] {$r_F^{(2)}$} child{node[triangle]{$F$}  }}
+	 				child{node[] {$\mathbf{\cdot} \quad \mathbf{\cdot}  \quad \mathbf{\cdot} $} child{node[]{$\mathbf{\cdot}  \quad \mathbf{\cdot}  \quad \mathbf{\cdot} $}edge from parent [draw=none] }edge from parent [draw=none]}
+	 				child{node[] {$r_F^{(m_1)}$} child{node[triangle]{$F$} }}
+ 					}
+ 					child{node[] {} child{node[circle] {$\cdot \quad \cdot \quad \cdot $}edge from parent [draw=none]}}
+ 					child{node[] {} 
+ 						child{
+ 							node[] {$r_F^{(1)}$}
+ 							child{node[triangle]{$F$} }}
+ 						child{node[] {$r_F^{(2)}$} child{node[triangle]{$F$}  }}
+ 						child{node[] {$\mathbf{\cdot} \quad \mathbf{\cdot}  \quad \mathbf{\cdot} $} child{node[]{$\mathbf{\cdot}  \quad \mathbf{\cdot}  \quad \mathbf{\cdot} $}edge from parent [draw=none] }edge from parent [draw=none]}
+ 						child{node[] {$r_F^{(m_p)}$} child{node[triangle]{$F$} }}
+ 					};
+		 	\end{tikzpicture}
+		 \end{center}
+	 	This construction suggesting that we have to choose $n$:
+	 	\[n:= gcd(m_1,m_2,...,m_p)\]
+	 	Because that is the $K_n$ all of them have in common. Observe that if $n=1$ the factor is indeed the trivial factor. We now know that the next factor will be $K_n$ or $\bar{K_n}$ depending on the label of $F$. Because this factor gets taken out of the tree the remaining children of the nodes holding $F$ $m_i$ times, should now be leafs with number $\frac{m_i}{n}$. The factorization of $K_n$ or $\bar{K_n}$ itself will be unambiguous and depends on the prime factorization of $n$, order not neglected.
+	\end{theorem}
+	\begin{theorem}
+		The factorization of $K_n$ with $n=p_1\cdot p_2\cdot ...\cdot p_k\quad p_1,...,p_k $ prime will be:
+		\[K_n = K_{p_{\tau(1)}} \circ K_{p_{\tau(2)}}\circ ...\circ K_{p_{\tau(k)}}\qquad \forall \tau\in S_k \] 
+		The construction for $\bar{K_n}$ can be done similarly.
+	\end{theorem}
+	With this we now can extract the last prime factor, while afterwards constructing the different factorizations for the remaining $K$-parts. Now looking at every node with depth above the shortly used it is clear that $F$ will be factor of it, the reason we just have to traverse the tree one time (bottom up).
+	
 		
 	\subsection{Find Isomorph Trees with AHU}
 	\hyperlink{www.jstor.org/stable/pdf/2690833.pdf}{A brilliant paper about this topic}: [Tree Isomorphism Algorithms: Speed vs. Clarity,\quad
 	Author(s): Douglas M. Campbell and David Radford]\\
 	The Algorithm of Aho, Hopcroft and Ullman is some brilliant Algorithm for check if some unordered rooted trees are isomorphic. It will work bottom up level wise and in $\mathcal{O}(n)$
 	\subsubsection{Knuth Tuples}
-	An easy way to check for isomorphy are Knuth Tuples. They are constructed using $\Sigma =\{(,)\}\cup M$ inductively for Tree $T\in \mathds{T}_M$:\\
-	$\mathcal{K}: \mathds{T}_M \longrightarrow \Sigma^*$
-	c\begin{itemize}
-		\item $T=(r,\emptyset)\,\Leftrightarrow\, T$  is leaf:$\quad \mathcal{K} (T) =[r]$
-		\item $T=(r,\mathcal{C}): \mathcal{K}(T)=[r \prod_{i\in |\mathcal{C}|} \mathcal K(ord_{\mathcal{K}}(\mathcal{C})_i)]$
+	An easy way to check for isomorphy are Knuth Tuples. They are constructed using $\Sigma =\{(,)\}\cup M$ inductively. We will approach this from the view of multisets, which helps us comparing and manipulating those tuples flawlessly. 
+	Construct Knuth-Tuple for Tree $T\in \mathds{T}_M$ where children have isomorphy invariant id's:\\
+	$\mathcal{K}: \mathds{T}_M \longrightarrow \mathcal{P}(\mathds{N}\times \mathds{N})$
+	\begin{itemize}
+		\item $T=(r,\emptyset)\,\Leftrightarrow\, T$  is leaf:$\quad \mathcal{K} (T) =\emptyset$
+		\item $T=(r,\mathcal{C}): \mathcal{K}(T)=\{(i, n)\,|\, i \text{ id},\, n \text{ number of children with this id} \}$
 	\end{itemize}
-	where $\prod$ stands for the usual concatenation of words of $\Sigma^*$ and $ord_{\mathcal{K}}(\mathcal{C})_i$ is the $i'th$ element from the ordering of the children after their Knuth String $\mathcal{K}(C)$.\\
-	The ordering could be done by replacing $($ with $1$ and $)$ with $0$ as well as every $m\in M$ with for instance a natural number $n\in \mathds{N}$.\\
-	This is the way this tuples are used in real world computation, because this is much more efficient than comparing strings.
-	\subsubsection{Better Indexing}
-	Because these strings may get really long, checking those strings will be quite painful.\\
-	The key idea of the following will be that we do that assignment level wise on both trees at the same time. We order those assignments and for $n$ different strings give numbers from $1,...,n$, called indexes. Proceed with one level above and so on.
+	With this calculation for the Knuth-tuple we're able to traverse the unambiguous tree bottom up and compare the Knuth-Tuples per depth. While splitting every node we are allowed to assure the subtrees we are dealing with will be prime.
 	\section{Practical Improvements}
 	\section{Algorithm}
 	\subsection{Cotree with unambiguous depth from minimal cotree}
@@ -614,4 +626,32 @@
 		\Return $(r, \mathcal{C}, d_{min}, d_{max})$
 		
 	\end{function}\\
+\begin{function}
+	\caption{calculateFactors($r_T, \mathcal{C}_T$) for $T_{min}=(r_T, \mathcal{C}_T)\in \mathds{T}_{\mathcal{B}}$ returns $S\subseteq \mathds{T}_{\mathcal{B}}^n$}
+	$(r,\mathcal{C},d_{min}, d_{max}) := $calculateUnambiguousCotree($r_T,\mathcal{C}_T$)$;$\\
+	$depthdict[][];$\\$ filldepthdict(depthdict);$\\
+	$factors[];$\\
+	\For{$d = 1;\, d \leq d_{max};\, d:=d+1\,$ }{
+		$primeTuples[];$\\
+		$gcds[];$\\
+		$ids[];$\\
+		\For{ every node $N=(r_N,\mathcal{C}_N,d_{N_{min}}, d_{N_{max}})$ in $depthdict[d]$ }{
+			$KT := $getKnuthTuple($N,\, d$);\\
+			\If{primeMultiset($KT$) is not in $primeTuples$}{
+				$primeTuples.append($primeMultiset($KT$)$);$\\
+				
+			}
+			$gcds[N] := k \quad$ with  $k\cdot $primeMultiset($KT$) $= KT$;\\
+			$ids[N] := primeTuples.position($primeMultiset($KT$)$) $;\\
+		}
+		\If{$primeTuples.length() == 1$}{\Comment{factor found}\\
+			write ids, multiplicities and kchilds
+		
+		}\Else{
+			
+		}
+	}
+	\Return $(r, \mathcal{C}, d_{min}, d_{max})$
+	
+\end{function}\\
 \end{document} 

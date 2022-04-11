@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2022.3.30)  11 APR 2022 11:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2022.3.30)  11 APR 2022 15:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1503,11 +1503,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 438--439
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 461--464
-
- []
-
-
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
 (fancyhdr)                \setlength{\headheight}{15.0pt}.
@@ -1525,22 +1520,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [10]
-LaTeX Font Info:    Font shape `T1/cmbr/m/it' in size <8> not available
-(Font)              Font shape `T1/cmbr/m/sl' tried instead on input line 531.
-LaTeX Font Info:    Font shape `T1/cmbr/m/it' in size <6> not available
-(Font)              Font shape `T1/cmbr/m/sl' tried instead on input line 531.
+Underfull \hbox (badness 10000) in paragraph at lines 513--514
 
-Overfull \hbox (20.62161pt too wide) detected at line 531
-\OMS/cmbrs/m/n/12 8\T1/cmr/m/it/12 i \OMS/cmbrs/m/n/12 2 f\OT1/cmbr/m/n/12 1\OM
-L/cmbrm/m/it/12 ; :::; \T1/cmr/m/it/12 m\OMS/cmbrs/m/n/12 g8\T1/cmr/m/it/12 M \
-OT1/cmbr/m/n/12 = (\T1/cmr/m/it/12 r[]\OML/cmbrm/m/it/12 ; \OMS/cmbrs/m/n/12 C[
-]\OT1/cmbr/m/n/12 ) \OMS/cmbrs/m/n/12 2 N\OT1/cmbr/m/n/12 (\T1/cmr/m/it/12 N\OT
-1/cmbr/m/n/12 ) :  \OMS/cmbrs/m/n/12 P\OT1/cmbr/m/n/12 (\T1/cmr/m/it/12 M\OT1/c
-mbr/m/n/12 ) = \T1/cmr/m/it/12 P \OT1/cmbr/m/n/12 = (\T1/cmr/m/it/12 r[]\OML/cm
-brm/m/it/12 ; \OMS/cmbrs/m/n/12 C[]\OT1/cmbr/m/n/12 )[]\T1/cmr/m/it/12 r[] \OT1
-/cmbr/m/n/12 = \T1/cmr/m/it/12 r[]  \OT1/cmbr/m/n/12 =[]\OMS/cmbrs/m/n/12 )  \T
-1/cmr/m/it/12 N \OMS/cmbrs/m/n/12 2 N\OT1/cmbr/m/n/12 (\OML/cmbrm/m/it/12 ^^L\O
-T1/cmbr/m/n/12 (\T1/cmr/m/it/12 S[]\OT1/cmbr/m/n/12 ))
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 515--516
+
  []
 
 
@@ -1552,7 +1538,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [11]
-Underfull \hbox (badness 1112) in paragraph at lines 580--580
+Underfull \hbox (badness 1112) in paragraph at lines 592--592
 []\T1/cmbr/bx/n/12 Function \T1/cmbr/m/n/12 cal-cu-la-te-U-nam-bigu-ous-Cotree(
 $\T1/cmr/m/it/12 r[]\OML/cmbrm/m/it/12 ; \OMS/cmbrs/m/n/12 C[]$\T1/cmbr/m/n/12 
 ) for $\T1/cmr/m/it/12 T[] \OT1/cmbr/m/n/12 = (\T1/cmr/m/it/12 r[]\OML/cmbrm/m/
@@ -1561,7 +1547,7 @@ n/12 T[]$ \T1/cmbr/m/n/12 re-turns
  []
 
 
-Underfull \hbox (badness 1112) in paragraph at lines 599--599
+Underfull \hbox (badness 1112) in paragraph at lines 611--611
 []\T1/cmbr/bx/n/12 Function \T1/cmbr/m/n/12 cal-cu-la-te-U-nam-bigu-ous-Cotree(
 $\T1/cmr/m/it/12 r[]\OML/cmbrm/m/it/12 ; \OMS/cmbrs/m/n/12 C[]$\T1/cmbr/m/n/12 
 ) for $\T1/cmr/m/it/12 T[] \OT1/cmbr/m/n/12 = (\T1/cmr/m/it/12 r[]\OML/cmbrm/m/
@@ -1570,7 +1556,7 @@ n/12 T[]$ \T1/cmbr/m/n/12 re-turns
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 561--617
+Underfull \hbox (badness 10000) in paragraph at lines 573--657
 
  []
 
@@ -1595,7 +1581,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 .calculateUnambiguousCotree}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.617 \end{document}
+l.657 \end{document}
                     ]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1609,17 +1595,26 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 .calculateUnambiguousCotree}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.617 \end{document}
-                    ] (./Algorithmus.aux)
+l.657 \end{document}
+                    ]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 15.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{15.0pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
+
+[15] (./Algorithmus.aux)
 Package rerunfilecheck Info: File `Algorithmus.out' has not changed.
-(rerunfilecheck)             Checksum: 818CB758EFCDC19884CEB0B3CC76E815;3642.
+(rerunfilecheck)             Checksum: FC1B43A923F2CC8F9E8D3B26FEABD6FD;3112.
  ) 
 Here is how much of TeX's memory you used:
- 39754 strings out of 478276
- 894310 string characters out of 5853013
- 1316499 words of memory out of 5000000
- 57245 multiletter control sequences out of 15000+600000
- 487834 words of font info for 69 fonts, out of 8000000 for 9000
+ 39881 strings out of 478276
+ 897319 string characters out of 5853013
+ 1320499 words of memory out of 5000000
+ 57372 multiletter control sequences out of 15000+600000
+ 486230 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,18n,89p,733b,1856s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{www.jstor.org/stable/pdf/2690833.pdf} has been re
@@ -1642,10 +1637,10 @@ e/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fo
 nts/type1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti
 1200.pfb>
-Output written on Algorithmus.pdf (14 pages, 256375 bytes).
+Output written on Algorithmus.pdf (15 pages, 270241 bytes).
 PDF statistics:
- 332 PDF objects out of 1000 (max. 8388607)
- 276 compressed objects within 3 object streams
- 77 named destinations out of 1000 (max. 500000)
- 181 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 328 PDF objects out of 1000 (max. 8388607)
+ 271 compressed objects within 3 object streams
+ 78 named destinations out of 1000 (max. 500000)
+ 165 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -78,7 +78,7 @@ GraphBinary reader::readBinaryFromGraphFile(){
     for(int i = 0; i < file.size()-1; i++){
         //char at = file.at(i);
         //std::cout << file.at(i) << std::endl ;
-        std::cout << ((int)file.at(i) - (int)'0')*0x80 << std::endl ;
+        //std::cout << ((int)file.at(i) - (int)'0')*0x80 << std::endl ;
         graphData.edges[i/DATA_SIZE] = graphData.edges[i/DATA_SIZE] << 1;
         graphData.edges[i/DATA_SIZE] = graphData.edges[i/DATA_SIZE]  | (((int)file.at(i)) - (int)'0');
     }

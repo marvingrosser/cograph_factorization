@@ -173,9 +173,9 @@ void graph::constructFromBinary(GraphBinary data){
     
     
     unsigned int edgecounter = 0;
-    unsigned long long nine = data.edges[98/DATA_SIZE];
+    
     for(int i = 0; i < data.number * data.number;i++){
-        std::cout << i/data.number << std::endl;
+        //std::cout << i/data.number << std::endl;
         if(this->getBitByNum((i % DATA_SIZE),data.edges[i/DATA_SIZE])){
             //std::cout << data.edges[i/DATA_SIZE]+0 << std::endl;
             

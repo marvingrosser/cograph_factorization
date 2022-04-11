@@ -24,6 +24,10 @@
 
 class cotree {
 public:
+    
+    void setFoundK(unsigned int k);
+    unsigned int getFoundK();
+    
     int findInMultisetVector(vector< map<unsigned int,unsigned int>> vec, map<unsigned int,unsigned int> ms);
     /**
      * set Multiplicity of the primeTuple found (id multiplicity)
@@ -90,7 +94,7 @@ public:
      * @param depthtogo the cotree to copy
      * @param primeTuple the primeTuple found on that depth
      */
-    cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned int> primeTuple);
+    cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned int> primeTuple, unsigned int depth);
     
 
     /**
@@ -228,6 +232,8 @@ private:
      * Multiplicity of this ID, e.g. if this Node is splitted and if so in how many parts
      */
     unsigned int ids_multiplicity;
+    
+    unsigned int found_k;
     /**
      * Depth interval (two numbers [from, to]) this node is on.
      * If this Interval contains more than one number, this node is representing multiple Nodes

@@ -18,6 +18,7 @@ using namespace std;
 #include "../headers/cotree.h"
 #include <vector>
 #include "../headers/InputHandler.h"
+#include <omp.h>
 /*
  * 
  */

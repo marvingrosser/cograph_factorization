@@ -21,7 +21,7 @@
 #include <iostream>
 using namespace std;
 using std::string;
-#define DATA_SIZE sizeof(unsigned long long)
+#define DATA_SIZE sizeof(unsigned long long)*8
 struct GraphBinary{
     int number;
     unsigned long long * edges;

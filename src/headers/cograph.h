@@ -19,7 +19,7 @@
 #include "reader.h"
 #include <string.h>
 #include <vector>
-#define DATA_SIZE sizeof(unsigned long long)
+#define DATA_SIZE sizeof(unsigned long long)*8
 using namespace std;
 using std::string;
 class vertice;

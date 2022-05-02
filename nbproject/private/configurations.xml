@@ -13,6 +13,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
             <option name="gdb_source_dirs" value="src/classes:src/headers"/>
@@ -31,8 +33,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -i "src/data/k12.graph" -p</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -i "src/data/p15.graph" -p</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -i "src/data/problem.graph" -p</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -i "src/data/ost.graph" -p</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -i "src/data/ost2.graph" -p</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -i "src/data/problem.graph" -p</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -i "src/data/ost2.graph" -p</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

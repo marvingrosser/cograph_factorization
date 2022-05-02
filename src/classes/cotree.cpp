@@ -171,11 +171,13 @@ cotree::cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned i
     this->ids_multiplicity = 1;
     if(depthtogo > 0){
         for(cotree* copy_child : copy->getChilds()){
-            if(primeTuple[copy_child->getId()] > 0 &&copy_child->getDepth()[1] == depth-1){// && copy_child->getDepth()[1]==depthtogo-1
+            unsigned int d =copy_child->getDepth()[1] ;
+            if(primeTuple[copy_child->getId()] > 0 && copy_child->getDepth()[1] == depth-1){// && copy_child->getDepth()[1]==depthtogo-1
                 this->childs.push_back(new cotree(copy_child, depthtogo-1));
                 primeTuple[copy_child->getId()] --;
             }
         }
+        
         if(primeTuple[copy->getId()] > 0){ //look at itself 
             for(unsigned int i = 0; i < primeTuple[copy->getId()] ; i++){
                 this->childs.push_back(new cotree(!this->state));

@@ -13,25 +13,26 @@
 
 #include "../headers/cograph.h"
 void graph::verticeUnion(unsigned long long* dest, unsigned long long* other, unsigned short size){
-    for(int i = 0; i < size/DATA_SIZE + 1; i++){
+
+    for(int i = 0; i < (int)(((int)size)/((int)DATA_SIZE)) + 1 ; i++){
         dest[i] |= other[i];
     }
 }
 void graph::verticeInverseUnion(unsigned long long* dest, unsigned long long* other, unsigned short size){
-    for(int i = 0; i < size/DATA_SIZE + 1; i++){
+    for(int i = 0; i <  (int)(((int)size)/((int)DATA_SIZE)) + 1 ; i++){
         dest[i] |= ~ other[i];
     }
 }
 
 void graph::verticeInversion(unsigned long long* dest, unsigned short size){
-    for(int i = 0; i < size/DATA_SIZE + 1; i++){
+    for(int i = 0; i < (int)(((int)size)/((int)DATA_SIZE)) + 1; i++){
         dest[i] = ~dest[i];
     }
 }
 
 
 void graph::verticeInverseXOR(unsigned long long * dest, unsigned long long * other, unsigned short size){
-    for(int i = 0; i < size/DATA_SIZE + 1; i++){
+    for(int i = 0; i < (int)(((int)size)/((int)DATA_SIZE)) + 1; i++){
         dest[i] ^= ~other[i];
     }
 }
@@ -40,16 +41,16 @@ vector<unsigned long long*> graph::getConnections(bool invert, unsigned long lon
     
     unsigned short numVerts = this->verticePointers.size(); //number of verts in the graph
 
-    unsigned long long * visited = (unsigned long long*)calloc(numVerts/DATA_SIZE,DATA_SIZE); //stores visited vertices
+    unsigned long long * visited = (unsigned long long*)calloc((int) (((int) numVerts)/((int)DATA_SIZE)),DATA_SIZE); //stores visited vertices
     
     verticeInverseUnion(visited, lookAt, numVerts); //fill visited with stuff we do not want to visit
     
     vector<unsigned long long*> components;
     
     for(int i=0; i < numVerts ; i++ ){
-        if( ((unsigned long long)visited[i / DATA_SIZE] >> (DATA_SIZE - 1  - (i % DATA_SIZE))) % 2 == 0){ //is the vertex[i] not visited? 
+        if( ((unsigned long long)visited[(int)(((int) i)/ ((int)DATA_SIZE))] >> ((int)DATA_SIZE - 1 - (int)(((int)i) % ((int)DATA_SIZE)))) % 2 == 0){ //is the vertex[i] not visited? 
   
-            unsigned long long * component = (unsigned long long*)calloc(numVerts/DATA_SIZE,DATA_SIZE); //component data
+            unsigned long long * component = (unsigned long long*)calloc((int) (((int) numVerts)/((int)DATA_SIZE)),DATA_SIZE); //component data
             
             verticeInverseUnion(component, lookAt,numVerts); //All Vertices not to look at will be 1    (*)
             
@@ -73,25 +74,25 @@ void graph::searchAllConnected(vertice* vert, unsigned long long* binary,bool in
     
     unsigned short numOfThisVert = vert->getNum(); //takes the index of this vertex
     
-    unsigned long long disjunion[numVerts/DATA_SIZE + 1]; //variable where we store wich vertices we have to visit from this vertex
+    unsigned long long disjunion[(int) (((int) numVerts)/((int)DATA_SIZE)) + 1]; //variable where we store wich vertices we have to visit from this vertex
     
     unsigned long long * realConnected = vert->getConnections(); //take the bitrepresentation for connected vertices
     
-    unsigned long long connectedCopy[numVerts/DATA_SIZE+1];
+    unsigned long long connectedCopy[(int) (((int) numVerts)/((int)DATA_SIZE)) +1];
     
-    for(int i = 0; i < numVerts/DATA_SIZE + 1;i++){ //loop over our Windows of the Bitrepr of connected vertices
+    for(int i = 0; i < (int) (((int) numVerts)/((int)DATA_SIZE)) + 1;i++){ //loop over our Windows of the Bitrepr of connected vertices
         connectedCopy[i] = (invert)? ~realConnected[i]: realConnected[i]; //invert if that shit has to be inverted 
         disjunion[i] = connectedCopy[i] ^ (binary[i] & connectedCopy[i]); //calculates the vertices we haveent visited but can visit from this vertex
         binary[i] |= connectedCopy[i]; // adds the vertices that will be visited from this vertex to the visited variable
     }
     
-    binary[numOfThisVert/DATA_SIZE] |=  ((unsigned long long)1) << DATA_SIZE - 1  - (numOfThisVert % DATA_SIZE);  //adds the vertex itseklf to the visited
+    binary[(int) (((int) numOfThisVert)/((int)DATA_SIZE))] |=  ((unsigned long long)1) << ((int)DATA_SIZE) - 1  - (int)(((int)numOfThisVert) % ((int)DATA_SIZE));  //adds the vertex itseklf to the visited
     
     if(disjunion){ //do the loop only if there are vertices to visit
         
         for(int i = 0; i < numVerts; i++){//könnte man nachdem nur noch nullen kommen + mod DATA_SIZE - 1  ^-1 skippen
             
-            unsigned long long currentVertice = disjunion[i/DATA_SIZE] >> DATA_SIZE - 1 -(i % DATA_SIZE); //vertex(i) to index DATA_SIZE - 1 
+            unsigned long long currentVertice = disjunion[(int)(((int) i)/((int) DATA_SIZE))] >> ((int) DATA_SIZE) - 1 - (int)(((int) i) % ((int) DATA_SIZE)); //vertex(i) to index DATA_SIZE - 1 
             
             if( currentVertice % 2 == 1 && i != numOfThisVert){ //should we visit this vertex?
                 
@@ -145,13 +146,13 @@ unsigned int graph::countBinaryOnes(unsigned long long binary){
 unsigned int graph::countBinaryOnes(unsigned long long* binary){
     unsigned int count = 0;
     unsigned int  n = this->numberVertices;
-    for(unsigned int i=0; i < (int)(n*n)/DATA_SIZE;i++){
+    for(unsigned int i=0; i < ((int)((int)(n*n))/((int)DATA_SIZE));i++){
         count += this->countBinaryOnes(binary[i]);
     }
     return count;
 }
-bool graph::getBitByNum(short num, unsigned long long byte){
-    return (byte >> DATA_SIZE - num - 1 ) & 1;
+bool graph::getBitByNum(short num, unsigned long long data){
+    return (data >> DATA_SIZE - num - 1 ) & 1;
 }
 void graph::constructFromBinary(GraphBinary data){
     
@@ -176,10 +177,11 @@ void graph::constructFromBinary(GraphBinary data){
     
     for(int i = 0; i < data.number * data.number;i++){
         //std::cout << i/data.number << std::endl;
-        if(this->getBitByNum((i % DATA_SIZE),data.edges[i/DATA_SIZE])){
-            //std::cout << data.edges[i/DATA_SIZE]+0 << std::endl;
+        //std::cout <<(int)(((int)i) % ((int)DATA_SIZE)) << std::endl;
+        if(this->getBitByNum((int)(((int)i) % ((int)DATA_SIZE)) ,data.edges[(int)(((int)i)/((int)DATA_SIZE))])){
+            //std::cout << "1 at num = " << (int)((int)i/(int)data.number) <<" : "<< i % data.number<< std::endl;
             
-            this->vertices[i/data.number].setOneInOut(i % data.number);
+            this->vertices[(int)((int)i/(int)data.number)].setOneInOut(i % data.number);
         }
     }
     

@@ -20,7 +20,7 @@
 #include <algorithm>
 #include <map>
 #include <iterator>
-#define DATA_SIZE sizeof(unsigned long long)
+#define DATA_SIZE sizeof(unsigned long long)*8
 
 class cotree {
 public:

@@ -40,7 +40,7 @@ string vertice::out_to_string(){
     unsigned long long o = this->out[1];
     unsigned long long a = this->out[0];
     for(int i=0 ; i < this->g->getSize();i++ ){
-        if((this->out[i/DATA_SIZE] >> (DATA_SIZE - 1 - i % DATA_SIZE)) % 2 ){
+        if((this->out[(int)(((int)i)/((int)DATA_SIZE)) ] >> ((int)DATA_SIZE - 1 - (int)(((int)i) % ((int)DATA_SIZE)))) % 2 ){
             outs.append("\t --> \t");
             outs.append(this->g->getVerticeByNumber(i)->to_string());
             outs.append("\n");
@@ -62,12 +62,15 @@ void vertice::setGraph(graph* g){
 }
 
 void vertice::initOut(unsigned short number){
-    this->out = (unsigned long long *)calloc(number/DATA_SIZE,DATA_SIZE);
+    this->out = (unsigned long long *)calloc(number/DATA_SIZE,DATA_SIZE/8);
     this->out[0] = (unsigned long long)0;
     
 }
 void vertice::setOneInOut(unsigned short index){
-    this->out[index/DATA_SIZE] |= ((unsigned long long) 1  << (DATA_SIZE- 1 - index % DATA_SIZE))  ;
+    this->out[(int) (((int)index)/((int)DATA_SIZE))] |= ((unsigned long long) 1  << ((int)DATA_SIZE - 1 - (int)(((int)index) % ((int)DATA_SIZE))))  ;
+    
+    //std::cout << "versch: " <<(((int)DATA_SIZE - 1 - (int)(((int)index) % ((int)DATA_SIZE))))<< std::endl;
+    
 }
 
 unsigned long long* vertice::getConnections(){

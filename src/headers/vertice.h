@@ -17,7 +17,7 @@
 #include <vector>
 #include "cograph.h"
 
-#define DATA_SIZE sizeof(unsigned long long)
+#define DATA_SIZE sizeof(unsigned long long)*8
 class graph;
 using namespace std;
 using std::vector;

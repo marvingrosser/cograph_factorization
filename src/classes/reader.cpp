@@ -12,7 +12,7 @@
  */
 
 #include "../headers/reader.h"
-
+#include <bitset>
 
 reader::reader(string path) {
     this->path = path;
@@ -64,7 +64,7 @@ GraphBinary reader::readBinaryFromGraphFile(){
     
     
     graphData.number = std::stoi(file.substr(0,file.find('\n')));
-    
+    //graphData.edges = (unsigned long long*)malloc((int)(graphData.number*graphData.number/DATA_SIZE)* DATA_SIZE/8 );
     graphData.edges = new unsigned long long[(int)(graphData.number*graphData.number/DATA_SIZE)];
     
     file = file.substr(file.find('\n'));
@@ -74,14 +74,18 @@ GraphBinary reader::readBinaryFromGraphFile(){
         file.erase(file.begin() + index);
         //file.erase(index+1);
     }
-    
-    for(int i = 0; i < file.size()-1; i++){
-        //char at = file.at(i);
-        //std::cout << file.at(i) << std::endl ;
-        //std::cout << ((int)file.at(i) - (int)'0')*0x80 << std::endl ;
-        graphData.edges[i/DATA_SIZE] = graphData.edges[i/DATA_SIZE] << 1;
-        graphData.edges[i/DATA_SIZE] = graphData.edges[i/DATA_SIZE]  | (((int)file.at(i)) - (int)'0');
+    int i = 0;
+    for(; i < file.size()-1; i++){
+        //if(i % graphData.number ==0) std::cout << std::endl;
+        char at = file.at(i);
+        //std::cout << file.at(i) << ','  ;
+        //std::cout << ((int)file.at(i) - (int)'0')*0x80<< std::endl;
+        graphData.edges[(int)((int)i)/((int)DATA_SIZE) ] = graphData.edges[(int)((int)i)/((int)DATA_SIZE) ] << 1;
+        graphData.edges[(int)((int)i)/((int)DATA_SIZE) ] = graphData.edges[(int)((int)i)/((int)DATA_SIZE) ]  | ((unsigned long long)((int)file.at(i)) - (int)'0');
+        
     }
+    graphData.edges[(int)((int)i)/((int)DATA_SIZE) ] = graphData.edges[(int)((int)i)/((int)DATA_SIZE) ] << (int)((int)DATA_SIZE - (int)(((int) i)%((int) DATA_SIZE)));
+    
 
     
     

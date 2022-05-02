@@ -22,7 +22,7 @@
 #include <iterator>
 #define DATA_SIZE sizeof(unsigned long long)
     
-    struct virtualData {
+    struct vData {
         //Isomorphy containing ID per depth-layer
         unsigned int id;
         
@@ -82,9 +82,10 @@ public:
      * Calculates the Knuth-Tuple (childs) for this vertice as multiset represented as map.
      * Children with depth above or equal to argument depth wont be considered  
      * @param depth Children with depth above or equal to wont be considered  
+     * @param pId programm id
      * @return multiset represented trough a map
      */
-    map<unsigned int,unsigned int> getKnuthTuple(unsigned int depth);
+    map<unsigned int,unsigned int> getKnuthTuple(unsigned int depth, unsigned int pId);
     /**
      * Node will write itself in the corresponding depthdict, considering its own depth
      * @param depthdict cotree dictionary for depths
@@ -116,14 +117,14 @@ public:
      * @param copy the cotree to copy
      * @param depthtogo the cotree to copy
      */
-    cotree(cotree* copy, unsigned int depthtogo);
+    cotree(cotree* copy, unsigned int depthtogo,int myDepth, unsigned int oldpId, unsigned int pId);
     /**
      * Construct cotree from given cotree, but just to a certain level, while considering the primeCotree found on this level
      * @param copy the cotree to copy
      * @param depthtogo the cotree to copy
      * @param primeTuple the primeTuple found on that depth
      */
-    cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned int> primeTuple, unsigned int depth);
+    cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned int> primeTuple, unsigned int depth,int myDepth, unsigned int oldpId, unsigned int pId);
     
 
     /**
@@ -213,7 +214,7 @@ public:
      * @param depthdict a filled depth-dictionary (from this cotree)
      * @return  (list of factorizations)
      */
-    vector<vector<cotree*>> getFactors(vector<vector<cotree*>> depthdict, unsigned int oldDepth, unsigned int callnumber);
+    vector<vector<cotree*>> getFactors(vector<vector<cotree*>> depthdict,unsigned int lastFound, unsigned int oldDepth, unsigned int pId, unsigned int oldpID, bool ignoreFactor);
 private:
         
     /**
@@ -259,7 +260,7 @@ private:
      *  the processors don't have to fetch their data again, if the data is altered by another processor)
      * 
      */
-    map<unsigned int, virtualData>;
+    map<unsigned int, vData> virtualData;
 
     /**
      * Depth interval (two numbers [from, to]) this node is on.

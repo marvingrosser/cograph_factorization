@@ -31,8 +31,9 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -i "src/data/k12.graph" -p</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -i "src/data/p15.graph" -p</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -i "src/data/problem.graph" -p</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -i "src/data/mlf.graph" -p</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -i "src/data/problem.graph" -p</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -i "src/data/mlf.graph" -p</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

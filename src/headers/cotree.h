@@ -184,7 +184,7 @@ public:
      * @param depthdict a filled depth-dictionary (from this cotree)
      * @return  (list of factorizations)
      */
-    vector<vector<cotree*>> getFactors(vector<vector<cotree*>> depthdict);
+    vector<vector<cotree*>> getFactors(vector<vector<cotree*>> depthdict, unsigned int oldDepth, unsigned int callnumber);
 private:
         
     /**

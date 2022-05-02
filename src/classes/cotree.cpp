@@ -218,11 +218,11 @@ int cotree::findInMultisetVector(vector< map<unsigned int,unsigned int>> vec, ma
     }
     return -1;
 }
-vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict){ //merge this with the factor-Algorithm (BottomUp)
+vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict, unsigned int oldDepth, unsigned int callNumber){ //merge this with the factor-Algorithm (BottomUp)
     vector<vector<cotree*>> factors;
     factors.push_back(*new vector<cotree*> );
     unsigned int lastdepthfound = 0;
-    for(unsigned int d=1; d < depthdict.size(); d++){
+    for(unsigned int d=oldDepth; d < depthdict.size(); d++){
         
         vector< map<unsigned int,unsigned int>> tuples;
         vector<map<unsigned int, unsigned int>> primeTuples; 
@@ -253,7 +253,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict){ /
         }
         //sort tuples
         vector<map<unsigned int, unsigned int>> remainingTuples;
-        if(primeTuples.size()==1){//wenn das passiert müssen wir bei nicht splitbaren tupeln
+        if(primeTuples.size()==1){//wenn das passiert müssen wir bei nicht splitbaren tupeln //wenn gefunden es muss auch der else part ausgeführt werden, jedoch in anderer "Dimension" (DImensionen fernhalten)
             //construct K-Tower here and add them to our factors. As well as the found primefactor
             unsigned int gcd = 0;
             

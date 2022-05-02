@@ -21,34 +21,63 @@
 #include <map>
 #include <iterator>
 #define DATA_SIZE sizeof(unsigned long long)
-
+    
+    struct virtualData {
+        //Isomorphy containing ID per depth-layer
+        unsigned int id;
+        
+        //Multiplicity of this ID, e.g. if this Node is splitted and if so in how many parts
+        unsigned int multiplicity;
+        
+        //virtual downwards extrusion
+        unsigned int foundK;
+    };
+    
 class cotree {
 public:
-    
-    void setFoundK(unsigned int k);
-    unsigned int getFoundK();
-    
+    /**
+     * Set the downwards extrusion extension
+     * @param k K-graph that needs to be extruded
+     * @param procId process id calling it
+     */
+    void setFoundK(unsigned int k, unsigned int procId);
+    /**
+     * Get the downwards extrusion extension
+     * @param procId process id calling it
+     * @return 
+     */
+    unsigned int getFoundK(unsigned int procId);
+    /**
+     * looks if the given map may be found in the vector, returns its id (-1 if not found)
+     * @param vec vector to search in
+     * @param ms multiset to search for
+     * @return  id (-1 if not found)
+     */
     int findInMultisetVector(vector< map<unsigned int,unsigned int>> vec, map<unsigned int,unsigned int> ms);
     /**
      * set Multiplicity of the primeTuple found (id multiplicity)
      * @param m multiplicity
+     * @param procId process id calling it
      */
-    void setMultiplicity(unsigned int m);
+    void setMultiplicity(unsigned int m, unsigned int procId);
     /**
      * set Multiplicity of the primeTuple found
+     * @param procId process id calling it
      * @return multiplicity
      */
-    unsigned int getMultiplicity();
+    unsigned int getMultiplicity(unsigned int procId);
     /**
      * get per depth assigned isomorphy id
+     * @param procId process id calling it
      * @return id
      */
-    unsigned int getId();
+    unsigned int getId(unsigned int procId);
     /**
      * set per depth assigned isomorphy id
      * @param id 
+     * @param procId process id calling it
      */
-    void setId(unsigned int id);
+    void setId(unsigned int id, unsigned int procId);
     /**
      * Calculates the Knuth-Tuple (childs) for this vertice as multiset represented as map.
      * Children with depth above or equal to argument depth wont be considered  
@@ -225,15 +254,13 @@ private:
      */
     void constructChildren(graph * g, vector<unsigned long long*> * components,vector<vector<cotree*>> *depthdict );
     /**
-     * Isomorphy containing ID per depth-layer
+     * for each process there is unique virtual data found in this map 
+     * (because it is )implemented in a binary search tree my hopes are high, that for multi threading
+     *  the processors don't have to fetch their data again, if the data is altered by another processor)
+     * 
      */
-    unsigned int id;
-    /**
-     * Multiplicity of this ID, e.g. if this Node is splitted and if so in how many parts
-     */
-    unsigned int ids_multiplicity;
-    
-    unsigned int found_k;
+    map<unsigned int, virtualData>;
+
     /**
      * Depth interval (two numbers [from, to]) this node is on.
      * If this Interval contains more than one number, this node is representing multiple Nodes

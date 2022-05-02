@@ -121,7 +121,7 @@ cotree::cotree(bool state){
     this->depth = new unsigned int[2];
     this->depth[0] = 0;
     this->depth[1] = 0;
-    this->found_k = 0;
+    this->virtualData[0].foundK = 0;
 }
 cotree::cotree(unsigned int k, unsigned int id,bool state){ //init a K-Cotree with k vertices (fully connected)
     if(k==1)k=0;
@@ -129,7 +129,7 @@ cotree::cotree(unsigned int k, unsigned int id,bool state){ //init a K-Cotree wi
     this->state = state;
     this->depth[0]=1;
     this->depth[1]=1;
-    this->id=id;
+    this->virtualData[0].id =id;
     for(unsigned int i = 0; i < k; i++){
         cotree * child = new cotree();
         this->childs.push_back(child);
@@ -137,7 +137,7 @@ cotree::cotree(unsigned int k, unsigned int id,bool state){ //init a K-Cotree wi
         child->depth[0] = 0;
         child->depth[1] = 0;
         child->state = !state;
-        child->id = 0;
+        child->virtualData[0].id = 0;
     }
 }
 unsigned int cotree::getChildNum(){
@@ -168,7 +168,7 @@ unsigned int * cotree::getDepth(){
 
 cotree::cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned int> primeTuple, unsigned int depth){
     this->state = copy->getState();
-    this->ids_multiplicity = 1;
+    this->virtualData[0].multiplicity = 1;
     if(depthtogo > 0){
         for(cotree* copy_child : copy->getChilds()){
             if(primeTuple[copy_child->getId()] > 0 &&copy_child->getDepth()[1] == depth-1){// && copy_child->getDepth()[1]==depthtogo-1
@@ -188,16 +188,16 @@ cotree::cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned i
     }
 }
 
-void cotree::setFoundK(unsigned int k){
-    this->found_k = k;
+void cotree::setFoundK(unsigned int k,unsigned int procId){
+    this->virtualData[procId].foundK = k;
 }
 
-unsigned int cotree::getFoundK(){
-    return this->found_k;
+unsigned int cotree::getFoundK(unsigned int procId){
+    return this->virtualData[procId].foundK;
 }
 cotree::cotree(cotree* copy, unsigned int depthtogo){
     this->state = copy->state;
-    this->ids_multiplicity = 1;
+    this->virtualData[0].multiplicity= 1;
     if(depthtogo > 0){
         for(cotree* copy_child : copy->getChilds()){
 
@@ -222,20 +222,20 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict, un
     vector<vector<cotree*>> factors;
     factors.push_back(*new vector<cotree*> );
     unsigned int lastdepthfound = 0;
+    
     for(unsigned int d=oldDepth; d < depthdict.size(); d++){
         
-        vector< map<unsigned int,unsigned int>> tuples;
-        vector<map<unsigned int, unsigned int>> primeTuples; 
-        vector<unsigned int*> gcds;
+        vector< map<unsigned int,unsigned int>> tuples; //index tuples of children (of nodes with depth d)
+        vector<map<unsigned int, unsigned int>> primeTuples;  //primetuples generating the set tuples (devides each component of other tuple and is itself not divisible) 
+        vector<unsigned int*> gcds; //for each tuple its components gcd and the array-index of prime Tuple dividing it
         
         for(unsigned int i=0; i < depthdict[d].size(); i++){//always split brutally if it is indeed not its own maximal depth
              
-             map<unsigned int,unsigned int> kt = depthdict[d][i]->getKnuthTuple(d);
-             unsigned int newgcd;
-             unsigned int pTnum = 0;
-             bool foundPrime = false;
+             map<unsigned int,unsigned int> kt = depthdict[d][i]->getKnuthTuple(d); //get indexTuple
+             unsigned int pTnum = 0; //primeTupleNumber
+             bool foundPrime = false; 
 
-             for(map<unsigned int, unsigned int> primeTuple : primeTuples){ //did we came across other Tuples that have tha same prime Tuple? If so fill informations
+             for(map<unsigned int, unsigned int> primeTuple : primeTuples){ //did we came across other Tuples that have the same prime Tuple? If so fill informations
                  if(cotree::isDivisible(kt, primeTuple)){
                      gcds.push_back(new unsigned int[2] {cotree::getGCDFromPrimeTuple(primeTuple, kt) , pTnum});
                      foundPrime = true;
@@ -257,38 +257,48 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict, un
             //construct K-Tower here and add them to our factors. As well as the found primefactor
             unsigned int gcd = 0;
             
-            for(unsigned int i = 0; i < gcds.size(); i++){ //splitting of the tuples to make sure that all are prime
+            for(unsigned int i = 0; i < gcds.size(); i++){ //extracting the greatest divisor with which we are able to split all tuples
                 gcd = __gcd(gcd, gcds[i][0]);
                 
             }
+            /**
+             * Now we have to distinguish between 
+             * nodes that are splittable (e.g. their parent has got the same state) --> split them virtually
+             * nodes that are not splittable (e.g. their parent hast not got the same state) --> extrude a set of of splits from them downwards, namely foundK
+             */
             for(unsigned int i =0 ; i < gcds.size(); i++){
-                if(depthdict[d][i]->getDepth()[1] > d ){
-                    depthdict[d][i]->setId(gcds.at(i)[1]);
-                    depthdict[d][i]->setMultiplicity(gcds.at(i)[0]/gcd);
-                    depthdict[d][i]->setFoundK(0);
-                }else{
+                if(depthdict[d][i]->getDepth()[1] > d ){ //parent node has same state
+                    depthdict[d][i]->setId(0);
+                    //depthdict[d][i]->setId(gcds.at(i)[1]); //set new ID
+                    depthdict[d][i]->setMultiplicity(gcds.at(i)[0]/gcd); //set Multiplicity which remains after extracting the kTower
+                    depthdict[d][i]->setFoundK(0); //nothing to extrude downwards
+                }else{ //parent node has not got the same state
+                    /**
+                     * order the not splittable tuples and look for similarities, thus giving them an equivalent id if their tuple is the same
+                     * considering id's only for (1 <= id <= n) because id = 0 is reserved for the splitted tuples
+                     */
                     map<unsigned int,unsigned int> kt = depthdict[d][i]->getKnuthTuple(d);
-                    int id = cotree::findInMultisetVector(remainingTuples, kt);
-                    if(id > -1){
+                    int id = cotree::findInMultisetVector(remainingTuples, kt); 
+                    if(id > -1){ //tuple has  been seen before
                         depthdict[d][i]->setId(id + 1);
                     
-                    }else{
-                        depthdict[d][i]->setId(remainingTuples.size() + 1);
-                        remainingTuples.push_back(kt);
+                    }else{  //tuple has not been seen before
+                        depthdict[d][i]->setId(remainingTuples.size() + 1); //set new id
+                        remainingTuples.push_back(kt); 
                     }
-                        depthdict[d][i]->setFoundK(gcds.at(i)[0]/gcd);
-                        depthdict[d][i]->setMultiplicity(1);
+                        depthdict[d][i]->setFoundK(gcds.at(i)[0]/gcd); //extrude downwards
+                        depthdict[d][i]->setMultiplicity(1);           //don't split
                     
                 }
             } 
             
-            set<vector<unsigned int>> factorizations = cotree::getPrimeFactorizations(gcd);
+            set<vector<unsigned int>> factorizations = cotree::getPrimeFactorizations(gcd); //get factorizations of gcd (order NOT neglegted)
             
             vector<vector<cotree*>> allTowers;
         
-            for(std::set<vector<unsigned int>>::iterator it = factorizations.begin() ; it!= factorizations.end(); ++it){
+            for(std::set<vector<unsigned int>>::iterator it = factorizations.begin() ; it!= factorizations.end(); ++it){ //construct kTower from gcd's factorization
                 vector<cotree*> kTower = *new vector<cotree*>;
-                bool rootstate = depthdict[d][0]->getState();
+                bool rootstate = depthdict[d][0]->getState(); //set rootstate
                 for(unsigned int k: *it){
                     cotree * kTree = new cotree(k,k, rootstate);
                     kTower.push_back(kTree);
@@ -301,11 +311,12 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict, un
             
             unsigned int towercount = allTowers.size();
             bool nofactor = true;
+            
             for(unsigned int i = 0; i < factorcount; i++ ){
                 
-                factors[i].push_back(new cotree(depthdict[d][0], d-lastdepthfound, primeTuples[0],d));
+                factors[i].push_back(new cotree(depthdict[d][0], d-lastdepthfound, primeTuples[0],d)); //construct tree of the primeTuple
                 
-                if(factors[i][factors[i].size()-1]->getChildNum() < 2 ){//check if the factor would be trivial (1) and delete it then
+                if(factors[i][factors[i].size()-1]->getChildNum() < 2 ){//check if the factor would be trivial (single vertice) and delete it then
                     factors[i].pop_back(); 
                 }else{
                     nofactor = false;
@@ -315,13 +326,13 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict, un
                 
             }
                     
-            for(unsigned int ti = 0; ti < allTowers.size(); ti++){//putting the Ktowers to the new concatenated factors
+            for(unsigned int ti = 0; ti < allTowers.size(); ti++){//putting the Ktowers to the new concatenated factors 
                 for(unsigned int fi = 0; fi < factorcount; fi++){
                     factors[fi*towercount+ti].insert(factors[fi*towercount + ti].end(), allTowers[ti].begin(), allTowers[ti].end());
                 }
             }
                     
-            lastdepthfound = d;//(!nofactor ? d:lastdepthfound );
+            lastdepthfound = d; 
         }else{
             for(unsigned int i = 0; i < gcds.size(); i++){ //splitting of the tuples to make sure that all are prime
                 if(depthdict[d][i]->getDepth()[1] > d){
@@ -338,8 +349,8 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict, un
                         depthdict[d][i]->setId(remainingTuples.size() + primeTuples.size());
                         remainingTuples.push_back(kt);
                     }
-                        depthdict[d][i]->setMultiplicity(1);
-                        depthdict[d][i]->setFoundK(gcds.at(i)[0]);
+                        depthdict[d][i]->setMultiplicity(1); 
+                        depthdict[d][i]->setFoundK(gcds.at(i)[0]);//think we might can delete this part because found k is just interesting if indeed a factor found
                 }
                 
             }
@@ -348,17 +359,17 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict, un
     
     return factors;
 }
-unsigned int cotree::getMultiplicity(){
-    return this->ids_multiplicity;
+unsigned int cotree::getMultiplicity(unsigned int procId){
+    return this->virtualData[procId].multiplicity;
 }
-void cotree::setMultiplicity(unsigned int m){
-    this->ids_multiplicity = m;
+void cotree::setMultiplicity(unsigned int m,unsigned int procId){
+    this->virtualData[procId].multiplicity = m;
 }
-unsigned int cotree::getId(){
-    return this->id;
+unsigned int cotree::getId(unsigned int procId){
+    return this->virtualData[procId].id;
 }
-void cotree::setId(unsigned int id){
-    this->id = id;
+void cotree::setId(unsigned int id, unsigned int procId){
+    this->virtualData[procId].id = id;
 }
 
 string cotree::get_string(){
@@ -393,10 +404,10 @@ void cotree::constructChildren(graph* g, vector<unsigned long long*>* components
             this->depth= new unsigned int[2];
             this->depth[0]=0;
             this->depth[1]=0;
-            this->ids_multiplicity = 1;
-            this->found_k = 0;
+            this->virtualData[0].multiplicity = 1;
+            this->virtualData[0].foundK = 0;
         if(components->size() > 1){//more than one vertice
-            this->id = 0;
+            this->virtualData[0].id = 0;
             this->depth[0]=-1;
             for(unsigned long long* thiscomponent: *components){
                 unsigned int *cdepth = new unsigned int[2];
@@ -409,7 +420,7 @@ void cotree::constructChildren(graph* g, vector<unsigned long long*>* components
             }
             //this->depth[1]++;
         }else{
-            this->id = (this->state? 1:0);
+            this->virtualData[0].id= (this->state? 1:0);
         }
 }
 cotree::cotree(graph* g, vector<vector<cotree*>> *depthdict){

@@ -20,7 +20,8 @@
 #include <algorithm>
 #include <map>
 #include <iterator>
-#define DATA_SIZE sizeof(unsigned long long)*8
+<<<<<<< HEAD
+#define DATA_SIZE sizeof(unsigned long long)
     
     struct vData {
         //Isomorphy containing ID per depth-layer
@@ -31,12 +32,12 @@
         
         //virtual downwards extrusion
         unsigned int foundK;
-        
-        unsigned int lastFoundDepth;
-        
-        unsigned int lastFoundMultiplicity;
     };
     
+=======
+#define DATA_SIZE sizeof(unsigned long long)*8
+
+>>>>>>> main
 class cotree {
 public:
     /**

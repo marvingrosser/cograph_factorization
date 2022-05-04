@@ -128,7 +128,7 @@ public:
      * @param depthtogo the cotree to copy
      * @param primeTuple the primeTuple found on that depth
      */
-    cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned int> primeTuple, unsigned int depth,int myDepth, unsigned int oldpId, unsigned int pId);
+    cotree(cotree* copy, unsigned int depthtogo, unsigned int depth,int myDepth, unsigned int oldpId, unsigned int pId);
     
 
     /**

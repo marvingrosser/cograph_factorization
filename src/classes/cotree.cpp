@@ -166,14 +166,14 @@ unsigned int * cotree::getDepth(){
 }
 
 
-cotree::cotree(cotree* copy, unsigned int depthtogo,map<unsigned int, unsigned int> primeTuple, unsigned int depth, int oDepth, unsigned int oldpId, unsigned int pId){
+cotree::cotree(cotree* copy, unsigned int depthtogo, unsigned int depth, int oDepth, unsigned int oldpId, unsigned int pId){
     this->state = copy->getState();
     this->virtualData[0].multiplicity = 1;
     unsigned int proc = depth - oDepth > 0?  pId: oldpId;
-    unsigned int gcd = cotree::gcdTuple(primeTuple);
+    unsigned int gcd = cotree::gcdTuple(copy->getKnuthTuple(depth, proc));
     if(depthtogo > 0){
         for(unsigned int d = depth; d >= copy->getDepth()[0]; d--){
-            proc = d - oDepth  > 0?  pId: oldpId;
+            proc = d - oDepth   > 0?  pId: oldpId;
             map<unsigned int, unsigned int > kt = copy->getKnuthTuple(d, proc);
             
             map<unsigned int, unsigned int > pt = cotree::constructGCDTuple(kt,gcd);
@@ -324,7 +324,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict,uns
             
             for(unsigned int i = 0; i < factorcount; i++ ){
                 
-                factors[i].push_back(new cotree(depthdict[d][0], d-lastdepthfound, primeTuples[0],d, oldDepth, oldpId, pId)); //construct tree of the primeTuple
+                factors[i].push_back(new cotree(depthdict[d][0], d-lastdepthfound, d, oldDepth, oldpId, pId)); //construct tree of the primeTuple
                 
                 if(factors[i][factors[i].size()-1]->getChildNum() < 2 ){//check if the factor would be trivial (single vertice) and delete it then
                     factors[i].pop_back(); 

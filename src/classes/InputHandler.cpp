@@ -62,7 +62,7 @@ void InputHandler::calculate(){
         std::cout << "\n\n Corresponding cotree: \n\n"<< gt->get_string() <<std::endl;
     }
     
-    vector<vector<cotree*>> factors = gt->getFactors(depthdict, 0,1, 0,0, false ); //maybe we have to get 0 there
+    vector<vector<cotree*>> factors = gt->getFactors(depthdict, 0,1, 0,0, false ,-1); //maybe we have to get 0 there
 
     std::cout << "\n\n#######################################\n\n" << std::endl;
     for(unsigned int fli = 0; fli < factors.size(); fli++){

@@ -186,7 +186,7 @@ cotree::cotree(cotree* copy, unsigned int depthtogo, unsigned int depth, int oDe
                     pt[child->getId(proc)]--;
                 }
             }
-            if(pt[copy->getId(proc)] > 0 && depthtogo == depth-d +1 ){ //look at itself 
+            if(pt[copy->getId(proc)] > 0 && depthtogo == depth-d + 1 ){ //look at itself 
                 for(unsigned int i = 0; i < pt[copy->getId(proc)] ; i++){
                     this->childs.push_back(new cotree(!this->state));
                 }
@@ -247,12 +247,15 @@ int cotree::findInMultisetVector(vector< map<unsigned int,unsigned int>> vec, ma
     }
     return -1;
 }
-vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict,unsigned int lastFound, unsigned int oldDepth, unsigned int pId, unsigned int oldpId, bool ignoreFactor){ //merge this with the factor-Algorithm (BottomUp)
+vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict,unsigned int lastFound, unsigned int oldDepth, unsigned int pId, unsigned int oldpId, bool ignoreFactor, unsigned int maxToGo){ //merge this with the factor-Algorithm (BottomUp)
     vector<vector<cotree*>> factors;
     factors.push_back(*new vector<cotree*> );
     unsigned int lastdepthfound = lastFound;
     vector<vector<cotree*>> recFactors;
     for(unsigned int d=oldDepth; d < depthdict.size(); d++){
+        if(d>maxToGo){
+            break;
+        }
         
         vector< map<unsigned int,unsigned int>> tuples; //index tuples of children (of nodes with depth d)
         vector<map<unsigned int, unsigned int>> primeTuples;  //primetuples generating the set tuples (devides each component of other tuple and is itself not divisible) 
@@ -283,7 +286,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict,uns
         //sort tuples
         vector<map<unsigned int, unsigned int>> remainingTuples;
         if(primeTuples.size()==1 && !ignoreFactor){//wenn das passiert müssen wir bei nicht splitbaren tupeln //wenn gefunden es muss auch der else part ausgeführt werden, jedoch in anderer "Dimension" (DImensionen fernhalten)
-            
+            maxToGo = -1;
             
             //construct K-Tower here and add them to our factors. As well as the found primefactor
             unsigned int gcd = 0;
@@ -371,10 +374,17 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict,uns
                     
                 }
             }
-            if(d!= depthdict.size() -1){
-                vector<vector<cotree*>> nrecFactors = this->getFactors(depthdict, lastdepthfound, d, pId + depthdict.size() - d  ,pId, true);
+            if(d!= depthdict.size() -1 && gcd > 1){
+                unsigned int maxDepth = d;
+                for(cotree*  node : depthdict[d]){
+                    unsigned int nDepth = node->getDepth()[1];
+                    maxDepth = maxDepth < nDepth? nDepth : maxDepth;
+                }
+                if(maxDepth > d){
+                    vector<vector<cotree*>> nrecFactors = this->getFactors(depthdict, lastdepthfound, d, pId + depthdict.size() - d  ,pId, true,maxDepth);
 
                 recFactors.insert(recFactors.end(), nrecFactors.begin(), nrecFactors.end());
+                }
             
             }
             lastdepthfound = d; 
@@ -397,7 +407,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict,uns
                         remainingTuples.push_back(kt);
                     }
                         depthdict[d][i]->setMultiplicity(1,pId); 
-                        depthdict[d][i]->setFoundK(gcds.at(i)[0],pId);//think we might can delete this part because found k is just interesting if indeed a factor found
+                        //depthdict[d][i]->setFoundK(gcds.at(i)[0],pId);//think we might can delete this part because found k is just interesting if indeed a factor found
                 }
                 
             }

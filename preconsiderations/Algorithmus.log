@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2022.3.30)  11 APR 2022 15:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.5.3)  9 MAY 2022 14:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Algorithmus.tex
 (./Algorithmus.tex
 LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2022-02-24>
+L3 programming layer <2022-04-10>
 (/usr/share/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
 (/usr/share/texmf-dist/tex/latex/base/size12.clo
@@ -1161,30 +1161,30 @@ File: pgflibraryshapes.geometric.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \c@theorem=\count356
 \c@definition=\count357
  (/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
+File: l3backend-pdftex.def 2022-04-14 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count358
 \l__pdf_internal_box=\box133
 ) (./Algorithmus.aux)
 \openout1 = `Algorithmus.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
  (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count359
@@ -1208,7 +1208,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \c@lstlisting=\count365
-Package hyperref Info: Link coloring OFF on input line 112.
+Package hyperref Info: Link coloring OFF on input line 113.
 
 (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -1221,9 +1221,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count366
 )
-LaTeX Info: Redefining \ref on input line 112.
-LaTeX Info: Redefining \pageref on input line 112.
-LaTeX Info: Redefining \nameref on input line 112.
+LaTeX Info: Redefining \ref on input line 113.
+LaTeX Info: Redefining \pageref on input line 113.
+LaTeX Info: Redefining \nameref on input line 113.
 
 (./Algorithmus.out) (./Algorithmus.out)
 \@outlinefile=\write4
@@ -1268,9 +1268,9 @@ Package pgfplots notification 'compat/show suggested version=true': document ha
 s been generated with the most recent feature set (\pgfplotsset{compat=1.18}).
 
 LaTeX Font Info:    Font shape `T1/cmbr/b/n' in size <20.74> not available
-(Font)              Font shape `T1/cmbr/bx/n' tried instead on input line 116.
+(Font)              Font shape `T1/cmbr/bx/n' tried instead on input line 117.
 LaTeX Font Info:    Font shape `T1/cmbr/b/n' in size <17.28> not available
-(Font)              Font shape `T1/cmbr/bx/n' tried instead on input line 119.
+(Font)              Font shape `T1/cmbr/bx/n' tried instead on input line 120.
 (./Algorithmus.toc
 LaTeX Font Info:    Font shape `T1/cmbr/b/n' in size <12> not available
 (Font)              Font shape `T1/cmbr/bx/n' tried instead on input line 1.
@@ -1301,33 +1301,33 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 ]
 LaTeX Font Info:    Font shape `T1/cmbr/b/n' in size <14.4> not available
-(Font)              Font shape `T1/cmbr/bx/n' tried instead on input line 123.
+(Font)              Font shape `T1/cmbr/bx/n' tried instead on input line 124.
 
-Underfull \hbox (badness 10000) in paragraph at lines 124--126
+Underfull \hbox (badness 10000) in paragraph at lines 125--127
 
  []
 
 LaTeX Font Info:    Trying to load font information for U+dsrom on input line 1
-27.
+28.
 (/usr/share/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 )
-Underfull \hbox (badness 10000) in paragraph at lines 127--129
+Underfull \hbox (badness 10000) in paragraph at lines 128--130
 
  []
 
 LaTeX Font Info:    Trying to load font information for TS1+cmbr on input line 
-130.
+131.
 (/usr/share/texmf-dist/tex/latex/cmbright/ts1cmbr.fd
 File: ts1cmbr.fd 2005/04/13 v8.1 (WaS)
 )
-Underfull \hbox (badness 10000) in paragraph at lines 131--132
+Underfull \hbox (badness 10000) in paragraph at lines 132--133
 
  []
 
 
 LaTeX Warning: The counter will not be printed.
-             The label is: $\space $ on input line 136.
+             The label is: $\space $ on input line 137.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1338,32 +1338,32 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 176--177
+Underfull \hbox (badness 10000) in paragraph at lines 177--178
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--181
+Underfull \hbox (badness 10000) in paragraph at lines 180--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 181--183
+Underfull \hbox (badness 10000) in paragraph at lines 182--184
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 181--183
+Underfull \hbox (badness 10000) in paragraph at lines 182--184
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 190--191
+Underfull \hbox (badness 10000) in paragraph at lines 191--192
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 203--204
+Underfull \hbox (badness 10000) in paragraph at lines 204--205
 
  []
 
@@ -1376,27 +1376,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 248--250
+Underfull \hbox (badness 10000) in paragraph at lines 249--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 248--250
+Underfull \hbox (badness 10000) in paragraph at lines 249--251
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 254--256
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 257--259
+Underfull \hbox (badness 10000) in paragraph at lines 258--260
 
  []
 
 
-Overfull \hbox (5.64633pt too wide) in paragraph at lines 257--259
+Overfull \hbox (5.64633pt too wide) in paragraph at lines 258--260
 \T1/cmbr/m/n/12 From the def-i-ni-tion above it schould be clear that $ \T1/cmr
 /m/it/12 n [] \OMS/cmbrs/m/n/12 jL\OT1/cmbr/m/n/12 (\T1/cmr/m/it/12 T\OT1/cmbr/
 m/n/12 )\OMS/cmbrs/m/n/12 j $ \T1/cmbr/m/n/12 from which fol-lows that $ \OMS/c
@@ -1406,12 +1406,12 @@ n/12 j$\T1/cmbr/m/n/12 .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 257--259
+Underfull \hbox (badness 10000) in paragraph at lines 258--260
 
  []
 
 LaTeX Font Info:    Font shape `T1/cmbr/m/it' in size <12> not available
-(Font)              Font shape `T1/cmbr/m/sl' tried instead on input line 259.
+(Font)              Font shape `T1/cmbr/m/sl' tried instead on input line 260.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
@@ -1430,22 +1430,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 316--320
+Underfull \hbox (badness 10000) in paragraph at lines 317--321
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 316--320
+Underfull \hbox (badness 10000) in paragraph at lines 317--321
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 320--321
+Underfull \hbox (badness 10000) in paragraph at lines 321--322
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 345--346
+Underfull \hbox (badness 10000) in paragraph at lines 346--347
 
  []
 
@@ -1458,17 +1458,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 364--368
+Underfull \hbox (badness 10000) in paragraph at lines 365--369
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 364--368
+Underfull \hbox (badness 10000) in paragraph at lines 365--369
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 381--385
+Underfull \hbox (badness 10000) in paragraph at lines 382--386
 
  []
 
@@ -1483,11 +1483,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [7]
 
 LaTeX Font Warning: Font shape `OT1/cmbr/bx/n' in size <8> not available
-(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 398.
+(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 399.
 
 
 LaTeX Font Warning: Font shape `OT1/cmbr/bx/n' in size <6> not available
-(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 398.
+(Font)              Font shape `OT1/cmbr/m/n' tried instead on input line 399.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1498,7 +1498,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 438--439
+Underfull \hbox (badness 10000) in paragraph at lines 439--440
 
  []
 
@@ -1520,12 +1520,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 513--514
+Underfull \hbox (badness 10000) in paragraph at lines 514--515
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 515--516
+Underfull \hbox (badness 10000) in paragraph at lines 516--517
 
  []
 
@@ -1538,25 +1538,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [11]
-Underfull \hbox (badness 1112) in paragraph at lines 592--592
-[]\T1/cmbr/bx/n/12 Function \T1/cmbr/m/n/12 cal-cu-la-te-U-nam-bigu-ous-Cotree(
-$\T1/cmr/m/it/12 r[]\OML/cmbrm/m/it/12 ; \OMS/cmbrs/m/n/12 C[]$\T1/cmbr/m/n/12 
-) for $\T1/cmr/m/it/12 T[] \OT1/cmbr/m/n/12 = (\T1/cmr/m/it/12 r[]\OML/cmbrm/m/
-it/12 ; \OMS/cmbrs/m/n/12 C[]\OT1/cmbr/m/n/12 ) \OMS/cmbrs/m/n/12 2 \U/dsrom/m/
-n/12 T[]$ \T1/cmbr/m/n/12 re-turns
- []
-
-
-Underfull \hbox (badness 1112) in paragraph at lines 611--611
-[]\T1/cmbr/bx/n/12 Function \T1/cmbr/m/n/12 cal-cu-la-te-U-nam-bigu-ous-Cotree(
-$\T1/cmr/m/it/12 r[]\OML/cmbrm/m/it/12 ; \OMS/cmbrs/m/n/12 C[]$\T1/cmbr/m/n/12 
-) for $\T1/cmr/m/it/12 T[] \OT1/cmbr/m/n/12 = (\T1/cmr/m/it/12 r[]\OML/cmbrm/m/
-it/12 ; \OMS/cmbrs/m/n/12 C[]\OT1/cmbr/m/n/12 ) \OMS/cmbrs/m/n/12 2 \U/dsrom/m/
-n/12 T[]$ \T1/cmbr/m/n/12 re-turns
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 573--657
+Underfull \hbox (badness 10000) in paragraph at lines 565--565
 
  []
 
@@ -1569,6 +1551,28 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
 [12]
+Underfull \hbox (badness 1112) in paragraph at lines 602--602
+[]\T1/cmbr/bx/n/12 Function \T1/cmbr/m/n/12 cal-cu-la-te-U-nam-bigu-ous-Cotree(
+$\T1/cmr/m/it/12 r[]\OML/cmbrm/m/it/12 ; \OMS/cmbrs/m/n/12 C[]$\T1/cmbr/m/n/12 
+) for $\T1/cmr/m/it/12 T[] \OT1/cmbr/m/n/12 = (\T1/cmr/m/it/12 r[]\OML/cmbrm/m/
+it/12 ; \OMS/cmbrs/m/n/12 C[]\OT1/cmbr/m/n/12 ) \OMS/cmbrs/m/n/12 2 \U/dsrom/m/
+n/12 T[]$ \T1/cmbr/m/n/12 re-turns
+ []
+
+
+Underfull \hbox (badness 1112) in paragraph at lines 621--621
+[]\T1/cmbr/bx/n/12 Function \T1/cmbr/m/n/12 cal-cu-la-te-U-nam-bigu-ous-Cotree(
+$\T1/cmr/m/it/12 r[]\OML/cmbrm/m/it/12 ; \OMS/cmbrs/m/n/12 C[]$\T1/cmbr/m/n/12 
+) for $\T1/cmr/m/it/12 T[] \OT1/cmbr/m/n/12 = (\T1/cmr/m/it/12 r[]\OML/cmbrm/m/
+it/12 ; \OMS/cmbrs/m/n/12 C[]\OT1/cmbr/m/n/12 ) \OMS/cmbrs/m/n/12 2 \U/dsrom/m/
+n/12 T[]$ \T1/cmbr/m/n/12 re-turns
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 583--667
+
+ []
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
@@ -1577,12 +1581,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
-[13pdfTeX warning (ext4): destination with the same identifier (name{algocffunc
-.calculateUnambiguousCotree}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.657 \end{document}
-                    ]
+[13]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 15.0pt, for example:
@@ -1591,11 +1590,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-3.0pt}.
 
-[14pdfTeX warning (ext4): destination with the same identifier (name{algocffunc
-.calculateUnambiguousCotree}) has been already used, duplicate ignored
+[14
+pdfTeX warning (ext4): destination with the same identifier (name{algocffunc.ca
+lculateUnambiguousCotree}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.657 \end{document}
+l.667 \end{document}
+                    
+pdfTeX warning (ext4): destination with the same identifier (name{algocffunc.ca
+lculateUnambiguousCotree}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.667 \end{document}
                     ]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1610,15 +1616,16 @@ Package rerunfilecheck Info: File `Algorithmus.out' has not changed.
 (rerunfilecheck)             Checksum: FC1B43A923F2CC8F9E8D3B26FEABD6FD;3112.
  ) 
 Here is how much of TeX's memory you used:
- 39881 strings out of 478276
- 897319 string characters out of 5853013
- 1320499 words of memory out of 5000000
- 57372 multiletter control sequences out of 15000+600000
+ 39904 strings out of 478238
+ 898052 string characters out of 5850457
+ 1321112 words of memory out of 5000000
+ 57425 multiletter control sequences out of 15000+600000
  486230 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,18n,89p,733b,1856s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{www.jstor.org/stable/pdf/2690833.pdf} has been re
-ferenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{www.jstor.org/stable/pdf/2690833.pdf} has been refe
+renced but does not exist, replaced by a fixed one
 
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/tex
 mf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf-dist/fonts/
@@ -1637,10 +1644,10 @@ e/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fo
 nts/type1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti
 1200.pfb>
-Output written on Algorithmus.pdf (15 pages, 270241 bytes).
+Output written on Algorithmus.pdf (15 pages, 271891 bytes).
 PDF statistics:
- 328 PDF objects out of 1000 (max. 8388607)
- 271 compressed objects within 3 object streams
- 78 named destinations out of 1000 (max. 500000)
+ 330 PDF objects out of 1000 (max. 8388607)
+ 273 compressed objects within 3 object streams
+ 79 named destinations out of 1000 (max. 500000)
  165 words of extra memory for PDF output out of 10000 (max. 10000000)
 

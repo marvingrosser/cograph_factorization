@@ -44,9 +44,10 @@ vector<unsigned long long*> graph::getConnections(bool invert, unsigned long lon
     unsigned long long * visited = (unsigned long long*)calloc((int) (((int) numVerts)/((int)DATA_SIZE)),DATA_SIZE); //stores visited vertices
     
     verticeInverseUnion(visited, lookAt, numVerts); //fill visited with stuff we do not want to visit
-    
+    vector<vertice*> verticePointers = this->verticePointers;
     vector<unsigned long long*> components;
-    
+
+
     for(int i=0; i < numVerts ; i++ ){
         if( ((unsigned long long)visited[(int)(((int) i)/ ((int)DATA_SIZE))] >> ((int)DATA_SIZE - 1 - (int)(((int)i) % ((int)DATA_SIZE)))) % 2 == 0){ //is the vertex[i] not visited? 
   
@@ -54,9 +55,9 @@ vector<unsigned long long*> graph::getConnections(bool invert, unsigned long lon
             
             verticeInverseUnion(component, lookAt,numVerts); //All Vertices not to look at will be 1    (*)
             
-            vertice* current = this->verticePointers.at(i); // take current vertice
+            vertice* current = verticePointers.at(i); // take current vertice
             
-            searchAllConnected(current, component , invert,this->verticePointers); //create component
+            searchAllConnected(current, component , invert,verticePointers); //create component
             
             verticeInverseXOR(component, lookAt,numVerts); //reverse step (*)
             
@@ -66,6 +67,7 @@ vector<unsigned long long*> graph::getConnections(bool invert, unsigned long lon
         }
         
     }
+    
     return components;
 }
 void graph::searchAllConnected(vertice* vert, unsigned long long* binary,bool invert,vector<vertice*> verticePointers){

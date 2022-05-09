@@ -552,9 +552,18 @@
 		\[K_n = K_{p_{\tau(1)}} \circ K_{p_{\tau(2)}}\circ ...\circ K_{p_{\tau(k)}}\qquad \forall \tau\in S_k \] 
 		The construction for $\bar{K_n}$ can be done similarly.
 	\end{theorem}
-	With this we now can extract the last prime factor, while afterwards constructing the different factorizations for the remaining $K$-parts. Now looking at every node with depth above the shortly used it is clear that $F$ will be factor of it, the reason we just have to traverse the tree one time (bottom up).
+	With this we now can extract the last prime factor, while afterwards constructing the different factorizations for the remaining $K$-parts. Now looking at every node with depth above the shortly used it is clear that $F$ will be factor of it. One problem remaining are cotrees having multiple factorizations, the $K_n$ not counted. First looking at it it seems we have to traverse the tree recursively where recursion is called if a factor is found, thus the recursive call ignoring this factor. However
 	
-		
+	\begin{theorem}
+		Let $T,F_1,F_2\in \mathds{T}_{\mathcal{B}}$ with $T\triangleleft F_1,\,T\triangleleft F_2$ and $K_n\not=F_1\not = F_2\not= K_n,\, F_1,F_2$ prime.
+		Then $\exists S_1,S_2\subseteq T$ with $F_1\cong_C F_1' \Subset S_1$ and $F_2\cong_C F_2' \Subset S_2$
+		\[S_1=S_2\]
+		\begin{proof}
+			Now assume $S_1\not=S_2$ then we may choose them with $S_1 \subset S_2$ or $S_2 \subset S_1$ but then $F_2 \triangleleft F_1$ or $F_1 \triangleleft F_2$ respectively contradicting the assumptions.
+		\end{proof}
+	\end{theorem}
+	From the theorem above it should be clear that the recursion only has to search for another factor till $S_1$ is exceeded, especially the $S_1$ with lowest depth. For implementation purposes after finding factor on subtrees of $T$:\\ \[V_1,...,V_n:\quad d' = min\left\{m\,|\, i\in\{1,...,n\} m=max\{d(\beta(P))\,|\, P\in \mathcal{P}(V_i)\}\right\} \] 
+	$d'$ the highest depth the recursion should search for another factor.
 	\subsection{Find Isomorph Trees with AHU}
 	\hyperlink{www.jstor.org/stable/pdf/2690833.pdf}{A brilliant paper about this topic}: [Tree Isomorphism Algorithms: Speed vs. Clarity,\quad
 	Author(s): Douglas M. Campbell and David Radford]\\
@@ -567,7 +576,7 @@
 		\item $T=(r,\emptyset)\,\Leftrightarrow\, T$  is leaf:$\quad \mathcal{K} (T) =\emptyset$
 		\item $T=(r,\mathcal{C}): \mathcal{K}(T)=\{(i, n)\,|\, i \text{ id},\, n \text{ number of children with this id} \}$
 	\end{itemize}
-	With this calculation for the Knuth-tuple we're able to traverse the unambiguous tree bottom up and compare the Knuth-Tuples per depth. While splitting every node we are allowed to assure the subtrees we are dealing with will be prime.
+	With this calculation for the Knuth-tuple we're able to traverse the unambiguous tree bottom up and compare the Knuth-Tuples per depth. While splitting every node we are allowed to assure the subtrees we are dealing with will be prime. This splitting is done by finding the prime multiset dividing the one we are looking at. The quotient in $\mathds{N}$ the new multiplicity of the prime tuple above.
 	\section{Practical Improvements}
 	\section{Algorithm}
 	\subsection{Cotree with unambiguous depth from minimal cotree}

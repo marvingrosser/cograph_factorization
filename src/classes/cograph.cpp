@@ -11,7 +11,9 @@
  * Created on October 25, 2021, 2:32 PM
  */
 
+
 #include "../headers/cograph.h"
+
 void graph::verticeUnion(unsigned long long* dest, unsigned long long* other, unsigned short size){
 
     for(int i = 0; i < (int)(((int)size)/((int)DATA_SIZE)) + 1 ; i++){
@@ -20,6 +22,7 @@ void graph::verticeUnion(unsigned long long* dest, unsigned long long* other, un
 }
 void graph::verticeInverseUnion(unsigned long long* dest, unsigned long long* other, unsigned short size){
     for(int i = 0; i <  (int)(((int)size)/((int)DATA_SIZE)) + 1 ; i++){
+        std::cout << omp_get_thread_num() <<std::endl;
         dest[i] |= ~ other[i];
     }
 }
@@ -46,12 +49,16 @@ vector<unsigned long long*> graph::getConnections(bool invert, unsigned long lon
     verticeInverseUnion(visited, lookAt, numVerts); //fill visited with stuff we do not want to visit
     vector<vertice*> verticePointers = this->verticePointers;
     vector<unsigned long long*> components;
-
-
+    //#pragma omp parallel for default(none) shared(components, visited) firstprivate(verticePointers,invert,numVerts,lookAt) 
     for(int i=0; i < numVerts ; i++ ){
-        if( ((unsigned long long)visited[(int)(((int) i)/ ((int)DATA_SIZE))] >> ((int)DATA_SIZE - 1 - (int)(((int)i) % ((int)DATA_SIZE)))) % 2 == 0){ //is the vertex[i] not visited? 
+        bool gointo = false;
+        #pragma omp flush
+        {
+            gointo = ((unsigned long long)visited[(int)(((int) i)/ ((int)(DATA_SIZE)))] >> ((int)(DATA_SIZE )- 1 - (int)(((int)i) % ((int)(DATA_SIZE))))) % 2 == 0;
+        }
+        if(gointo ){ //is the vertex[i] not visited? 
   
-            unsigned long long * component = (unsigned long long*)calloc((int) (((int) numVerts)/((int)DATA_SIZE)),DATA_SIZE); //component data
+            unsigned long long * component = (unsigned long long*)calloc((int) (((int) numVerts)/((int)(DATA_SIZE))),(DATA_SIZE)); //component data
             
             verticeInverseUnion(component, lookAt,numVerts); //All Vertices not to look at will be 1    (*)
             
@@ -62,8 +69,11 @@ vector<unsigned long long*> graph::getConnections(bool invert, unsigned long lon
             verticeInverseXOR(component, lookAt,numVerts); //reverse step (*)
             
             verticeUnion(visited,component, numVerts); // write the component to the visited
+            #pragma omp critical
+            {
+                components.push_back(component); //add the component to our components vector
+            }
             
-            components.push_back(component); //add the component to our components vector
         }
         
     }
@@ -165,7 +175,7 @@ void graph::constructFromBinary(GraphBinary data){
     this->vertices = new vertice[data.number]();
     this->verticePointers = *new vector<vertice*>;
     
-    
+    #pragma omp parallel for
     for(int i=0; i < this->numberVertices ;i++ ){
         this->vertices[i] = * new vertice(i);
         this->vertices[i].initOut(this->numberVertices - 1);
@@ -176,7 +186,7 @@ void graph::constructFromBinary(GraphBinary data){
     
     
     unsigned int edgecounter = 0;
-    
+    #pragma omp parallel for 
     for(int i = 0; i < data.number * data.number;i++){
         //std::cout << i/data.number << std::endl;
         //std::cout <<(int)(((int)i) % ((int)DATA_SIZE)) << std::endl;

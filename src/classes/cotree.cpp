@@ -457,7 +457,7 @@ cotree::cotree() {
 
 cotree::cotree(const cotree& orig) {
 }
-void cotree::constructChildren(graph* g, vector<unsigned long long*>* components,vector<vector<cotree*>> *depthdict ){
+void cotree::constructChildren(graph* g, set<unsigned long long*>* components,vector<vector<cotree*>> *depthdict ){
             this->depth= new unsigned int[2];
             this->depth[0]=0;
             this->depth[1]=0;
@@ -484,7 +484,7 @@ cotree::cotree(graph* g, vector<vector<cotree*>> *depthdict){
     unsigned short size = g->getSize();
     unsigned long long* lookAtAll = (unsigned long long *)calloc( size/ DATA_SIZE,DATA_SIZE);
     g->verticeInversion(lookAtAll, size);
-    vector<unsigned long long*> components= g->getConnections(false,lookAtAll);
+    set<unsigned long long*> components= g->getConnections(false,lookAtAll);
     if(components.size() == 1){
         this->state = true;
         components= g->getConnections(true,lookAtAll);
@@ -496,7 +496,7 @@ cotree::cotree(graph* g, vector<vector<cotree*>> *depthdict){
 }
 cotree::cotree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth,vector<vector<cotree*>> *depthdict){
     this->state = state;
-    vector<unsigned long long*> components = g->getConnections(state, component);
+    set<unsigned long long*> components = g->getConnections(state, component);
     {
         this->constructChildren(g,&components,depthdict);
     }

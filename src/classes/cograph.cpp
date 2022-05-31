@@ -40,7 +40,7 @@ void graph::verticeInverseXOR(unsigned long long * dest, unsigned long long * ot
     }
 }
 
-vector<unsigned long long*> graph::getConnections(bool invert, unsigned long long* lookAt){
+set<unsigned long long*> graph::getConnections(bool invert, unsigned long long* lookAt){
     
     unsigned short numVerts = this->verticePointers.size(); //number of verts in the graph
 
@@ -48,7 +48,7 @@ vector<unsigned long long*> graph::getConnections(bool invert, unsigned long lon
     
     verticeInverseUnion(visited, lookAt, numVerts); //fill visited with stuff we do not want to visit
     vector<vertice*> verticePointers = this->verticePointers;
-    vector<unsigned long long*> components;
+    set<unsigned long long*> components;
     //#pragma omp parallel for default(none) shared(components, visited) firstprivate(verticePointers,invert,numVerts,lookAt) 
     for(int i=0; i < numVerts ; i++ ){
         bool gointo = false;
@@ -71,7 +71,7 @@ vector<unsigned long long*> graph::getConnections(bool invert, unsigned long lon
             verticeUnion(visited,component, numVerts); // write the component to the visited
             #pragma omp critical
             {
-                components.push_back(component); //add the component to our components vector
+                components.insert(component); //add the component to our components vector
             }
             
         }

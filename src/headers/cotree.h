@@ -257,7 +257,7 @@ private:
      * @param components connected components
      * @param depthdict depth dictionary
      */
-    void constructChildren(graph * g, vector<unsigned long long*> * components,vector<vector<cotree*>> *depthdict );
+    void constructChildren(graph * g, set<unsigned long long*> * components,vector<vector<cotree*>> *depthdict );
     /**
      * for each process there is unique virtual data found in this map 
      * (because it is )implemented in a binary search tree my hopes are high, that for multi threading

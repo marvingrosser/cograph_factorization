@@ -15,6 +15,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 #include <vector>
+#include <set>
 #include "vertice.h"
 #include "reader.h"
 #include <string.h>
@@ -67,7 +68,7 @@ public:
      * @param lookAt which Verts should be looked at?
      * @return vector of binary representation of components
      */
-    vector<unsigned long long*> getConnections(bool invert,unsigned long long* lookAt);
+    set<unsigned long long*> getConnections(bool invert,unsigned long long* lookAt);
     /**
      * Inverts the given Vertice-Outputs on the Binary Data
      * @param dest  Given input

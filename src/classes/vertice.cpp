@@ -20,6 +20,8 @@ graph* vertice::getGraph(){
 
 vertice::vertice(int num) {
     this->num =num;
+    this->out= NULL;
+
 
 }
 vertice::vertice(){
@@ -56,14 +58,17 @@ int vertice::getNum(){
 
 
 vertice::~vertice() {
-	delete[] this->out;
+	if(this->out != NULL){
+		free( this->out );
+	}
+
 }
 void vertice::setGraph(graph* g){
     this->g = g;
 }
 
 void vertice::initOut(unsigned short number){
-    this->out = (unsigned long long *)calloc(number/DATA_SIZE,DATA_SIZE/8);
+    this->out = (unsigned long long *)calloc(number/DATA_SIZE +1 ,DATA_SIZE/8);
     this->out[0] = (unsigned long long)0;
     
 }

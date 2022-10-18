@@ -23,9 +23,7 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    InputHandler ih = *new InputHandler(argv, argc); 
-    
-    
+   InputHandler ih = InputHandler(argv, argc); 
     return 0;
 }
 

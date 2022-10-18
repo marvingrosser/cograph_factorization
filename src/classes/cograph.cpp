@@ -143,15 +143,18 @@ graph::graph(const graph& orig) {
 
 graph::~graph() {
 	for(int i=0; i< this->numberVertices;i++){
-		delete &this->vertices[i];
-		delete this->verticePointers.at(i);
+		//delete &this->vertices[i];
+		//delete this->verticePointers.at(i);
 	}
-	delete[] this->vertices;	
+	this->verticePointers.clear();
+	this->verticePointers.shrink_to_fit();
+	//delete &this->verticePointers;
+	delete[] this->vertices;
+	//delete &this->verticePointers;	
 }
 graph::graph(string path){
     GraphBinary file = (reader(path)).getData();
     this->constructFromBinary(file);
-
 }
 
 unsigned int graph::countBinaryOnes(unsigned long long binary){
@@ -179,11 +182,11 @@ void graph::constructFromBinary(GraphBinary data){
     this->numberEdges = (unsigned int) this->countBinaryOnes(data.edges);
     //std::cout << "\n" << this->numberEdges << std::endl;
     this->vertices = new vertice[data.number]();
-    this->verticePointers = *new vector<vertice*>;
+    this->verticePointers = vector<vertice*>();
     
  //   #pragma omp parallel for
     for(int i=0; i < this->numberVertices ;i++ ){
-        this->vertices[i] = * new vertice(i);
+        this->vertices[i] =  vertice(i);
         this->vertices[i].initOut(this->numberVertices - 1);
         this->vertices[i].setGraph(this);
         this->verticePointers.push_back(&vertices[i]);

@@ -21,9 +21,9 @@ void InputHandler::init(char** args, int argnum){
     for(unsigned int i = 1; i < argnum; i++){
         if(strcmp(args[i],"--input") == 0 || strcmp(args[i], "-i") == 0){
             i++;
-            this->input = *new string(args[i]);
+            this->input =  string(args[i]);
         }else if (strcmp(args[i],"--output") == 0 || strcmp(args[i], "-o") == 0){
-            this->output = *new string(args[i]);
+            this->output =  string(args[i]);
             i++;
         }else if(strcmp(args[i],"--help") == 0 || strcmp(args[i], "-h") == 0){
             this->handleHelp();
@@ -49,12 +49,7 @@ InputHandler::InputHandler(const InputHandler& orig) {
 }
 
 void InputHandler::calculate(){
-    while(true){
-	graph *g = new graph(this->input);
-    }
-    	graph *g = new graph(this->input);
-
-    
+    graph *g = new graph(this->input);
     //while(true){
     //	vector<vector<cotree*>> depthdict;
     //	cotree * gt = new cotree(g, &depthdict);
@@ -85,6 +80,14 @@ void InputHandler::calculate(){
     if(this->output != ""){
     
     }
+    for(int i=0; i < factors.size(); i++){
+    	for (int j=0; j < factors[i].size();j++){
+		delete factors[i][j];
+	}
+    }
+    delete g;
+    delete gt;
+
 }
 
 InputHandler::~InputHandler() {

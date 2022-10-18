@@ -493,6 +493,10 @@ cotree::cotree(graph* g, vector<vector<cotree*>> *depthdict){
     }
     this->constructChildren(g,&components,depthdict);
     this->writeInDepthDict(depthdict);
+    for(set<unsigned long long*>::iterator it= components.begin(); it != components.end(); ++it){
+    	delete[] *it;
+    }
+    delete lookAtAll;
 }
 cotree::cotree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth,vector<vector<cotree*>> *depthdict){
     this->state = state;

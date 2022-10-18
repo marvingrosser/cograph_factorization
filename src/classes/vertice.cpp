@@ -56,6 +56,7 @@ int vertice::getNum(){
 
 
 vertice::~vertice() {
+	delete[] this->out;
 }
 void vertice::setGraph(graph* g){
     this->g = g;

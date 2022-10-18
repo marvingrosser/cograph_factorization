@@ -49,13 +49,19 @@ InputHandler::InputHandler(const InputHandler& orig) {
 }
 
 void InputHandler::calculate(){
-    graph *g = new graph(this->input);
+    while(true){
+	graph *g = new graph(this->input);
+    }
+    	graph *g = new graph(this->input);
+
     
-    
-    
-    
-    vector<vector<cotree*>> depthdict;
-    cotree * gt = new cotree(g, &depthdict);
+    //while(true){
+    //	vector<vector<cotree*>> depthdict;
+    //	cotree * gt = new cotree(g, &depthdict);
+    //}
+     vector<vector<cotree*>> depthdict;
+    	cotree * gt = new cotree(g, &depthdict);
+   
     if(this->si){
         std::cout << "\n Input cograph:" << std::endl;
         std::cout << g->get_string()<< std::endl;

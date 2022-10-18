@@ -22,7 +22,7 @@ void graph::verticeUnion(unsigned long long* dest, unsigned long long* other, un
 }
 void graph::verticeInverseUnion(unsigned long long* dest, unsigned long long* other, unsigned short size){
     for(int i = 0; i <  (int)(((int)size)/((int)DATA_SIZE)) + 1 ; i++){
-        std::cout << omp_get_thread_num() <<std::endl;
+        //std::cout << omp_get_thread_num() <<std::endl;
         dest[i] |= ~ other[i];
     }
 }
@@ -56,7 +56,7 @@ set<unsigned long long*> graph::getConnections(bool invert, unsigned long long* 
         {
             gointo = ((unsigned long long)visited[(int)(((int) i)/ ((int)(DATA_SIZE)))] >> ((int)(DATA_SIZE )- 1 - (int)(((int)i) % ((int)(DATA_SIZE))))) % 2 == 0;
         }
-        if(gointo ){ //is the vertex[i] not visited? 
+        if(gointo){ //is the vertex[i] not visited? 
   
             unsigned long long * component = (unsigned long long*)calloc((int) (((int) numVerts)/((int)(DATA_SIZE))),(DATA_SIZE)); //component data
             
@@ -74,8 +74,8 @@ set<unsigned long long*> graph::getConnections(bool invert, unsigned long long* 
                 components.insert(component); //add the component to our components vector
             }
             
+   
         }
-        
     }
     delete[] visited;
     
@@ -142,9 +142,14 @@ graph::graph(const graph& orig) {
 }
 
 graph::~graph() {
+	for(int i=0; i< this->numberVertices;i++){
+		delete &this->vertices[i];
+		delete this->verticePointers.at(i);
+	}
+	delete[] this->vertices;	
 }
 graph::graph(string path){
-    GraphBinary file = (*new reader(path)).getData();
+    GraphBinary file = (reader(path)).getData();
     this->constructFromBinary(file);
 
 }
@@ -197,6 +202,7 @@ void graph::constructFromBinary(GraphBinary data){
             this->vertices[(int)((int)i/(int)data.number)].setOneInOut(i % data.number);
         }
     }
+    delete[] data.edges;
     
 }
 

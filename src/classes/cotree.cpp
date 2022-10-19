@@ -22,7 +22,7 @@ bool cotree::isDivisible(map<unsigned int,unsigned int> divident, map<unsigned i
     if(divident.size() == divisor.size()){//if they dont have the same size, they have to differ with at least one element
         
         if(divident==divisor) return true; 
-        unsigned int olddiv;
+        unsigned int olddiv=0;
         //loop throu all indices of the divisor and divide the multiplicities. If all quotients are the same then the multiset is divisible by prime multiset
         for(std::map<unsigned int, unsigned int>::iterator divisorIt=divisor.begin(); divisorIt!= divisor.end(); ++divisorIt){
             
@@ -30,7 +30,7 @@ bool cotree::isDivisible(map<unsigned int,unsigned int> divident, map<unsigned i
             unsigned int dividentcount = divident[(*divisorIt).first];
             unsigned int div = (unsigned int)dividentcount/divisorcount;
             
-            if((float) div != (float)((float)dividentcount)/((float) divisorcount) || (olddiv != div && divisorIt!=divisor.begin()) || div == 0){
+            if(dividentcount % divisorcount != 0 || (olddiv != div && divisorIt!=divisor.begin()) || div == 0){
                 return false;
             }
             
@@ -225,7 +225,7 @@ unsigned int cotree::getFoundK(unsigned int procId){
 }
 cotree::cotree(cotree* copy, unsigned int depthtogo,int myDepth, unsigned int oldpId, unsigned int pId ){
 this->depth = NULL;  
-    this->state = copy->state;
+    this->state = copy->getState();
     this->virtualData[0].multiplicity= 1;
     unsigned int procRoot = myDepth >= 0?  pId: oldpId;
     if(depthtogo > 0){
@@ -243,7 +243,7 @@ this->depth = NULL;
 int cotree::findInMultisetVector(vector< map<unsigned int,unsigned int>> vec, map<unsigned int,unsigned int> ms){
     for(int i = 0; i < vec.size();i++){
         if(vec.at(i) == ms){
-            if(ms.empty()) std::cout << "empty" << std::endl;
+            if(ms.empty()) std::cout << "Multiset empty" << std::endl;
             return i;
         }
     }
@@ -332,9 +332,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict,uns
                 factors[i].push_back(new cotree(depthdict[d][0], d-lastdepthfound, d, oldDepth, oldpId, pId)); //construct tree of the primeTuple
                 
                 if(factors[i][factors[i].size()-1]->getChildNum() < 2 ){//check if the factor would be trivial (single vertice) and delete it then
-			for(int j= 0; j < factors[i].size(); j++){
-				delete factors[i][j];
-			}	
+			delete factors[i][factors[i].size()-1];	
                     	factors[i].pop_back(); 
                 }else{
                     nofactor = false;
@@ -436,6 +434,7 @@ void cotree::setId(unsigned int id, unsigned int procId){
 }
 
 string cotree::get_string(){
+    //cout << this->state << endl;
     return string("  ").append(this->get_string("",true).substr(6, string::npos));
 }
 string cotree::get_string(string intendation, bool isLast){
@@ -448,7 +447,8 @@ string cotree::get_string(string intendation, bool isLast){
         me_s.append("├─");
         intendation.append("| ");
     }
-    me_s.append(this->state? "1": "0");
+    string app = this->state? "1": "0";
+    me_s.append(app);
     //me_s.append("\t [").append(to_string(this->depth[0])).append(", ").append(to_string(this->depth[1])).append("]").append(" \t (").append(to_string(this->id)).append(")");
     me_s.append("\n");
     for(unsigned short i = 0; i < this->childs.size(); i++){
@@ -459,10 +459,12 @@ string cotree::get_string(string intendation, bool isLast){
 }
 cotree::cotree() {
     this->depth =NULL ;
+    this->state = true;
 }
 
 cotree::cotree(const cotree& orig) {
 	this->depth = NULL;
+	this->state = true;
 }
 void cotree::constructChildren(graph* g, set<unsigned long long*>* components,vector<vector<cotree*>> *depthdict ){
             this->depth= new unsigned int[2];
@@ -496,16 +498,21 @@ cotree::cotree(graph* g, vector<vector<cotree*>> *depthdict){
     set<unsigned long long*> components= g->getConnections(false,lookAtAll);
     if(components.size() == 1){
         this->state = true;
+	cotree::freeComponents(components);
         components= g->getConnections(true,lookAtAll);
     }else{
         this->state = false;
     }
     this->constructChildren(g,&components,depthdict);
     this->writeInDepthDict(depthdict);
-    for(set<unsigned long long*>::iterator it= components.begin(); it != components.end(); ++it){
+    cotree::freeComponents(components);
+    free(lookAtAll);
+}
+
+void cotree::freeComponents(set<unsigned long long *> components ){
+	for(set<unsigned long long*>::iterator it= components.begin(); it != components.end(); ++it){
     	free( *it);
     }
-    free(lookAtAll);
 }
 cotree::cotree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth,vector<vector<cotree*>> *depthdict){
 this->depth = NULL;  
@@ -519,6 +526,7 @@ this->depth = NULL;
         pdepth[1] = this->depth[1];
         
         this->writeInDepthDict(depthdict);
+	cotree::freeComponents(components);
 }
 void cotree::writeInDepthDict(vector<vector<cotree*> >* depthdict){
     for(unsigned int i = this->depth[0]; i <= this->depth[1];i++){

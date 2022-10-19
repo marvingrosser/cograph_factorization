@@ -44,7 +44,7 @@ set<unsigned long long*> graph::getConnections(bool invert, unsigned long long* 
     
     unsigned short numVerts = this->verticePointers.size(); //number of verts in the graph
 
-    unsigned long long * visited = (unsigned long long*)calloc((int) (((int) numVerts)/((int)DATA_SIZE)),DATA_SIZE); //stores visited vertices
+    unsigned long long * visited = (unsigned long long*)calloc((int) (((int) numVerts)/((int)DATA_SIZE)+1),DATA_SIZE/8); //stores visited vertices
     
     verticeInverseUnion(visited, lookAt, numVerts); //fill visited with stuff we do not want to visit
     vector<vertice*> verticePointers = this->verticePointers;
@@ -58,7 +58,7 @@ set<unsigned long long*> graph::getConnections(bool invert, unsigned long long* 
         }
         if(gointo){ //is the vertex[i] not visited? 
   
-            unsigned long long * component = (unsigned long long*)calloc((int) (((int) numVerts)/((int)(DATA_SIZE))),(DATA_SIZE)); //component data
+            unsigned long long * component = (unsigned long long*)calloc((int) (((int) numVerts)/((int)(DATA_SIZE)))+1,(DATA_SIZE)/8); //component data
             
             verticeInverseUnion(component, lookAt,numVerts); //All Vertices not to look at will be 1    (*)
             
@@ -77,7 +77,7 @@ set<unsigned long long*> graph::getConnections(bool invert, unsigned long long* 
    
         }
     }
-    delete[] visited;
+   free(visited); 
     
     return components;
 }

@@ -250,7 +250,11 @@ private:
     * @return gcd
     */
     unsigned int gcdTuple(map<unsigned int,unsigned int> gcdTuple);
-
+    /**
+     * Frees Memory allocated by cograph for finding components
+     * @param components
+     */
+    void freeComponents(set<unsigned long long*> components);
     /**
      * Construct children from given graph and connected components. 
      * @param g graph

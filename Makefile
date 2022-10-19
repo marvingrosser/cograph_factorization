@@ -2,6 +2,7 @@ TARGET_EXEC := cogfac
 
 BUILD_DIR := ./build
 SRC_DIRS := ./src/classes
+LDFLAGS := -L/usr/lib -lomp
 
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. Make will incorrectly expand these otherwise.
@@ -22,7 +23,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 # The -MMD and -MP flags together generate Makefiles for us!
 # These files will have .d instead of .o as the output.
-CPPFLAGS := $(INC_FLAGS) -MMD -MP -g
+CPPFLAGS := $(INC_FLAGS) -MMD -MP -g -fopenmp
 
 # The final build step.
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)

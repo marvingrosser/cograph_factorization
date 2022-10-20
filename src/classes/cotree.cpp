@@ -167,7 +167,8 @@ unsigned int * cotree::getDepth(){
 
 
 cotree::cotree(cotree* copy, unsigned int depthtogo, unsigned int depth, int oDepth, unsigned int oldpId, unsigned int pId){
-this->depth = NULL;  
+    this->depth = new unsigned int[2];
+    *this->depth = *copy->getDepth();  
     this->state = copy->getState();
     this->virtualData[0].multiplicity = 1;
     unsigned int proc = depth - oDepth > 0?  pId: oldpId;
@@ -224,7 +225,8 @@ unsigned int cotree::getFoundK(unsigned int procId){
     return this->virtualData[procId].foundK;
 }
 cotree::cotree(cotree* copy, unsigned int depthtogo,int myDepth, unsigned int oldpId, unsigned int pId ){
-this->depth = NULL;  
+    this->depth = new unsigned int[2];
+    *this->depth = *copy->getDepth();  
     this->state = copy->getState();
     this->virtualData[0].multiplicity= 1;
     unsigned int procRoot = myDepth >= 0?  pId: oldpId;
@@ -493,7 +495,7 @@ void cotree::constructChildren(graph* g, set<unsigned long long*>* components,ve
 cotree::cotree(graph* g, vector<vector<cotree*>> *depthdict){
 	this->depth = NULL;    
 	unsigned short size = g->getSize();
-    unsigned long long* lookAtAll = (unsigned long long *)calloc( size/ DATA_SIZE,DATA_SIZE);
+    unsigned long long* lookAtAll = (unsigned long long *)calloc( size/ DATA_SIZE+1,DATA_SIZE);
     g->verticeInversion(lookAtAll, size);
     set<unsigned long long*> components= g->getConnections(false,lookAtAll);
     if(components.size() == 1){
@@ -515,7 +517,9 @@ void cotree::freeComponents(set<unsigned long long *> components ){
     }
 }
 cotree::cotree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth,vector<vector<cotree*>> *depthdict){
-this->depth = NULL;  
+    this->depth = new unsigned int[2];
+    this->depth[0] = 0;  
+    this->depth[1] = 0;
     this->state = state;
     set<unsigned long long*> components = g->getConnections(state, component);
     {
@@ -540,10 +544,8 @@ cotree::~cotree() {
 	for(int i=0; i < this->childs.size(); i++){
 		delete childs[i];
 	}
-	childs.clear();
-	childs.shrink_to_fit();
 	if(this->depth != NULL){
-		delete [] this->depth;	
+	   delete [] this->depth;	
 	}	
 }
 

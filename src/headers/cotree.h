@@ -192,7 +192,7 @@ public:
     /** 
      * @return Depth intervall from this node
      */
-    unsigned int * getDepth();
+    unsigned int *  getDepth();
     /**
     *  Calculates all PrimeFactorizations, order NOT neglected.
     * @param gcd number to factorize

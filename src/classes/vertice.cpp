@@ -39,9 +39,10 @@ string vertice::to_string(){
 
 string vertice::out_to_string(){
     string outs = "";
-    unsigned long long o = this->out[1];
-    unsigned long long a = this->out[0];
-    for(int i=0 ; i < this->g->getSize();i++ ){
+    if(this->out==NULL ){
+    	return "";
+    }
+       for(int i=0 ; i < this->g->getSize();i++ ){
         if((this->out[(int)(((int)i)/((int)DATA_SIZE)) ] >> ((int)DATA_SIZE - 1 - (int)(((int)i) % ((int)DATA_SIZE)))) % 2 ){
             outs.append("\t --> \t");
             outs.append(this->g->getVerticeByNumber(i)->to_string());

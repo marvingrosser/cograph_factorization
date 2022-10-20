@@ -28,7 +28,7 @@ void graph::verticeInverseUnion(unsigned long long* dest, unsigned long long* ot
 }
 
 void graph::verticeInversion(unsigned long long* dest, unsigned short size){
-    for(int i = 0; i < (int)(((int)size)/((int)DATA_SIZE)) + 1; i++){
+    for(int i = 0; i < (int)(((int)size)/((int)DATA_SIZE)) + 1 ; i++){
         dest[i] = ~dest[i];
     }
 }
@@ -49,10 +49,10 @@ set<unsigned long long*> graph::getConnections(bool invert, unsigned long long* 
     verticeInverseUnion(visited, lookAt, numVerts); //fill visited with stuff we do not want to visit
     vector<vertice*> verticePointers = this->verticePointers;
     set<unsigned long long*> components;
-    #pragma omp parallel for default(none) shared(components, visited) firstprivate(verticePointers,invert,numVerts,lookAt) 
+    //#pragma omp parallel for default(none) shared(components, visited) firstprivate(verticePointers,invert,numVerts,lookAt) 
     for(int i=0; i < numVerts ; i++ ){
         bool gointo = false;
-        #pragma omp flush
+        //#pragma omp flush
         {
             gointo = ((unsigned long long)visited[(int)(((int) i)/ ((int)(DATA_SIZE)))] >> ((int)(DATA_SIZE )- 1 - (int)(((int)i) % ((int)(DATA_SIZE))))) % 2 == 0;
         }
@@ -69,7 +69,7 @@ set<unsigned long long*> graph::getConnections(bool invert, unsigned long long* 
             verticeInverseXOR(component, lookAt,numVerts); //reverse step (*)
             
             verticeUnion(visited,component, numVerts); // write the component to the visited
-            #pragma omp critical
+            //#pragma omp critical
             {
                 components.insert(component); //add the component to our components vector
             }
@@ -184,7 +184,7 @@ void graph::constructFromBinary(GraphBinary data){
     this->vertices = new vertice[data.number]();
     this->verticePointers = vector<vertice*>();
     
-    #pragma omp parallel for
+    //#pragma omp parallel for
     for(int i=0; i < this->numberVertices ;i++ ){
         this->vertices[i] =  vertice(i);
         this->vertices[i].initOut(this->numberVertices - 1);
@@ -195,7 +195,7 @@ void graph::constructFromBinary(GraphBinary data){
     
     
     unsigned int edgecounter = 0;
-    #pragma omp parallel for 
+    //#pragma omp parallel for 
     for(int i = 0; i < data.number * data.number;i++){
         //std::cout << i/data.number << std::endl;
         //std::cout <<(int)(((int)i) % ((int)DATA_SIZE)) << std::endl;

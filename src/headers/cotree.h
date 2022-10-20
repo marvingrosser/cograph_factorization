@@ -143,7 +143,7 @@ public:
      * @param state
      */
     cotree(graph* g, unsigned long long* component, bool state, unsigned int* pdepth, vector<vector<cotree*>> *depthdict);
-    cotree(const cotree& orig);
+    cotree(cotree* orig);
     /**
      * Get children of this node
      * @return 

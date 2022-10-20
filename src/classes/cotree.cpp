@@ -301,7 +301,7 @@ vector<vector<cotree*>> cotree::getFactors(vector<vector<cotree*>> depthdict,uns
             }
             if(lastFound==lastdepthfound && d==depthdict.size() - 1 && gcd == 1) {
                 if(pId == 0){
-                    factors[0].push_back(this);
+                    factors[0].push_back(new cotree(this));
                     return factors;
                 }else{
                     return * new vector<vector<cotree*>>;
@@ -464,9 +464,13 @@ cotree::cotree() {
     this->state = true;
 }
 
-cotree::cotree(const cotree& orig) {
+cotree::cotree(cotree*  orig) {
 	this->depth = NULL;
-	this->state = true;
+	this->state = orig->getState();
+	for(cotree* ochild: orig->getChilds()){
+		this->childs.push_back(new cotree(ochild));
+	}
+
 }
 void cotree::constructChildren(graph* g, set<unsigned long long*>* components,vector<vector<cotree*>> *depthdict ){
             this->depth= new unsigned int[2];
@@ -517,9 +521,7 @@ void cotree::freeComponents(set<unsigned long long *> components ){
     }
 }
 cotree::cotree(graph* g, unsigned long long* component, bool state, unsigned int * pdepth,vector<vector<cotree*>> *depthdict){
-    this->depth = new unsigned int[2];
-    this->depth[0] = 0;  
-    this->depth[1] = 0;
+    this->depth =NULL; 
     this->state = state;
     set<unsigned long long*> components = g->getConnections(state, component);
     {
